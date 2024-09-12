@@ -4,25 +4,40 @@ import { authenticated } from '../../access/authenticated'
 
 const Users: CollectionConfig = {
   slug: 'users',
-  access: {
-    admin: authenticated,
-    create: authenticated,
-    delete: authenticated,
-    read: authenticated,
-    update: authenticated,
-  },
-  admin: {
-    defaultColumns: ['name', 'email'],
-    useAsTitle: 'name',
-  },
   auth: true,
+  admin: {
+    useAsTitle: 'email',
+  },
   fields: [
     {
       name: 'name',
       type: 'text',
     },
+    {
+      name: 'isVendor',
+      type: 'checkbox',
+      label: 'É vendedor?',
+    },
+    {
+      name: 'vendorDetails',
+      type: 'group',
+      fields: [
+        {
+          name: 'cpfCnpj',
+          type: 'text',
+          label: 'CPF/CNPJ',
+        },
+        {
+          name: 'bankInfo',
+          type: 'textarea',
+          label: 'Informações bancárias',
+        },
+      ],
+      admin: {
+        condition: (data) => data.isVendor,
+      },
+    },
   ],
-  timestamps: true,
 }
 
 export default Users

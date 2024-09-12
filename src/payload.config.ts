@@ -12,25 +12,28 @@ import {
   HeadingFeature,
   ItalicFeature,
   LinkFeature,
+  UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import sharp from 'sharp' // editor-import
-import { UnderlineFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
+import sharp from 'sharp' // editor-import
 import { fileURLToPath } from 'url'
 
-import Categories from './collections/Categories'
-import { Media } from './collections/Media'
-import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
+import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
+import { Page, Post } from 'src/payload-types'
+import Orders from './collections/Orders'
+import Products from './collections/Products'
+import Stores from './collections/Stores'
 import Users from './collections/Users'
 import { seedHandler } from './endpoints/seedHandler'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { revalidateRedirects } from './hooks/revalidateRedirects'
-import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
-import { Page, Post } from 'src/payload-types'
+import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { Posts } from './collections/Posts'
+import Categories from './collections/Categories'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -117,7 +120,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users],
+  collections: [Users, Products, Stores, Orders, Media, Pages, Posts, Categories],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   endpoints: [
