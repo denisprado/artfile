@@ -24,7 +24,6 @@ const Products: CollectionConfig = {
       name: 'file',
       type: 'upload',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'seller',

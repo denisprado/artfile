@@ -87,7 +87,7 @@ export interface Product {
   name: string;
   description?: string | null;
   price: number;
-  file: string | Media;
+  file?: (string | null) | Media;
   seller: string | User;
   category?: ('laser' | '3d') | null;
   updatedAt: string;
