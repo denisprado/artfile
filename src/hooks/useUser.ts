@@ -37,40 +37,9 @@ export const useUser = async () => {
     fetchUser()
   }, [])
 
-  const login = async (email: string, password: string) => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      const response = await payload.login({
-        collection: 'users',
-        data: { email, password },
-      })
-      setUser(response.user as User)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const logout = async () => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      await payload.logout()
-      setUser(null)
-    } catch (err) {
-      setError(err.message)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
   return {
     user,
     isLoading,
     error,
-    login,
-    logout,
   }
 }

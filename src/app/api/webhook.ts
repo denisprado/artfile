@@ -44,11 +44,11 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         break
       case 'invoice.paid':
         // Lógica para lidar com pagamentos de assinatura bem-sucedidos
-        await handleSuccessfulSubscription(event.data.object)
+        // await handleSuccessfulSubscription(event.data.object)
         break
       case 'invoice.payment_failed':
         // Lógica para lidar com falhas de pagamento de assinatura
-        await handleFailedSubscription(event.data.object)
+        // await handleFailedSubscription(event.data.object)
         break
       default:
         console.log(`Unhandled event type ${event.type}`)
@@ -85,36 +85,36 @@ async function sendConfirmationEmail(session) {
   console.log(`Enviando e-mail de confirmação para ${userEmail} para o pedido ${orderId}`)
 }
 
-async function handleSuccessfulSubscription(invoice) {
-  const subscriptionId = invoice.subscription
-  const customerId = invoice.customer
-  const payload = await getPayload({ config: payloadConfig })
+// async function handleSuccessfulSubscription(invoice) {
+//   const subscriptionId = invoice.subscription
+//   const customerId = invoice.customer
+//   const payload = await getPayload({ config: payloadConfig })
 
-  await payload.update({
-    collection: 'users',
-    where: {
-      stripeCustomerId: customerId,
-    },
-    // data: {
-    //   stripeSubscriptionStatus: 'active',
-    //   stripeSubscriptionId: subscriptionId,
-    // },
-  })
-}
+//   await payload.update({
+//     collection: 'users',
+//     where: {
+//       stripeCustomerId: customerId,
+//     },
+//     // data: {
+//     //   stripeSubscriptionStatus: 'active',
+//     //   stripeSubscriptionId: subscriptionId,
+//     // },
+//   })
+// }
 
-async function handleFailedSubscription(invoice) {
-  const customerId = invoice.customer
-  const payload = await getPayload({ config: payloadConfig })
+// async function handleFailedSubscription(invoice) {
+//   const customerId = invoice.customer
+//   const payload = await getPayload({ config: payloadConfig })
 
-  await payload.update({
-    collection: 'users',
-    where: {
-      stripeCustomerId: customerId,
-    },
-    data: {
-      subscriptionStatus: 'failed',
-    },
-  })
-}
+//   await payload.update({
+//     collection: 'users',
+//     where: {
+//       stripeCustomerId: customerId,
+//     },
+//     data: {
+//       subscriptionStatus: 'failed',
+//     },
+//   })
+// }
 
 export default cors(webhookHandler)

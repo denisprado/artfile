@@ -5,6 +5,7 @@ import { Metadata } from 'next'
 import { Product, Store } from '@/payload-types'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
+import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
 
 type Props = {
 	params: {
@@ -15,30 +16,34 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const payload = await getPayloadHMR({ config: configPromise })
 
-	const store = await payload.findByID({
+	const store = await payload.find({
 		collection: 'stores',
-		id: params.storeId,
+		where: {
+			id: { equals: params.storeId },
+		},
 	})
 
 	if (!store) return {}
 
 	return {
-		title: `${store.name} - Loja`,
-		description: store.description as string,
+		title: `${store?.docs[0]?.name} - Loja`,
+		description: store?.docs[0]?.description as string,
 	}
 }
 
 const StorePage: React.FC<Props> = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 
-	const store = await payload.findByID({
+	const storeFull = (await payload.find({
 		collection: 'stores',
-		id: params.storeId,
+		where: {
+			id: { equals: params.storeId },
+		},
 		depth: 1,
-	}) as Store | null
+	})) as PaginatedDocs<Store>
 
-	if (!store) notFound()
-
+	if (!storeFull) return notFound()
+	const store = storeFull.docs[0]
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<h1 className="text-3xl font-bold mb-6">{store.name}</h1>

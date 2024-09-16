@@ -1,69 +1,80 @@
 import { useState, useCallback } from 'react'
-import payload from 'payload'
+import { getPayload } from 'payload'
+import payloadConfig from '@payload-config'
+import { Media } from '@/payload-types'
 
-export const usePayloadAPI = () => {
+export const usePayloadAPI = async () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const payload = await getPayload({ config: payloadConfig })
+  const createStore = useCallback(
+    async (formData: FormData) => {
+      setLoading(true)
+      setError(null)
+      try {
+        const response = await payload.create({
+          collection: 'stores',
+          data: {
+            name: formData.get('name') as string,
+            owner: formData.get('owner') as string,
+          },
+        })
+        setLoading(false)
+        return response
+      } catch (err) {
+        setError(err.message)
+        setLoading(false)
+        throw err
+      }
+    },
+    [payload],
+  )
 
-  const createStore = useCallback(async (formData: FormData) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await payload.create({
-        collection: 'stores',
-        data: {
-          name: formData.get('name') as string,
-          owner: formData.get('owner') as string,
-        },
-      })
-      setLoading(false)
-      return response
-    } catch (err) {
-      setError(err.message)
-      setLoading(false)
-      throw err
-    }
-  }, [])
+  const updateStore = useCallback(
+    async (id: string, formData: FormData) => {
+      setLoading(true)
+      setError(null)
+      try {
+        const response = await payload.update({
+          collection: 'stores',
+          id,
+          data: Object.fromEntries(formData),
+        })
+        setLoading(false)
+        return response
+      } catch (err) {
+        setError(err.message)
+        setLoading(false)
+        throw err
+      }
+    },
+    [payload],
+  )
 
-  const updateStore = useCallback(async (id: string, formData: FormData) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await payload.update({
-        collection: 'stores',
-        id,
-        data: Object.fromEntries(formData),
-      })
-      setLoading(false)
-      return response
-    } catch (err) {
-      setError(err.message)
-      setLoading(false)
-      throw err
-    }
-  }, [])
-
-  const uploadProduct = useCallback(async (formData: FormData) => {
-    setLoading(true)
-    setError(null)
-    try {
-      const response = await payload.create({
-        collection: 'products',
-        data: {
-          name: formData.get('name') as string,
-          price: formData.get('price') as string,
-          file: formData.get('file') as File,
-          seller: formData.get('seller') as string,
-        },
-      })
-      setLoading(false)
-      return response
-    } catch (err) {
-      setError(err.message)
-      setLoading(false)
-      throw err
-    }
-  }, [])
+  const uploadProduct = useCallback(
+    async (formData: FormData) => {
+      setLoading(true)
+      setError(null)
+      try {
+        const response = await payload.create({
+          collection: 'products',
+          data: {
+            name: formData.get('name') as string,
+            price: Number(formData.get('price')) as number,
+            file: formData.get('file') as string | Media | null | undefined,
+            seller: formData.get('seller') as string,
+          },
+        })
+        setLoading(false)
+        return response
+      } catch (err) {
+        setError(err.message)
+        setLoading(false)
+        throw err
+      }
+    },
+    [payload],
+  )
 
   const getSales = useCallback(async () => {
     setLoading(true)
@@ -80,7 +91,7 @@ export const usePayloadAPI = () => {
       setLoading(false)
       throw err
     }
-  }, [])
+  }, [payload])
 
   return {
     createStore,

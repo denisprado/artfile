@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { Product } from '@/payload-types'
