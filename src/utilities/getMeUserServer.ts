@@ -3,12 +3,11 @@ import { redirect } from 'next/navigation'
 
 import type { User } from '../payload-types'
 
-export const getMeUser = async (args?: {
+export const getMeUserServer = async (args?: {
   nullUserRedirect?: string
   validUserRedirect?: string
 }): Promise<{
-  token: string
-  user: User
+  user: User | null
 }> => {
   const { nullUserRedirect, validUserRedirect } = args || {}
   const cookieStore = cookies()
@@ -20,11 +19,7 @@ export const getMeUser = async (args?: {
     },
   })
 
-  const {
-    user,
-  }: {
-    user: User
-  } = await meUserReq.json()
+  const { user } = await meUserReq.json()
 
   if (validUserRedirect && meUserReq.ok && user) {
     redirect(validUserRedirect)
@@ -34,9 +29,5 @@ export const getMeUser = async (args?: {
     redirect(nullUserRedirect)
   }
 
-  // Token will exist here because if it doesn't the user will be redirected
-  return {
-    token: token!,
-    user,
-  }
+  return { user: user || null }
 }

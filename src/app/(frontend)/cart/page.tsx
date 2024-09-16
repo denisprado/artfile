@@ -1,23 +1,26 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { stripePromise } from '@/lib/stripe'
-import { useUser } from '@/hooks/useUser'
-import { getMeUser } from '@/utilities/getMeUser'
+import { getMeUserClient } from '@/utilities/getMeUserClient'
+import type { User } from '@/payload-types'
 
 const Cart: React.FC = () => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
-	const user = getMeUser()
+	const [user, setUser] = useState<User | null>(null)
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const { user } = await getMeUserClient()
+			setUser(user)
+			setIsLoading(false)
+		}
+		fetchUser()
+	}, [])
 
 	const handleCheckout = async () => {
-
-		if (!user) {
-			console.error('Usuário não está autenticado')
-			// Aqui você pode redirecionar para a página de login ou mostrar um modal de login
-			return
-		}
-
 		try {
 			const response = await fetch('/api/create-checkout-session', {
 				method: 'POST',
@@ -30,7 +33,7 @@ const Cart: React.FC = () => {
 						price: item.product.price,
 						quantity: item.quantity
 					})),
-					userId: (await user).user.id
+					userId: user?.id
 				}),
 			});
 
@@ -39,10 +42,6 @@ const Cart: React.FC = () => {
 			}
 
 			const { sessionId } = await response.json();
-
-			if (!sessionId) {
-				throw new Error('No session ID returned from the server');
-			}
 
 			// Redirecionar para o checkout do Stripe
 			const stripe = await stripePromise;
@@ -84,9 +83,9 @@ const Cart: React.FC = () => {
 					<button
 						onClick={handleCheckout}
 						className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
-						disabled={!user}
+						disabled={isLoading || !user}
 					>
-						{!user ? 'Carregando...' : 'Finalizar Compra'}
+						{isLoading ? 'Carregando...' : 'Finalizar Compra'}
 					</button>
 				</>
 			)}
