@@ -324,7 +324,7 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'posts' | null;
+  relationTo?: ('posts' | 'products' | 'stores') | null;
   categories?: (string | Category)[] | null;
   limit?: number | null;
   selectedDocs?:

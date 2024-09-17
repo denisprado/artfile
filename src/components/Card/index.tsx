@@ -7,6 +7,7 @@ import React, { Fragment } from 'react'
 import type { Post, Store, Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
+import Image from 'next/image' // Import Image from Next.js
 
 export type CardProps = {
 	alignItems?: 'center'
@@ -37,7 +38,7 @@ export const Card: React.FC<CardProps> = (props) => {
 		>
 			<div className="relative w-full ">
 				{!imageUrl && !meta?.image && <div className="">No image</div>}
-				{imageUrl && <img src={imageUrl} alt={title || name} className="w-full h-auto" />}
+				{imageUrl && <Image src={imageUrl} alt={title || name} layout="responsive" width={500} height={300} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 			<div className="p-4">

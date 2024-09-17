@@ -1,4 +1,4 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps } from '@/payload-types'
+import type { Post, ArchiveBlock as ArchiveBlockProps, Store, Product } from '@/payload-types'
 
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
@@ -10,13 +10,14 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 export const ArchiveBlock: React.FC<
 	ArchiveBlockProps & {
 		id?: string
+		collection: 'posts' | 'stores' | 'products'
 	}
 > = async (props) => {
-	const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+	const { id, collection, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
 
 	const limit = limitFromProps || 3
 
-	let posts: Post[] = []
+	let posts: Post[] | Store[] | Product[] = []
 
 	if (populateBy === 'collection') {
 		const payload = await getPayloadHMR({ config: configPromise })
@@ -27,7 +28,7 @@ export const ArchiveBlock: React.FC<
 		})
 
 		const fetchedPosts = await payload.find({
-			collection: 'posts',
+			collection: collection ? collection : 'stores',
 			depth: 1,
 			limit,
 			...(flattenedCategories && flattenedCategories.length > 0
@@ -41,11 +42,11 @@ export const ArchiveBlock: React.FC<
 				: {}),
 		})
 
-		posts = fetchedPosts.docs
+		posts = fetchedPosts.docs as Post[] | Store[] | Product[]
 	} else {
 		if (selectedDocs?.length) {
 			const filteredSelectedPosts = selectedDocs.map((post) => {
-				if (typeof post.value === 'object') return post.value
+				if (typeof post.value === 'object') return post.value as Post | Store | Product
 			}) as Post[]
 
 			posts = filteredSelectedPosts
@@ -59,7 +60,7 @@ export const ArchiveBlock: React.FC<
 					<RichText className="ml-0 max-w-[48rem]" content={introContent} enableGutter={false} />
 				</div>
 			)}
-			<CollectionArchive items={posts} relationTo="posts" />
+			<CollectionArchive items={posts.map(post => ({ ...post, slug: post.slug || '' }))} relationTo={collection} />
 		</div>
 	)
 }
