@@ -13,6 +13,11 @@ const Orders: CollectionConfig = {
       required: true,
     },
     {
+      name: 'fileArt',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'products',
       type: 'relationship',
       relationTo: 'products',

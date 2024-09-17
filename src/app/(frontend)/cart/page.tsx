@@ -31,7 +31,8 @@ const Cart: React.FC = () => {
 					items: cart.map(item => ({
 						name: item.product.name,
 						price: item.product.price,
-						quantity: item.quantity
+						quantity: item.quantity,
+						fileArt: item.product.fileArt
 					})),
 					userId: user?.id
 				}),

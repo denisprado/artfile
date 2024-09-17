@@ -174,6 +174,7 @@ export interface Store {
 export interface Order {
   id: string;
   buyer: string | User;
+  fileArt?: (string | null) | Media;
   products: (string | Product)[];
   totalAmount: number;
   status: 'pending' | 'paid' | 'delivered';
