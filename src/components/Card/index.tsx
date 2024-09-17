@@ -22,9 +22,10 @@ export const Card: React.FC<CardProps> = (props) => {
 	const { card, link } = useClickableCard({})
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
-	const { slug, categories, meta, title, name, description, price, imageUrl } = doc as any
+	const { slug, categories, meta, title, name, description, price, imageUrl, fileArt, logo } = doc as any
+	console.log(doc)
 	const titleToUse = titleFromProps || title
-
+	const imageUrlToUse = imageUrl ? imageUrl : fileArt?.url ? fileArt?.url : logo?.url
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
 
@@ -37,8 +38,8 @@ export const Card: React.FC<CardProps> = (props) => {
 			ref={card.ref}
 		>
 			<div className="relative w-full ">
-				{!imageUrl && !meta?.image && <div className="">No image</div>}
-				{imageUrl && <Image src={imageUrl} alt={title || name} layout="responsive" width={500} height={300} />}
+				{!imageUrlToUse && !meta?.image && <div className="">No image</div>}
+				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={500} height={300} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 			<div className="p-4">
@@ -74,7 +75,7 @@ export const Card: React.FC<CardProps> = (props) => {
 					</div>
 				)}
 				{description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
-				{price && <div className="mt-2 text-2xl font-bold">R$ {price.toFixed(2)}</div>}
+				{price && <div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>}
 			</div>
 		</article>
 	)

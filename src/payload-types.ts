@@ -85,11 +85,13 @@ export interface User {
 export interface Product {
   id: string;
   name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   description?: string | null;
   price: number;
-  file?: (string | null) | Media;
+  fileArt: string | Media;
   seller: string | User;
-  category?: ('laser' | '3d') | null;
+  categories?: (string | Category)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -129,6 +131,25 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  parent?: (string | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Category;
+        url?: string | null;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stores".
  */
 export interface Store {
@@ -138,6 +159,10 @@ export interface Store {
   owner: string | User;
   logo?: (string | null) | Media;
   products?: (string | Product)[] | null;
+  publishedAt?: string | null;
+  authors?: (string | User)[] | null;
+  slug?: string | null;
+  slugLock?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -336,25 +361,6 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  title: string;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,3 +1,4 @@
+import { slugField } from '@/fields/slug'
 import { CollectionConfig } from 'payload'
 
 const Stores: CollectionConfig = {
@@ -32,6 +33,36 @@ const Stores: CollectionConfig = {
       relationTo: 'products',
       hasMany: true,
     },
+    {
+      name: 'publishedAt',
+      type: 'date',
+      admin: {
+        date: {
+          pickerAppearance: 'dayAndTime',
+        },
+        position: 'sidebar',
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (siblingData._status === 'published' && !value) {
+              return new Date()
+            }
+            return value
+          },
+        ],
+      },
+    },
+    {
+      name: 'authors',
+      type: 'relationship',
+      admin: {
+        position: 'sidebar',
+      },
+      hasMany: true,
+      relationTo: 'users',
+    },
+    ...slugField('name'),
   ],
 }
 

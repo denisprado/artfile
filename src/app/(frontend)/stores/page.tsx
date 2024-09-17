@@ -9,7 +9,7 @@ import React from 'react'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
-export const COLLECTION = 'posts'
+export const COLLECTION = 'stores'
 export default async function Page() {
 	const payload = await getPayloadHMR({ config: configPromise })
 

@@ -8,7 +8,7 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 type Props = {
 	params: {
-		productId: string
+		slug: string
 	}
 }
 
@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props) {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
-		where: { id: { equals: params.productId } }
+		where: { slug: { equals: params.slug } }
 	}) as unknown as Product | null
 
 	if (!product) return notFound()
@@ -31,7 +31,7 @@ const ProductPage = async ({ params }: Props) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
-		where: { id: { equals: params.productId } }
+		where: { slug: { equals: params.slug } }
 	}).then((res) => res.docs[0] as unknown as Product | null)
 
 	if (!product) {
@@ -59,10 +59,11 @@ const ProductPage = async ({ params }: Props) => {
 					<h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
 					<p className="text-gray-600 mb-4">{product?.description}</p>
 					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
-
-					<div className="mb-4">
-						<span className="font-semibold">Categoria:</span> {product?.category}
-					</div>
+					{product?.category && (
+						<div className="mb-4">
+							<span className="font-semibold">Categoria:</span> {product.category[0].slug}
+						</div>
+					)}
 
 					<AddToCartButtonWrapper product={product} />
 				</div>

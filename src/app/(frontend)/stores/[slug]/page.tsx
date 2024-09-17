@@ -9,7 +9,7 @@ import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
 
 type Props = {
 	params: {
-		storeId: string
+		slug: string
 	}
 }
 
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const store = await payload.find({
 		collection: 'stores',
 		where: {
-			id: { equals: params.storeId },
+			id: { equals: params.slug },
 		},
 	})
 
@@ -37,7 +37,7 @@ const StorePage: React.FC<Props> = async ({ params }) => {
 	const storeFull = (await payload.find({
 		collection: 'stores',
 		where: {
-			id: { equals: params.storeId },
+			id: { equals: params.slug },
 		},
 		depth: 1,
 	})) as PaginatedDocs<Store>
