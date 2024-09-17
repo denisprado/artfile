@@ -16,7 +16,7 @@ export type CollectionItem = {
 }
 
 export type Props = {
-	items: CollectionItem[]
+	items: Post[] | Store[] | Product[] | null
 	relationTo: 'posts' | 'stores' | 'products'
 }
 

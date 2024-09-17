@@ -10,11 +10,11 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 export const ArchiveBlock: React.FC<
 	ArchiveBlockProps & {
 		id?: string
-		collection: 'posts' | 'stores' | 'products'
+		relationTo: 'posts' | 'stores' | 'products'
 	}
 > = async (props) => {
-	const { id, collection, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
-
+	const { id, relationTo, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+	console.log(relationTo)
 	const limit = limitFromProps || 3
 
 	let posts: Post[] | Store[] | Product[] = []
@@ -28,7 +28,7 @@ export const ArchiveBlock: React.FC<
 		})
 
 		const fetchedPosts = await payload.find({
-			collection: collection ? collection : 'stores',
+			collection: relationTo ? relationTo : 'stores',
 			depth: 1,
 			limit,
 			...(flattenedCategories && flattenedCategories.length > 0
@@ -60,7 +60,7 @@ export const ArchiveBlock: React.FC<
 					<RichText className="ml-0 max-w-[48rem]" content={introContent} enableGutter={false} />
 				</div>
 			)}
-			<CollectionArchive items={posts.map(post => ({ ...post, slug: post.slug || '' }))} relationTo={collection} />
+			<CollectionArchive items={posts.map(post => ({ ...post, slug: post.slug || '' }))} relationTo={relationTo} />
 		</div>
 	)
 }

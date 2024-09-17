@@ -58,7 +58,7 @@ const StorePage: React.FC<Props> = async ({ params }) => {
 							<p className="text-gray-600 mb-2">{product?.description}</p>
 							<p className="font-bold">R$ {product?.price.toFixed(2)}</p>
 							<Link
-								href={`/product/${product?.id}`}
+								href={`/products/${product?.id}`}
 								className="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
 							>
 								Ver detalhes
