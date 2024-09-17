@@ -23,9 +23,10 @@ export const Card: React.FC<CardProps> = (props) => {
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 
 	const { slug, categories, meta, title, name, description, price, imageUrl, fileArt, logo } = doc as any
-	console.log(doc)
+
 	const titleToUse = titleFromProps || title
-	const imageUrlToUse = imageUrl ? imageUrl : fileArt?.url ? fileArt?.url : logo?.url
+	const imageUrlToUse = relationTo === 'posts' ? imageUrl : relationTo === 'products' ? fileArt.url : logo.url
+	console.log(imageUrlToUse)
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
 

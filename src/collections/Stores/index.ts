@@ -21,9 +21,19 @@ const Stores: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: true,
+      defaultValue: ({ req }) => req.user.id, // Define o valor padrão como o ID do usuário logado
+      admin: {
+        readOnly: true, // Desabilita a edição do campo
+      },
     },
     {
       name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+    },
+
+    {
+      name: 'header',
       type: 'upload',
       relationTo: 'media',
     },

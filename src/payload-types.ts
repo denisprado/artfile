@@ -158,6 +158,7 @@ export interface Store {
   description?: string | null;
   owner: string | User;
   logo?: (string | null) | Media;
+  header?: (string | null) | Media;
   products?: (string | Product)[] | null;
   publishedAt?: string | null;
   authors?: (string | User)[] | null;
