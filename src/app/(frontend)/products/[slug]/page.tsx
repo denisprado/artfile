@@ -1,7 +1,7 @@
 import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import payload from 'payload'
+import Image from 'next/image'
 import { Media, Product } from '@/payload-types'
 import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
@@ -46,9 +46,9 @@ const ProductPage = async ({ params }: Props) => {
 
 			<div className="grid md:grid-cols-2 gap-8">
 				<div>
-					{product.file && (
-						<img
-							src={(product?.file as Media).filename!}
+					{product.fileArt && (
+						<Image
+							src={(product?.fileArt as Media).filename!}
 							alt={product?.name!}
 							className="w-full h-auto rounded-lg shadow-lg"
 						/>

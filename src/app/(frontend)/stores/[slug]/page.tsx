@@ -16,8 +16,8 @@ type Props = {
 	}
 }
 
-export const COLLECTION = 'products'
 
+const COLLECTION = 'products'
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const payload = await getPayloadHMR({ config: configPromise })
 
