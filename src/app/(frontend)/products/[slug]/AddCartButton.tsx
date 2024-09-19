@@ -15,6 +15,7 @@ const AddToCartButton: React.FC<Props> = ({ product, user }) => {
 	const handleAddToCart = () => {
 		addToCart(product)
 	}
+	console.log(user)
 
 	if (!user) {
 		return (

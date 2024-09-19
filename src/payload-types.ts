@@ -83,7 +83,6 @@ export interface User {
  * via the `definition` "products".
  */
 export interface Product {
-	[x: string]: any;
   id: string;
   name: string;
   slug?: string | null;

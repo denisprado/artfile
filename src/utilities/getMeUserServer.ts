@@ -7,6 +7,7 @@ export const getMeUserServer = async (args?: {
   nullUserRedirect?: string
   validUserRedirect?: string
 }): Promise<{
+  token: string
   user: User | null
 }> => {
   const { nullUserRedirect, validUserRedirect } = args || {}
@@ -20,6 +21,7 @@ export const getMeUserServer = async (args?: {
   })
 
   const { user } = await meUserReq.json()
+  console.log('meUserReq', meUserReq)
 
   if (validUserRedirect && meUserReq.ok && user) {
     redirect(validUserRedirect)
@@ -29,5 +31,5 @@ export const getMeUserServer = async (args?: {
     redirect(nullUserRedirect)
   }
 
-  return { user: user || null }
+  return { token: token!, user: user || null }
 }

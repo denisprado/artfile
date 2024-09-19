@@ -48,9 +48,12 @@ const ProductPage = async ({ params }: Props) => {
 				<div>
 					{product.fileArt && (
 						<Image
-							src={(product?.fileArt as Media).filename!}
+							src={(product?.fileArt as Media).url!}
 							alt={product?.name!}
 							className="w-full h-auto rounded-lg shadow-lg"
+							width={680}
+							height={320}
+							objectFit='cover'
 						/>
 					)}
 				</div>
@@ -59,9 +62,9 @@ const ProductPage = async ({ params }: Props) => {
 					<h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
 					<p className="text-gray-600 mb-4">{product?.description}</p>
 					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
-					{product?.category && (
+					{product?.categories && (
 						<div className="mb-4">
-							<span className="font-semibold">Categoria:</span> {product.category[0].slug}
+							<span className="font-semibold">Categoria:</span> {product.categories[0].toString()}
 						</div>
 					)}
 

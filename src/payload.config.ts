@@ -19,7 +19,6 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp' // editor-import
 import { fileURLToPath } from 'url'
-
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Page, Post } from 'src/payload-types'
 import Orders from './collections/Orders'
