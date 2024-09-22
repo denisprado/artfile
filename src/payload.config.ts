@@ -33,12 +33,13 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import Categories from './collections/Categories'
+import { pt } from 'payload/i18n/pt'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
+  return doc?.title ? `${doc.title} | Artfile` : 'ArtFile'
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
@@ -123,6 +124,7 @@ export default buildConfig({
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer],
+  i18n: { supportedLanguages: { pt } },
   plugins: [
     redirectsPlugin({
       collections: ['pages', 'posts'],
@@ -146,13 +148,14 @@ export default buildConfig({
         },
       },
     }),
+
     nestedDocsPlugin({
       collections: ['categories'],
     }),
-    seoPlugin({
-      generateTitle,
-      generateURL,
-    }),
+    // seoPlugin({
+    //   generateTitle,
+    //   generateURL,
+    // }),
     formBuilderPlugin({
       fields: {
         payment: false,
