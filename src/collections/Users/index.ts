@@ -5,6 +5,12 @@ import { authenticated } from '../../access/authenticated'
 const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
+  access: {
+    create: () => true,
+    read: () => true,
+    update: () => true,
+    delete: () => true,
+  },
   admin: {
     useAsTitle: 'email',
   },
