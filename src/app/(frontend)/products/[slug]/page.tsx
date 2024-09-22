@@ -2,7 +2,7 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Media, Product } from '@/payload-types'
+import { Category, Media, Product } from '@/payload-types'
 import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
@@ -38,6 +38,8 @@ const ProductPage = async ({ params }: Props) => {
 		return notFound()
 	}
 
+	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
+
 	return (
 		<div className="container mx-auto px-4 py-8">
 			<Link href="/products" className="text-blue-500 hover:underline mb-4 inline-block">
@@ -64,7 +66,7 @@ const ProductPage = async ({ params }: Props) => {
 					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
 					{product?.categories && (
 						<div className="mb-4">
-							<span className="font-semibold">Categoria:</span> {product.categories[0].toString()}
+							<span className="font-semibold">Categorias:</span> {categories?.join(', ')}
 						</div>
 					)}
 

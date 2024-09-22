@@ -1,3 +1,5 @@
+import { isAdmin } from '@/access/isAdmin'
+import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { CollectionConfig } from 'payload'
@@ -5,6 +7,11 @@ import { title } from 'process'
 
 const Products: CollectionConfig = {
   slug: 'products',
+  access: {
+    read: isAdminOrCreatedBy,
+    update: isAdminOrCreatedBy,
+    delete: isAdminOrCreatedBy,
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'slug', 'updatedAt'],
@@ -19,7 +26,18 @@ const Products: CollectionConfig = {
     preview: (doc) =>
       generatePreviewPath({ path: `/products/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
   },
-
+  hooks: {
+    beforeChange: [
+      ({ req, operation, data }) => {
+        if (operation === 'create') {
+          if (req.user) {
+            data.createdBy = req.user.id
+            return data
+          }
+        }
+      },
+    ],
+  },
   fields: [
     {
       type: 'tabs',
@@ -68,12 +86,19 @@ const Products: CollectionConfig = {
               type: 'number',
               required: true,
             },
-
             {
-              name: 'seller',
+              name: 'createdBy',
               type: 'relationship',
               relationTo: 'users',
               required: true,
+              access: {
+                update: () => false,
+              },
+              admin: {
+                readOnly: true,
+                position: 'sidebar',
+                condition: (data) => Boolean(data?.createdBy),
+              },
             },
             {
               name: 'categories',

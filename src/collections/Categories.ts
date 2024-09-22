@@ -2,14 +2,16 @@ import type { CollectionConfig } from 'payload'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { isAdmin } from '@/access/isAdmin'
+import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
   access: {
     create: authenticated,
-    delete: authenticated,
+    delete: isAdmin,
     read: anyone,
-    update: authenticated,
+    update: isAdminOrCreatedBy,
   },
   admin: {
     useAsTitle: 'title',
@@ -20,7 +22,33 @@ const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'createdBy',
+      type: 'relationship',
+      relationTo: 'users',
+      required: true,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        condition: (data) => Boolean(data?.createdBy),
+      },
+    },
   ],
+  hooks: {
+    beforeChange: [
+      ({ req, operation, data }) => {
+        if (operation === 'create') {
+          if (req.user) {
+            data.createdBy = req.user.id
+            return data
+          }
+        }
+      },
+    ],
+  },
 }
 
 export default Categories

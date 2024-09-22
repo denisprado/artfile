@@ -17,16 +17,6 @@ const Stores: CollectionConfig = {
       type: 'textarea',
     },
     {
-      name: 'owner',
-      type: 'relationship',
-      relationTo: 'users',
-      required: true,
-      defaultValue: ({ req }) => req.user.id, // Define o valor padrão como o ID do usuário logado
-      admin: {
-        readOnly: true, // Desabilita a edição do campo
-      },
-    },
-    {
       name: 'logo',
       type: 'upload',
       relationTo: 'media',
@@ -64,16 +54,33 @@ const Stores: CollectionConfig = {
       },
     },
     {
-      name: 'authors',
+      name: 'createdBy',
       type: 'relationship',
-      admin: {
-        position: 'sidebar',
-      },
-      hasMany: true,
       relationTo: 'users',
+      required: true,
+      access: {
+        update: () => false,
+      },
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        condition: (data) => Boolean(data?.createdBy),
+      },
     },
     ...slugField('name'),
   ],
+  hooks: {
+    beforeChange: [
+      ({ req, operation, data }) => {
+        if (operation === 'create') {
+          if (req.user) {
+            data.createdBy = req.user.id
+            return data
+          }
+        }
+      },
+    ],
+  },
 }
 
 export default Stores

@@ -1,3 +1,5 @@
+import { isAdmin } from '@/access/isAdmin'
+import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 import { CollectionConfig } from 'payload'
 
 const Orders: CollectionConfig = {
@@ -5,17 +7,25 @@ const Orders: CollectionConfig = {
   admin: {
     useAsTitle: 'id',
   },
+  access: {
+    read: isAdminOrCreatedBy,
+    update: isAdminOrCreatedBy,
+    delete: isAdmin,
+  },
   fields: [
     {
-      name: 'buyer',
+      name: 'createdBy',
       type: 'relationship',
       relationTo: 'users',
       required: true,
-    },
-    {
-      name: 'fileArt',
-      type: 'upload',
-      relationTo: 'media',
+      access: {
+        update: () => false,
+      },
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+        condition: (data) => Boolean(data?.createdBy),
+      },
     },
     {
       name: 'products',
@@ -44,6 +54,18 @@ const Orders: CollectionConfig = {
       type: 'text',
     },
   ],
+  hooks: {
+    beforeChange: [
+      ({ req, operation, data }) => {
+        if (operation === 'create') {
+          if (req.user) {
+            data.createdBy = req.user.id
+            return data
+          }
+        }
+      },
+    ],
+  },
 }
 
 export default Orders

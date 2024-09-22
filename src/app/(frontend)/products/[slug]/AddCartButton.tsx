@@ -3,6 +3,7 @@
 import React from 'react'
 import { useCart } from '@/contexts/CartContext'
 import type { Product, User } from '@/payload-types'
+import Link from 'next/link'
 
 type Props = {
 	product: Product
@@ -15,16 +16,11 @@ const AddToCartButton: React.FC<Props> = ({ product, user }) => {
 	const handleAddToCart = () => {
 		addToCart(product)
 	}
-	console.log(user)
+
 
 	if (!user) {
 		return (
-			<button
-				className="bg-gray-300 text-gray-600 px-6 py-2 rounded cursor-not-allowed"
-				disabled
-			>
-				Faça login para comprar
-			</button>
+			<Link href='/admin' className='text-primary'>Faça login ou cadastre-se para comprar</Link>
 		)
 	}
 

@@ -26,10 +26,16 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import { slugField } from '@/fields/slug'
+import { isAdmin } from '@/access/isAdmin'
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
-  
+  access: {
+    create: isAdmin,
+    delete: isAdmin,
+    read: isAdmin,
+    update: isAdmin,
+  },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {

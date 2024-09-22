@@ -19,7 +19,6 @@ export interface Config {
     pages: Page;
     posts: Post;
     categories: Category;
-    redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
     'payload-preferences': PayloadPreference;
@@ -62,7 +61,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name?: string | null;
-  isVendor?: boolean | null;
+  role: 'admin' | 'user';
   vendorDetails?: {
     cpfCnpj?: string | null;
     bankInfo?: string | null;
@@ -84,13 +83,25 @@ export interface User {
  */
 export interface Product {
   id: string;
+  images?:
+    | {
+        images?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  files?:
+    | {
+        files?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
   name: string;
   slug?: string | null;
   slugLock?: boolean | null;
   description?: string | null;
-  price: number;
   fileArt: string | Media;
-  seller: string | User;
+  price: number;
+  createdBy?: (string | null) | User;
   categories?: (string | Category)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -136,6 +147,7 @@ export interface Media {
 export interface Category {
   id: string;
   title: string;
+  createdBy?: (string | null) | User;
   parent?: (string | null) | Category;
   breadcrumbs?:
     | {
@@ -156,12 +168,11 @@ export interface Store {
   id: string;
   name: string;
   description?: string | null;
-  owner: string | User;
   logo?: (string | null) | Media;
   header?: (string | null) | Media;
   products?: (string | Product)[] | null;
   publishedAt?: string | null;
-  authors?: (string | User)[] | null;
+  createdBy?: (string | null) | User;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -173,8 +184,7 @@ export interface Store {
  */
 export interface Order {
   id: string;
-  buyer: string | User;
-  fileArt?: (string | null) | Media;
+  createdBy?: (string | null) | User;
   products: (string | Product)[];
   totalAmount: number;
   status: 'pending' | 'paid' | 'delivered';
@@ -594,29 +604,6 @@ export interface Form {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "redirects".
- */
-export interface Redirect {
-  id: string;
-  from: string;
-  to?: {
-    type?: ('reference' | 'custom') | null;
-    reference?:
-      | ({
-          relationTo: 'pages';
-          value: string | Page;
-        } | null)
-      | ({
-          relationTo: 'posts';
-          value: string | Post;
-        } | null);
-    url?: string | null;
-  };
   updatedAt: string;
   createdAt: string;
 }
