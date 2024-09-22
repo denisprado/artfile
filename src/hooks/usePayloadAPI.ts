@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
-import { Media } from '@/payload-types'
+import { Media, Product } from '@/payload-types'
 
 export const usePayloadAPI = async () => {
   const [loading, setLoading] = useState(false)
@@ -61,7 +61,7 @@ export const usePayloadAPI = async () => {
           data: {
             name: formData.get('name') as string,
             price: Number(formData.get('price')) as number,
-            file: formData.get('file') as string | Media | null | undefined,
+            fileArt: formData.get('fileArt') as Product['fileArt'],
             seller: formData.get('seller') as string,
           },
         })
