@@ -20,14 +20,25 @@ const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      name: 'role',
-      type: 'select',
-      options: [
-        { label: 'Admin', value: 'admin' },
-        { label: 'User', value: 'user' },
-      ],
+      name: 'email',
+      type: 'text',
       required: true,
-      defaultValue: 'user',
+    },
+    {
+      name: 'roles',
+      type: 'select',
+      hasMany: true,
+      defaultValue: ['customer'],
+      options: [
+        {
+          label: 'admin',
+          value: 'admin',
+        },
+        {
+          label: 'customer',
+          value: 'customer',
+        },
+      ],
     },
     {
       name: 'vendorDetails',

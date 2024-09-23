@@ -61,7 +61,7 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name?: string | null;
-  role: 'admin' | 'user';
+  roles?: ('admin' | 'customer')[] | null;
   vendorDetails?: {
     cpfCnpj?: string | null;
     bankInfo?: string | null;
