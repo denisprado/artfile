@@ -43,8 +43,8 @@ const Cart: React.FC = () => {
 				throw new Error('Network response was not ok');
 			}
 
-			const { sessionId } = await response.json();
-
+			const { session } = await response.json();
+			const sessionId = session.id
 
 			if (response.ok) {
 				try {
@@ -59,9 +59,9 @@ const Cart: React.FC = () => {
 								item.product.id
 							)),
 							totalAmount: getCartTotal(),
-							paymentId: sessionId,
+							paymentId: session.id,
 							createdBy: user?.id,
-							status: "pending"
+							status: session.payment_status
 						})
 					})
 
@@ -83,7 +83,6 @@ const Cart: React.FC = () => {
 							purchases: cart.map(item => (
 								item.product.id
 							)),
-
 						})
 					})
 				}

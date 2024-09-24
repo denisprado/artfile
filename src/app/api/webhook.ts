@@ -34,7 +34,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (event.type) {
       case 'checkout.session.completed':
         const session = event.data.object
-
+        console.log('webhook session', session)
         // Atualizar o status do pedido no banco de dados
         await updateOrderStatus(session)
 

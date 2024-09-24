@@ -8,6 +8,7 @@ const SuccessPage: React.FC = () => {
 	const { clearCart } = useCart()
 
 	useEffect(() => {
+
 		clearCart()
 	}, [])
 

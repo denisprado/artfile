@@ -46,9 +46,9 @@ const Orders: CollectionConfig = {
       name: 'status',
       type: 'select',
       options: [
-        { label: 'Pendente', value: 'pending' },
+        { label: 'Pagamento não requerido', value: 'no_payment_required' },
         { label: 'Pago', value: 'paid' },
-        { label: 'Entregue', value: 'delivered' },
+        { label: 'Não pago', value: 'unpaid' },
       ],
       required: true,
     },

@@ -214,7 +214,7 @@ export interface Order {
   createdBy?: (string | null) | User;
   products: (string | Product)[];
   totalAmount: number;
-  status: 'pending' | 'paid' | 'delivered';
+  status: 'no_payment_required' | 'paid' | 'unpaid';
   paymentId?: string | null;
   updatedAt: string;
   createdAt: string;
