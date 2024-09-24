@@ -24,7 +24,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	useEffect(() => {
 		const savedCart = localStorage.getItem('cart')
 		if (savedCart) {
-			setCart(JSON.parse(savedCart))
+			const parsedCart = JSON.parse(savedCart)
+			// Verifica se o carrinho salvo é diferente do estado atual
+			if (JSON.stringify(parsedCart) !== JSON.stringify(cart)) {
+				setCart(parsedCart)
+			}
 		}
 	}, [])
 

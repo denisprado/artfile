@@ -5,6 +5,7 @@ import { useCart } from '@/contexts/CartContext'
 import { stripePromise } from '@/lib/stripe'
 import { getMeUserClient } from '@/utilities/getMeUserClient'
 import type { User } from '@/payload-types'
+import qs from 'qs'
 
 const Cart: React.FC = () => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
@@ -64,8 +65,16 @@ const Cart: React.FC = () => {
 						})
 					})
 
-					const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/update`, {
-						method: 'UPDATE',
+					const stringifiedQuery = qs.stringify({
+						where: {
+							id: {
+								equals: user?.id,
+							},
+						},
+					}, { addQueryPrefix: true });
+
+					const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${stringifiedQuery}`, {
+						method: 'PATCH',
 						credentials: 'include',
 						headers: {
 							'Content-Type': 'application/json',
