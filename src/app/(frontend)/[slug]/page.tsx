@@ -13,77 +13,77 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 
-export async function generateStaticParams() {
-  const payload = await getPayloadHMR({ config: configPromise })
-  const pages = await payload.find({
-    collection: 'pages',
-    draft: false,
-    limit: 1000,
-    overrideAccess: false,
-  })
+// export async function generateStaticParams() {
+// 	const payload = await getPayloadHMR({ config: configPromise })
+// 	const pages = await payload.find({
+// 		collection: 'pages',
+// 		draft: false,
+// 		limit: 1000,
+// 		overrideAccess: false,
+// 	})
 
-  return pages.docs
-    ?.filter((doc) => {
-      return doc.slug !== 'home'
-    })
-    .map(({ slug }) => slug)
-}
+// 	return pages.docs
+// 		?.filter((doc) => {
+// 			return doc.slug !== 'home'
+// 		})
+// 		.map(({ slug }) => slug)
+// }
 
 export default async function Page({ params: { slug = 'home' } }) {
-  const url = '/' + slug
+	const url = '/' + slug
 
-  let page: PageType | null
+	let page: PageType | null
 
-  page = await queryPageBySlug({
-    slug,
-  })
+	page = await queryPageBySlug({
+		slug,
+	})
 
-  // Remove this code once your website is seeded
-  if (!page) {
-    page = homeStatic
-  }
+	// Remove this code once your website is seeded
+	if (!page) {
+		page = homeStatic
+	}
 
-  if (!page) {
-    return <PayloadRedirects url={url} />
-  }
+	if (!page) {
+		return <PayloadRedirects url={url} />
+	}
 
-  const { hero, layout } = page
+	const { hero, layout } = page
 
-  return (
-    <article className="pt-16 pb-24">
-      {/* Allows redirects for valid pages too */}
-      <PayloadRedirects disableNotFound url={url} />
+	return (
+		<article className="pt-16 pb-24">
+			{/* Allows redirects for valid pages too */}
+			<PayloadRedirects disableNotFound url={url} />
 
-      <RenderHero {...hero} />
-      <RenderBlocks blocks={layout} />
-    </article>
-  )
+			<RenderHero {...hero} />
+			<RenderBlocks blocks={layout} />
+		</article>
+	)
 }
 
-export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
-  const page = await queryPageBySlug({
-    slug,
-  })
+// export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
+//   const page = await queryPageBySlug({
+//     slug,
+//   })
 
-  return generateMeta({ doc: page })
-}
+//   return generateMeta({ doc: page })
+// }
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-  const { isEnabled: draft } = draftMode()
+	const { isEnabled: draft } = draftMode()
 
-  const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayloadHMR({ config: configPromise })
 
-  const result = await payload.find({
-    collection: 'pages',
-    draft,
-    limit: 1,
-    overrideAccess: true,
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  })
+	const result = await payload.find({
+		collection: 'pages',
+		draft,
+		limit: 1,
+		overrideAccess: true,
+		where: {
+			slug: {
+				equals: slug,
+			},
+		},
+	})
 
-  return result.docs?.[0] || null
+	return result.docs?.[0] || null
 })

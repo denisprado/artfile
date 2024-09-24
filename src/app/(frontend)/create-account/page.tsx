@@ -11,20 +11,20 @@ import { Gutter } from '@/components/Gutter'
 export default async function CreateAccount() {
 	await getMeUserServer({
 		validUserRedirect: `/account?warning=${encodeURIComponent(
-			'Cannot create a new account while logged in, please log out and try again.',
+			'Não é possível criar uma nova conta enquanto estiver logado, por favor, faça logout e tente novamente.',
 		)}`,
 	})
 
 	return (
 		<Gutter className={classes.createAccount}>
-			<h1>Create Account</h1>
+			<h1>Criar conta</h1>
 			<CreateAccountForm />
 		</Gutter>
 	)
 }
 
 export const metadata: Metadata = {
-	title: 'Account',
-	description: 'Create an account or log in to your existing account.',
+	title: 'Conta',
+	description: 'Crie uma conta ou acesse sua conta.',
 
 }
