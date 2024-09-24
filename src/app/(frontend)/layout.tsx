@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<link href="/favicon.ico" rel="icon" sizes="32x32" />
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			<body>
+			<body className='overflow-x-hidden overflow-y-scroll'>
 				<Providers>
 					<CartProvider>
 						<AdminBar
@@ -35,10 +35,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							}}
 						/>
 						<LivePreviewListener />
-
-						<Header />
-						{children}
-						<Footer />
+						<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
+							<Header />
+							<main>
+								{children}
+							</main>
+							<Footer />
+						</div>
 					</CartProvider>
 				</Providers>
 			</body>
