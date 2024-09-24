@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
+import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -39,6 +40,16 @@ const Users: CollectionConfig = {
           value: 'customer',
         },
       ],
+    },
+    {
+      name: 'purchases',
+      label: 'Minhas compras',
+      type: 'relationship',
+      relationTo: 'products',
+      hasMany: true,
+      hooks: {
+        // beforeChange: [resolveDuplicatePurchases],
+      },
     },
     {
       name: 'vendorDetails',

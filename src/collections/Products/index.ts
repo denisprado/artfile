@@ -2,6 +2,7 @@ import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
+import { read } from 'fs'
 import { CollectionConfig } from 'payload'
 import { title } from 'process'
 
@@ -69,6 +70,9 @@ const Products: CollectionConfig = {
               name: 'name',
               type: 'text',
               required: true,
+              access: {
+                read: () => true,
+              },
             },
             ...slugField('name'),
             {

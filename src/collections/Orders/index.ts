@@ -33,6 +33,9 @@ const Orders: CollectionConfig = {
       relationTo: 'products',
       hasMany: true,
       required: true,
+      access: {
+        read: () => true,
+      },
     },
     {
       name: 'totalAmount',

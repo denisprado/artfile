@@ -32,17 +32,58 @@ const Cart: React.FC = () => {
 						name: item.product.name,
 						price: item.product.price,
 						quantity: item.quantity,
-						fileArt: item.product.fileArt
 					})),
 					userId: user?.id
 				}),
 			});
+
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
 
 			const { sessionId } = await response.json();
+
+
+			if (response.ok) {
+				try {
+					const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/create`, {
+						method: 'POST',
+						credentials: 'include',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							products: cart.map(item => (
+								item.product.id
+							)),
+							totalAmount: getCartTotal(),
+							paymentId: sessionId,
+							createdBy: user?.id,
+							status: "pending"
+						})
+					})
+
+					const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/update`, {
+						method: 'UPDATE',
+						credentials: 'include',
+						headers: {
+							'Content-Type': 'application/json',
+						},
+						body: JSON.stringify({
+							purchases: cart.map(item => (
+								item.product.id
+							)),
+
+						})
+					})
+				}
+
+				catch (error) {
+					return error
+				}
+			}
+
 
 			// Redirecionar para o checkout do Stripe
 			const stripe = await stripePromise;

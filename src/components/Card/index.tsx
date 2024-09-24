@@ -8,6 +8,7 @@ import type { Post, Store, Product } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import Image from 'next/image' // Import Image from Next.js
+import AddToCartButtonWrapper from '@/app/(frontend)/products/[slug]/AddToCartButtonWrapper'
 
 export type CardProps = {
 	alignItems?: 'center'
@@ -26,7 +27,7 @@ export const Card: React.FC<CardProps> = (props) => {
 
 	const titleToUse = titleFromProps || title
 	const imageUrlToUse = relationTo === 'posts' ? imageUrl : relationTo === 'products' ? fileArt.url : logo.url
-	console.log(imageUrlToUse)
+	const isProduct = relationTo === 'products'
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
 
@@ -76,7 +77,9 @@ export const Card: React.FC<CardProps> = (props) => {
 					</div>
 				)}
 				{description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
-				{price && <div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>}
+				{price && <div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
+				}
+
 			</div>
 		</article>
 	)

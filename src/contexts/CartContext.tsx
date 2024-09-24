@@ -6,7 +6,6 @@ import { Product } from '@/payload-types'
 type CartItem = {
 	product: Product
 	quantity: number
-	fileArt: Product['fileArt']
 }
 
 type CartContextType = {
@@ -43,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 						: item
 				)
 			}
-			return [...currentCart, { product, quantity: 1, fileArt: product.fileArt }]
+			return [...currentCart, { product, quantity: 1 }]
 		})
 	}
 
