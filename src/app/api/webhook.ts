@@ -61,7 +61,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-async function updateOrderStatus(session) {
+export async function updateOrderStatus(session) {
   const orderId = session.metadata.orderId
   const payload = await getPayload({ config: payloadConfig })
 

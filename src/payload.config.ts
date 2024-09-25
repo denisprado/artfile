@@ -15,6 +15,7 @@ import {
   UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import stripePlugin from '@payloadcms/plugin-stripe'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp' // editor-import
@@ -34,6 +35,7 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import Categories from './collections/Categories'
 import { pt } from 'payload/i18n/pt'
+import { updateOrderStatus } from './app/api/webhook'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -148,6 +150,20 @@ export default buildConfig({
     //     },
     //   },
     // }),
+
+    stripePlugin({
+      stripeSecretKey: process.env.STRIPE_SECRET_KEY!,
+      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      webhooks: {
+        'customer.subscription.updated': ({ event, stripe, stripeConfig }) => {
+          // do something...
+        },
+        'payment_intent.succeeded': async ({ event, stripe, stripeConfig }) => {
+          console.log(event, 'Pago')
+          await updateOrderStatus(event)
+        },
+      },
+    }),
 
     nestedDocsPlugin({
       collections: ['categories'],
