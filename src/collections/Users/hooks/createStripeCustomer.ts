@@ -2,7 +2,7 @@ import { BeforeChangeHook } from 'node_modules/payload/dist/collections/config/t
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2024-06-20',
+  apiVersion: '2022-08-01',
 })
 
 export const createStripeCustomer: BeforeChangeHook = async ({ req, data, operation }) => {

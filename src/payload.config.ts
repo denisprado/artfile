@@ -15,7 +15,7 @@ import {
   UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import stripePlugin from '@payloadcms/plugin-stripe'
+import { stripePlugin } from '@payloadcms/plugin-stripe'
 import path from 'path'
 import { buildConfig } from 'payload'
 import sharp from 'sharp' // editor-import
@@ -154,11 +154,12 @@ export default buildConfig({
     stripePlugin({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY!,
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
+      rest: false,
       webhooks: {
-        'customer.subscription.updated': ({ event, stripe, stripeConfig }) => {
+        'customer.subscription.updated': ({ event, stripe }) => {
           // do something...
         },
-        'payment_intent.succeeded': async ({ event, stripe, stripeConfig }) => {
+        'payment_intent.succeeded': async ({ event, stripe }) => {
           console.log(event, 'Pago')
           await updateOrderStatus(event)
         },
