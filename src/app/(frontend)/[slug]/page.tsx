@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 
-import { PayloadRedirects } from '@/components/PayloadRedirects'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { draftMode } from 'next/headers'
@@ -38,21 +37,11 @@ export default async function Page({ params: { slug = 'home' } }) {
 		slug,
 	})
 
-	// Remove this code once your website is seeded
-	if (!page) {
-		page = homeStatic
-	}
-
-	if (!page) {
-		return <PayloadRedirects url={url} />
-	}
 
 	const { hero, layout } = page
 
 	return (
 		<article className="pt-16 pb-24">
-			{/* Allows redirects for valid pages too */}
-			<PayloadRedirects disableNotFound url={url} />
 
 			<RenderHero {...hero} />
 			<RenderBlocks blocks={layout} />
