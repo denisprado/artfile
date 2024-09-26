@@ -23,6 +23,48 @@ const Cart: React.FC = () => {
 
 	const handleCheckout = async () => {
 		try {
+
+			const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/create`, {
+				method: 'POST',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					products: cart.map(item => (
+						item.product.id
+					)),
+					totalAmount: getCartTotal(),
+					paymentId: null,
+					createdBy: user?.id,
+					status: 'unpaid'
+				})
+			})
+
+			const stringifiedQuery = qs.stringify({
+				where: {
+					id: {
+						equals: user?.id,
+					},
+				},
+			}, { addQueryPrefix: true });
+
+			const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${stringifiedQuery}`, {
+				method: 'PATCH',
+				credentials: 'include',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					purchases: cart.map(item => (
+						item.product.id
+					)),
+				})
+			})
+
+			const orderId = await order.json().then(data => data.id)
+			console.log(orderId)
+
 			const response = await fetch('/api/create-checkout-session', {
 				method: 'POST',
 				headers: {
@@ -34,63 +76,20 @@ const Cart: React.FC = () => {
 						price: item.product.price,
 						quantity: item.quantity,
 					})),
-					userId: user?.id
+					userId: user?.id,
+					orderId: orderId
 				}),
 			});
+
+			const { session } = await response.json();
+			const sessionId = session.id
 
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
 
-			const { session } = await response.json();
-			const sessionId = session.id
 
-			if (response.ok) {
-				try {
-					const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/create`, {
-						method: 'POST',
-						credentials: 'include',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							products: cart.map(item => (
-								item.product.id
-							)),
-							totalAmount: getCartTotal(),
-							paymentId: session.id,
-							createdBy: user?.id,
-							status: session.payment_status
-						})
-					})
-
-					const stringifiedQuery = qs.stringify({
-						where: {
-							id: {
-								equals: user?.id,
-							},
-						},
-					}, { addQueryPrefix: true });
-
-					const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${stringifiedQuery}`, {
-						method: 'PATCH',
-						credentials: 'include',
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						body: JSON.stringify({
-							purchases: cart.map(item => (
-								item.product.id
-							)),
-						})
-					})
-				}
-
-				catch (error) {
-					return error
-				}
-			}
 
 
 			// Redirecionar para o checkout do Stripe

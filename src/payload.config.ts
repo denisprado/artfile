@@ -153,15 +153,16 @@ export default buildConfig({
 
     stripePlugin({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY!,
-      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_SECRET,
-      rest: false,
+      stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET,
       webhooks: {
         'customer.subscription.updated': ({ event, stripe }) => {
           // do something...
         },
-        'payment_intent.succeeded': async ({ event, stripe }) => {
-          console.log(event, 'Pago')
-          await updateOrderStatus(event)
+        'payment_intent.succeeded': async ({ event }) => {
+          const paymentIntent = event.data.object
+          const orderId = paymentIntent.metadata.orderId
+          console.log('paymentIntent', paymentIntent)
+          // await updateOrderStatus(orderId)
         },
       },
     }),

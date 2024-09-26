@@ -4,7 +4,6 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { stripe } from '../../lib/stripe'
 import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
-import Stripe from 'stripe'
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -23,7 +22,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     const buf = await buffer(req)
     const sig = req.headers['stripe-signature']
 
-    let event: Stripe.Event
+    let event
 
     try {
       event = stripe.webhooks.constructEvent(buf.toString(), sig as string, webhookSecret as string)
@@ -31,25 +30,27 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(400).send(`Webhook Error: ${err.message}`)
       return
     }
-    const session = event.data.object
+
     switch (event.type) {
-      case 'payment_intent.canceled':
-        const paymentIntentCanceled = event.data.object
-        // Then define and call a function to handle the event payment_intent.canceled
-        break
-      case 'payment_intent.created':
-        const paymentIntentCreated = event.data.object
-        // Then define and call a function to handle the event payment_intent.created
-        break
-      case 'payment_intent.succeeded':
-        const paymentIntentSucceeded = event.data.object
-        // Then define and call a function to handle the event payment_intent.succeeded
+      case 'checkout.session.completed':
+        const session = event.data.object
+        console.log('event.data.object', session)
+
+        // Atualizar o status do pedido no banco de dados
         await updateOrderStatus(session)
 
         // Enviar e-mail de confirmação
         await sendConfirmationEmail(session)
+
         break
-      // ... handle other event types
+      case 'invoice.paid':
+        // Lógica para lidar com pagamentos de assinatura bem-sucedidos
+        // await handleSuccessfulSubscription(event.data.object)
+        break
+      case 'invoice.payment_failed':
+        // Lógica para lidar com falhas de pagamento de assinatura
+        // await handleFailedSubscription(event.data.object)
+        break
       default:
         console.log(`Unhandled event type ${event.type}`)
     }
@@ -61,15 +62,15 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 }
 
-export async function updateOrderStatus(session) {
-  const orderId = session.metadata.orderId
+async function updateOrderStatus(session) {
+  const orderId = session.metadata?.orderId
   const payload = await getPayload({ config: payloadConfig })
 
   await payload.update({
     collection: 'orders',
     id: orderId,
     data: {
-      status: 'paid',
+      status: session.paymentIntent,
       // Removendo o campo stripeSessionId, pois não existe no tipo esperado
     },
   })
