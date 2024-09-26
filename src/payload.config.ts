@@ -1,6 +1,7 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
-
+import { getPayload } from 'payload'
+import payloadConfig from '@payload-config'
 import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
@@ -35,7 +36,6 @@ import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
 import Categories from './collections/Categories'
 import { pt } from 'payload/i18n/pt'
-import { updateOrderStatus } from './app/api/webhook'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -158,11 +158,11 @@ export default buildConfig({
         'customer.subscription.updated': ({ event, stripe }) => {
           // do something...
         },
-        'payment_intent.succeeded': async ({ event }) => {
-          const paymentIntent = event.data.object
-          const orderId = paymentIntent.metadata.orderId
-          console.log('paymentIntent', paymentIntent)
-          // await updateOrderStatus(orderId)
+        'checkout.session.completed': async ({ event, req }) => {
+          const session = event.data.object
+
+          // console.log('paymentIntent', paymentIntent)
+          await updateOrderStatus(session)
         },
       },
     }),
@@ -208,3 +208,20 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
 })
+
+async function updateOrderStatus(session: {
+  metadata: { order_id: any }
+  payment_status: 'unpaid' | 'paid'
+}) {
+  const orderId = session.metadata?.order_id
+  const payload = await getPayload({ config: payloadConfig })
+
+  await payload.update({
+    collection: 'orders',
+    id: orderId,
+    data: {
+      status: session.payment_status,
+      // Removendo o campo stripeSessionId, pois não existe no tipo esperado
+    },
+  })
+}

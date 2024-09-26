@@ -62,8 +62,9 @@ const Cart: React.FC = () => {
 				})
 			})
 
-			const orderId = await order.json().then(data => data.id)
-			console.log(orderId)
+			const orderResponse = await order.json()
+			const orderId = orderResponse?.doc?.id
+			console.log("orderId", orderId)
 
 			const response = await fetch('/api/create-checkout-session', {
 				method: 'POST',
@@ -82,7 +83,7 @@ const Cart: React.FC = () => {
 			});
 
 			const { session } = await response.json();
-			const sessionId = session.id
+			const sessionId = session?.id
 
 
 			if (!response.ok) {

@@ -7,13 +7,14 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
     const { items, userId, orderId } = body
-
+    console.log('order no checkout', orderId)
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
     }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      payment_intent_data: { metadata: { orderId } },
       line_items: items.map((item: { name: string; price: number; quantity: any }) => ({
         price_data: {
           currency: 'brl',
@@ -30,10 +31,10 @@ export async function POST(req: Request) {
       cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/cancel`,
       metadata: {
         userId,
-        orderId,
+        order_id: orderId,
       },
     })
-    console.log('session', session)
+
     return NextResponse.json({ session: session })
   } catch (err) {
     console.error('Error creating checkout session:', err)

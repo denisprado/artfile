@@ -2,8 +2,7 @@ import { buffer } from 'micro'
 import Cors from 'micro-cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { stripe } from '../../lib/stripe'
-import { getPayload } from 'payload'
-import payloadConfig from '@payload-config'
+
 
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
@@ -37,7 +36,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
         console.log('event.data.object', session)
 
         // Atualizar o status do pedido no banco de dados
-        await updateOrderStatus(session)
+        // await updateOrderStatus(session)
 
         // Enviar e-mail de confirmação
         await sendConfirmationEmail(session)
@@ -60,20 +59,6 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     res.setHeader('Allow', 'POST')
     res.status(405).end('Method Not Allowed')
   }
-}
-
-async function updateOrderStatus(session) {
-  const orderId = session.metadata?.orderId
-  const payload = await getPayload({ config: payloadConfig })
-
-  await payload.update({
-    collection: 'orders',
-    id: orderId,
-    data: {
-      status: session.paymentIntent,
-      // Removendo o campo stripeSessionId, pois não existe no tipo esperado
-    },
-  })
 }
 
 async function sendConfirmationEmail(session) {
