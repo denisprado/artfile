@@ -1,6 +1,7 @@
 import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 import { CollectionConfig } from 'payload'
+import { adminsOrOrderedBy } from './access/adminsOrCreatedBy'
 
 const Orders: CollectionConfig = {
   slug: 'orders',
@@ -8,8 +9,8 @@ const Orders: CollectionConfig = {
     useAsTitle: 'id',
   },
   access: {
-    read: isAdminOrCreatedBy,
-    update: isAdminOrCreatedBy,
+    read: adminsOrOrderedBy,
+    update: adminsOrOrderedBy,
     delete: isAdmin,
   },
   fields: [

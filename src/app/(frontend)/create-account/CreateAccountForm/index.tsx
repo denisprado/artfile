@@ -48,7 +48,7 @@ const CreateAccountForm: React.FC = () => {
 			})
 
 			if (!response.ok) {
-				const message = response.statusText || 'Houve uma conta para criar sua conta.'
+				const message = response.statusText || 'Houve um problema para criar sua conta.'
 				setError(message)
 				return
 			}
