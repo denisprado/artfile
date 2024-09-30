@@ -4,11 +4,13 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Post, Store, Product } from '@/payload-types'
+import type { Post, Store, Product, User } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import Image from 'next/image' // Import Image from Next.js
 import AddToCartButtonWrapper from '@/app/(frontend)/products/[slug]/AddToCartButtonWrapper'
+import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
+import { getMeUserClient } from '@/utilities/getMeUserClient'
 
 export type CardProps = {
 	alignItems?: 'center'
@@ -22,7 +24,7 @@ export type CardProps = {
 export const Card: React.FC<CardProps> = (props) => {
 	const { card, link } = useClickableCard({})
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
-
+	const user = getMeUserClient()
 	const { slug, categories, meta, title, name, description, price, imageUrl, fileArt, logo } = doc as any
 
 	const titleToUse = titleFromProps || title
@@ -76,8 +78,8 @@ export const Card: React.FC<CardProps> = (props) => {
 						</h3>
 					</div>
 				)}
-				{description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
-				{price && <div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
+				{description && <div className="mt-2"><p>{sanitizedDescription}</p></div>}
+				{isProduct && price && <div className='flex flex-row justify-between w-full'><div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div><AddToCartButton product={doc as Product} user={user as unknown as User} /></div>
 				}
 
 			</div>
