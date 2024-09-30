@@ -3,6 +3,8 @@ import { CollectionConfig } from 'payload'
 
 const Stores: CollectionConfig = {
   slug: 'stores',
+  labels: { plural: 'Lojas', singular: 'Loja' },
+
   admin: {
     useAsTitle: 'name',
   },

@@ -7,6 +7,8 @@ import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
+  labels: { plural: 'Categorias', singular: 'Categoria' },
+
   access: {
     create: authenticated,
     delete: isAdmin,

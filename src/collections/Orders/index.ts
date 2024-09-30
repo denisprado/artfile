@@ -5,6 +5,7 @@ import { adminsOrOrderedBy } from './access/adminsOrCreatedBy'
 
 const Orders: CollectionConfig = {
   slug: 'orders',
+  labels: { plural: 'Pedidos', singular: 'Pedido' },
   admin: {
     useAsTitle: 'id',
   },

@@ -2,15 +2,19 @@ import type { CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
+import { isAdmin } from '@/access/isAdmin'
+import adminsAndUser from './access/adminsAndUser'
 
 const Users: CollectionConfig = {
   slug: 'users',
+  labels: { plural: 'Usuários', singular: 'Usuário' },
+
   auth: true,
   access: {
     create: () => true,
-    read: () => true,
-    update: () => true,
-    delete: () => true,
+    read: adminsAndUser,
+    update: adminsAndUser,
+    delete: isAdmin,
   },
   admin: {
     useAsTitle: 'email',

@@ -12,6 +12,8 @@ const filename = fileURLToPath(import.meta.url)
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: { plural: 'Mídias', singular: 'Mídia' },
+
   // access: {
   //   create: isAdminOrCreatedBy,
   //   delete: isAdminOrCreatedBy,

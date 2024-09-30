@@ -23,6 +23,8 @@ import {
 import { isAdmin } from '@/access/isAdmin'
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: { plural: 'Páginas', singular: 'Página' },
+
   access: {
     create: isAdmin,
     delete: isAdmin,

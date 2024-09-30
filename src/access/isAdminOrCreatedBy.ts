@@ -1,6 +1,8 @@
+import { checkRole } from '@/collections/Users/checkRole'
+
 export const isAdminOrCreatedBy = ({ req: { user } }) => {
   // Scenario #1 - Check if user has the 'admin' role
-  if (user && user.role === 'admin') {
+  if (checkRole(['admin'], user)) {
     return true
   }
 

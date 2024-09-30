@@ -8,6 +8,8 @@ import { title } from 'process'
 
 const Products: CollectionConfig = {
   slug: 'products',
+  labels: { plural: 'Produtos', singular: 'Produto' },
+
   access: {
     read: isAdminOrCreatedBy,
     update: isAdminOrCreatedBy,
