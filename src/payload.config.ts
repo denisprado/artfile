@@ -1,12 +1,11 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from '@payloadcms/db-mongodb'
-import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
+import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
+import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
+import { stripePlugin } from '@payloadcms/plugin-stripe'
 import {
   BoldFeature,
   FixedToolbarFeature,
@@ -16,26 +15,22 @@ import {
   UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { stripePlugin } from '@payloadcms/plugin-stripe'
 import path from 'path'
-import { buildConfig } from 'payload'
+import { buildConfig, getPayload } from 'payload'
+import { pt } from 'payload/i18n/pt'
 import sharp from 'sharp' // editor-import
-import { fileURLToPath } from 'url'
-import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { Page, Post } from 'src/payload-types'
+import { fileURLToPath } from 'url'
+import Categories from './collections/Categories'
+import { Media } from './collections/Media'
 import Orders from './collections/Orders'
+import { Pages } from './collections/Pages'
+import { Posts } from './collections/Posts'
 import Products from './collections/Products'
 import Stores from './collections/Stores'
 import Users from './collections/Users'
-import { seedHandler } from './endpoints/seedHandler'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { revalidateRedirects } from './hooks/revalidateRedirects'
-import { Media } from './collections/Media'
-import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
-import Categories from './collections/Categories'
-import { pt } from 'payload/i18n/pt'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -65,11 +60,20 @@ export default buildConfig({
           path: '/signup',
         },
       },
+      graphics: {
+        Logo: { path: './components/Logo' },
+        Icon: { path: './components/Icon' },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
+    dateFormat: 'dd/mm/yyyy',
+    meta: {
+      titleSuffix: '- ArtFile',
+    },
+
     livePreview: {
       breakpoints: [
         {
