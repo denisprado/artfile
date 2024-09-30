@@ -17,8 +17,13 @@ export default async function CreateAccount() {
 
 	return (
 		<Gutter className={classes.createAccount}>
-			<h1>Criar conta</h1>
-			<CreateAccountForm />
+			<div className="pt-24 pb-24">
+				<div className="container mb-16">
+
+					<h1>Criar conta</h1>
+					<CreateAccountForm />
+				</div>
+			</div>
 		</Gutter>
 	)
 }
