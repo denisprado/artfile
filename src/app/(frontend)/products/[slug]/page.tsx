@@ -37,24 +37,33 @@ const ProductPage = async ({ params }: Props) => {
 	if (!product) {
 		return notFound()
 	}
+	const SIZE = 'card'
+	console.log(product)
+	const imgProduct = (product.thumbnail as Media)?.sizes?.[SIZE]?.filename
+
+
+	const imageUrlToUse =
+		product ? "/" + imgProduct : '/media/artfile-logo.svg'
+
+	const widthToUSe = product && imgProduct ? (product.thumbnail as Media)?.sizes?.[SIZE]?.width : 500
+
+	const heightToUSe = product && imgProduct ? (product.thumbnail as Media).sizes?.[SIZE]?.height : 500
+
 
 	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
 
 	return (
 		<div className="container mx-auto px-4 py-8">
-			<Link href="/products" className="text-blue-500 hover:underline mb-4 inline-block">
-				&larr; Voltar para a loja
-			</Link>
 
 			<div className="grid md:grid-cols-2 gap-8">
 				<div>
-					{product.fileArt && (
+					{product.thumbnail && (
 						<Image
-							src={(product?.fileArt as Media).url!}
+							src={imageUrlToUse}
 							alt={product?.name!}
 							className="w-full h-auto rounded-lg shadow-lg"
-							width={680}
-							height={320}
+							width={widthToUSe!}
+							height={heightToUSe!}
 							objectFit='cover'
 						/>
 					)}

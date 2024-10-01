@@ -27,12 +27,12 @@ export const Card: React.FC<CardProps> = (props) => {
 	const user = getMeUserClient()
 	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore } = doc as any
 
+	const titleToUse = titleFromProps || title
+
 	const isProduct = relationTo === 'products'
 	const isStore = relationTo === 'stores'
 	const isOrder = relationTo === 'orders'
 	const isPost = relationTo === 'posts'
-
-	const titleToUse = titleFromProps || title
 
 	const imgProduct = thumbnail?.sizes?.thumbnail?.filename
 	const imgStore = logoStore?.sizes?.thumbnail?.filename
@@ -41,8 +41,11 @@ export const Card: React.FC<CardProps> = (props) => {
 		isProduct ? "/" + imgProduct : isStore ?
 			"/" + imgStore : '/media/artfile-logo.svg'
 	console.log("thumbnail", thumbnail)
+
 	const widthToUSe = isProduct && imgProduct ? thumbnail?.sizes?.thumbnail?.width : isStore && imgStore ? logoStore?.sizes?.thumbnail?.width : 500
+
 	const heightToUse = (isProduct && imgProduct) ? thumbnail?.sizes?.thumbnail?.height : (isStore && imgStore) ? logoStore?.sizes?.thumbnail?.height : 300
+
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
 
@@ -54,7 +57,7 @@ export const Card: React.FC<CardProps> = (props) => {
 			)}
 			ref={card.ref}
 		>
-			<div className="relative w-full ">
+			<div className="relative w-full">
 				{!imageUrlToUse && !meta?.image && <div className="">No image</div>}
 				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
@@ -97,7 +100,9 @@ export const Card: React.FC<CardProps> = (props) => {
 				{isProduct && price &&
 					<div className='flex flex-row justify-between w-full'>
 						<div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
+
 						<AddToCartButton product={doc as Product} user={user as unknown as User} /></div>
+
 				}
 
 			</div>

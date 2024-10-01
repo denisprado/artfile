@@ -29,11 +29,14 @@ const AddToCartButton: React.FC<Props> = ({ product, user }) => {
 
 
 	return (
-		<Button
+		<button
+			className='no-click'
+
 			onClick={handleAddToCart}
-			type='button' label='Adicionar ao carrinho' appearance='primary'
-		>
-		</Button>
+			type='button'
+
+		>Adicionar ao carrinho
+		</button>
 	)
 }
 
