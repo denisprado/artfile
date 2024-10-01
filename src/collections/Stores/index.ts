@@ -19,13 +19,13 @@ const Stores: CollectionConfig = {
       type: 'textarea',
     },
     {
-      name: 'logo',
+      name: 'logoStore',
       type: 'upload',
       relationTo: 'media',
     },
 
     {
-      name: 'header',
+      name: 'imageHeaderStore',
       type: 'upload',
       relationTo: 'media',
     },

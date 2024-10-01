@@ -7,6 +7,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 
 const filename = fileURLToPath(import.meta.url)
 
@@ -14,12 +15,12 @@ export const Media: CollectionConfig = {
   slug: 'media',
   labels: { plural: 'Mídias', singular: 'Mídia' },
 
-  // access: {
-  //   create: isAdminOrCreatedBy,
-  //   delete: isAdminOrCreatedBy,
-  //   read: isAdminOrCreatedBy,
-  //   update: isAdminOrCreatedBy,
-  // },
+  access: {
+    create: isAdminOrCreatedBy,
+    delete: isAdminOrCreatedBy,
+    read: isAdminOrCreatedBy,
+    update: isAdminOrCreatedBy,
+  },
   fields: [
     {
       name: 'alt',

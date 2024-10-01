@@ -61,12 +61,7 @@ const Products: CollectionConfig = {
               name: 'description',
               type: 'textarea',
             },
-            {
-              name: 'fileArt',
-              type: 'upload',
-              relationTo: 'media',
-              required: true,
-            },
+
             {
               name: 'price',
               type: 'number',
@@ -101,8 +96,15 @@ const Products: CollectionConfig = {
           label: 'Imagens',
           fields: [
             {
+              name: 'thumbnail',
+              type: 'upload',
+              relationTo: 'media',
+              required: true,
+            },
+            {
               type: 'array',
               name: 'images',
+              label: 'Imagens',
               fields: [{ type: 'upload', relationTo: 'media', name: 'images' }],
             },
           ],

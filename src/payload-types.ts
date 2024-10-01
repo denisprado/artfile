@@ -88,10 +88,10 @@ export interface Product {
   slug?: string | null;
   slugLock?: boolean | null;
   description?: string | null;
-  fileArt: string | Media;
   price: number;
   createdBy?: (string | null) | User;
   categories?: (string | Category)[] | null;
+  thumbnail: string | Media;
   images?:
     | {
         images?: (string | null) | Media;
@@ -101,6 +101,26 @@ export interface Product {
   files?:
     | {
         files?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  createdBy?: (string | null) | User;
+  parent?: (string | null) | Category;
+  breadcrumbs?:
+    | {
+        doc?: (string | null) | Category;
+        url?: string | null;
+        label?: string | null;
         id?: string | null;
       }[]
     | null;
@@ -169,34 +189,14 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  title: string;
-  createdBy?: (string | null) | User;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "stores".
  */
 export interface Store {
   id: string;
   name: string;
   description?: string | null;
-  logo?: (string | null) | Media;
-  header?: (string | null) | Media;
+  logoStore?: (string | null) | Media;
+  imageHeaderStore?: (string | null) | Media;
   products?: (string | Product)[] | null;
   publishedAt?: string | null;
   createdBy?: (string | null) | User;

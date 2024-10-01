@@ -25,11 +25,24 @@ export const Card: React.FC<CardProps> = (props) => {
 	const { card, link } = useClickableCard({})
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 	const user = getMeUserClient()
-	const { slug, categories, meta, title, name, description, price, imageUrl, fileArt, logo } = doc as any
+	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore } = doc as any
+
+	const isProduct = relationTo === 'products'
+	const isStore = relationTo === 'stores'
+	const isOrder = relationTo === 'orders'
+	const isPost = relationTo === 'posts'
 
 	const titleToUse = titleFromProps || title
-	const imageUrlToUse = relationTo === 'posts' ? imageUrl : relationTo === 'products' ? fileArt?.url : logo?.url
-	const isProduct = relationTo === 'products'
+
+	const imgProduct = thumbnail?.sizes?.thumbnail?.filename
+	const imgStore = logoStore?.sizes?.thumbnail?.filename
+
+	const imageUrlToUse = isPost ? imageUrl :
+		isProduct ? "/" + imgProduct : isStore ?
+			"/" + imgStore : '/media/artfile-logo.svg'
+	console.log("thumbnail", thumbnail)
+	const widthToUSe = isProduct && imgProduct ? thumbnail?.sizes?.thumbnail?.width : isStore && imgStore ? logoStore?.sizes?.thumbnail?.width : 500
+	const heightToUse = (isProduct && imgProduct) ? thumbnail?.sizes?.thumbnail?.height : (isStore && imgStore) ? logoStore?.sizes?.thumbnail?.height : 300
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
 
@@ -43,7 +56,7 @@ export const Card: React.FC<CardProps> = (props) => {
 		>
 			<div className="relative w-full ">
 				{!imageUrlToUse && !meta?.image && <div className="">No image</div>}
-				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={500} height={300} />}
+				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 			<div className="p-4">
