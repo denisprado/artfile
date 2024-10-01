@@ -114,6 +114,8 @@ export interface Product {
 export interface Category {
   id: string;
   title: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
   createdBy?: (string | null) | User;
   parent?: (string | null) | Category;
   breadcrumbs?:

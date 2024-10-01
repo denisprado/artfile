@@ -4,6 +4,7 @@ import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
+import { slugField } from '@/fields/slug'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
@@ -24,6 +25,7 @@ const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    ...slugField(),
     {
       name: 'createdBy',
       type: 'relationship',
