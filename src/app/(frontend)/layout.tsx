@@ -15,6 +15,7 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import './globals.css'
 import { draftMode } from 'next/headers'
 import { CartProvider } from '@/contexts/CartContext'
+import './_css/app.scss'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = draftMode()

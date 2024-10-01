@@ -62,6 +62,11 @@ export const Archive: Block = {
           label: 'Stores',
           value: 'stores',
         },
+
+        {
+          label: 'Orders',
+          value: 'orders',
+        },
       ],
     },
     {

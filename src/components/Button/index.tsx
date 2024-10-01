@@ -45,7 +45,7 @@ export const Button: React.FC<Props> = ({
 
 	const content = (
 		<div className={classes.content}>
-			<span className={classes.label}>{label}</span>
+			<span className={classes.label + 'no-click'}>{label}</span>
 		</div>
 	)
 
