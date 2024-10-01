@@ -38,7 +38,8 @@ export default async function Page({ params: { slug = 'home' } }) {
 	})
 
 
-	const { hero, layout } = page
+	const layout = page?.layout
+	const hero = page?.hero
 
 	return (
 		<article className="pt-16 pb-24">

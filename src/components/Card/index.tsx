@@ -16,7 +16,7 @@ export type CardProps = {
 	alignItems?: 'center'
 	className?: string
 	doc: Post | Store | Product
-	relationTo: 'posts' | 'stores' | 'products'
+	relationTo: 'posts' | 'stores' | 'products' | 'orders'
 	showCategories?: boolean
 	title?: string
 }
@@ -28,7 +28,7 @@ export const Card: React.FC<CardProps> = (props) => {
 	const { slug, categories, meta, title, name, description, price, imageUrl, fileArt, logo } = doc as any
 
 	const titleToUse = titleFromProps || title
-	const imageUrlToUse = relationTo === 'posts' ? imageUrl : relationTo === 'products' ? fileArt.url : logo.url
+	const imageUrlToUse = relationTo === 'posts' ? imageUrl : relationTo === 'products' ? fileArt?.url : logo?.url
 	const isProduct = relationTo === 'products'
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
 	const href = `/${relationTo}/${slug || doc.id}`
@@ -78,8 +78,13 @@ export const Card: React.FC<CardProps> = (props) => {
 						</h3>
 					</div>
 				)}
-				{description && <div className="mt-2"><p>{sanitizedDescription}</p></div>}
-				{isProduct && price && <div className='flex flex-row justify-between w-full'><div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div><AddToCartButton product={doc as Product} user={user as unknown as User} /></div>
+				{description && <div className="mt-2">
+					<p>{sanitizedDescription}</p>
+				</div>}
+				{isProduct && price &&
+					<div className='flex flex-row justify-between w-full'>
+						<div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
+						<AddToCartButton product={doc as Product} user={user as unknown as User} /></div>
 				}
 
 			</div>

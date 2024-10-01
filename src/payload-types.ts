@@ -84,6 +84,14 @@ export interface User {
  */
 export interface Product {
   id: string;
+  name: string;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  description?: string | null;
+  fileArt: string | Media;
+  price: number;
+  createdBy?: (string | null) | User;
+  categories?: (string | Category)[] | null;
   images?:
     | {
         images?: (string | null) | Media;
@@ -96,14 +104,6 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  name: string;
-  slug?: string | null;
-  slugLock?: boolean | null;
-  description?: string | null;
-  fileArt: string | Media;
-  price: number;
-  createdBy?: (string | null) | User;
-  categories?: (string | Category)[] | null;
   updatedAt: string;
   createdAt: string;
 }

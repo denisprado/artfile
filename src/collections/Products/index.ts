@@ -46,26 +46,6 @@ const Products: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          label: 'Imagens',
-          fields: [
-            {
-              type: 'array',
-              name: 'images',
-              fields: [{ type: 'upload', relationTo: 'media', name: 'images' }],
-            },
-          ],
-        },
-        {
-          label: 'Arquivos',
-          fields: [
-            {
-              type: 'array',
-              name: 'files',
-              fields: [{ type: 'upload', relationTo: 'media', name: 'files' }],
-            },
-          ],
-        },
-        {
           label: 'Dados',
           fields: [
             {
@@ -114,6 +94,26 @@ const Products: CollectionConfig = {
               },
               hasMany: true,
               relationTo: 'categories',
+            },
+          ],
+        },
+        {
+          label: 'Imagens',
+          fields: [
+            {
+              type: 'array',
+              name: 'images',
+              fields: [{ type: 'upload', relationTo: 'media', name: 'images' }],
+            },
+          ],
+        },
+        {
+          label: 'Arquivos',
+          fields: [
+            {
+              type: 'array',
+              name: 'files',
+              fields: [{ type: 'upload', relationTo: 'media', name: 'files' }],
             },
           ],
         },

@@ -4,6 +4,9 @@ import React from 'react'
 import { useCart } from '@/contexts/CartContext'
 import type { Product, User } from '@/payload-types'
 import Link from 'next/link'
+
+import { ShoppingCartIcon } from 'lucide-react'
+import { Button } from '@/components/Button'
 // import { usePathname, useRouter } from 'next/navigation' // Adicione esta importação
 
 type Props = {
@@ -23,21 +26,14 @@ const AddToCartButton: React.FC<Props> = ({ product, user }) => {
 	// 	router.push('/admin?redirect=' + encodeURIComponent(pathname)) // Redireciona para a página de login
 	// }
 
-	if (!user) {
-		return (
-			<button className='text-primary'>
-				Faça login ou cadastre-se para comprar
-			</button>
-		)
-	}
+
 
 	return (
-		<button
+		<Button
 			onClick={handleAddToCart}
-			className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
+			type='button' label='Adicionar ao carrinho' appearance='primary'
 		>
-			Adicionar ao Carrinho
-		</button>
+		</Button>
 	)
 }
 
