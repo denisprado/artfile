@@ -40,7 +40,7 @@ export const Card: React.FC<CardProps> = (props) => {
 	const imageUrlToUse = isPost ? imageUrl :
 		isProduct ? "/" + imgProduct : isStore ?
 			"/" + imgStore : '/media/artfile-logo.svg'
-	console.log("thumbnail", thumbnail)
+
 
 	const widthToUSe = isProduct && imgProduct ? thumbnail?.sizes?.thumbnail?.width : isStore && imgStore ? logoStore?.sizes?.thumbnail?.width : 500
 

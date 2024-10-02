@@ -7,7 +7,7 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
     const { items, userId, orderId } = body
-    console.log('order no checkout', orderId)
+
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
     }

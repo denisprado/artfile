@@ -64,7 +64,6 @@ const Cart: React.FC = () => {
 
 			const orderResponse = await order.json()
 			const orderId = orderResponse?.doc?.id
-			console.log("orderId", orderId)
 
 			const response = await fetch('/api/create-checkout-session', {
 				method: 'POST',

@@ -38,7 +38,7 @@ const ProductPage = async ({ params }: Props) => {
 		return notFound()
 	}
 	const SIZE = 'card'
-	console.log(product)
+
 	const imgProduct = (product.thumbnail as Media)?.sizes?.[SIZE]?.filename
 
 

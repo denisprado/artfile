@@ -37,7 +37,7 @@ function useClickableCard<T extends HTMLElement>({
         const target = e.target as Element
 
         // Verifica se o elemento clicado tem a classe 'no-click'
-        console.log(target)
+
         if (target.classList.contains('no-click')) {
           return // Ignora o clique se for o elemento que não deve abrir o link
         }

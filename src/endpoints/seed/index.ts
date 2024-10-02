@@ -65,7 +65,7 @@ export const seed = async ({
   }
 
   for (const collection of collections) {
-    console.log('delete', collection)
+    
     await payload.delete({
       collection: collection,
       where: {
@@ -83,7 +83,7 @@ export const seed = async ({
     req,
   })
 
-  console.log({ pages })
+  
 
   payload.logger.info(`— Seeding demo author and user...`)
 

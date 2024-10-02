@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const body = await req.json()
     const { session_id } = body
     const session = await stripe.checkout.sessions.retrieve(session_id)
-    console.log('session success', session.payment_status)
+
     try {
       await updateOrderStatus(session)
     } catch (err) {

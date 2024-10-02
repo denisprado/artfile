@@ -3,7 +3,6 @@ import Cors from 'micro-cors'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { stripe } from '../../lib/stripe'
 
-
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 export const config = {
@@ -33,7 +32,6 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     switch (event.type) {
       case 'checkout.session.completed':
         const session = event.data.object
-        console.log('event.data.object', session)
 
         // Atualizar o status do pedido no banco de dados
         // await updateOrderStatus(session)
