@@ -1,12 +1,10 @@
-import React from 'react'
+import { Order, Product } from '@/payload-types'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
-import { Category, Media, Order, Product } from '@/payload-types'
 
-import { getPayloadHMR } from '@payloadcms/next/utilities'
-import configPromise from '@payload-config'
 import { CollectionArchive } from '@/components/CollectionArchive'
+import configPromise from '@payload-config'
+import { getPayloadHMR } from '@payloadcms/next/utilities'
+
 type Props = {
 	params: {
 		id: string
