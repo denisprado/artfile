@@ -53,17 +53,16 @@ const StorePageLayout: React.FC<Props> = async ({ params, children }) => {
 
 	const categoriesWithProducts = storeFull.docs[0]?.products
 
-	const str = params.slug
-	const char = "/"
-	const lastIndex = str.lastIndexOf(char);
-	const slugFinal = lastIndex !== -1 ? str.substring(lastIndex + 1) : str;
-
-
+	function getSubstring(str, char) {
+		const lastIndex = str.firstIndexOf(char);
+		const slugFinal = lastIndex !== -1 ? str.substring(lastIndex + 1) : str;
+		return slugFinal
+	}
 
 	const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
 		(product as Product)?.categories?.map(category => ({
 			title: (category as Category).title,
-			slug: (category as Category).slug?.includes('/cat/') ? params.slug + '/cat/' + slugFinal : (category as Category).slug
+			slug: params.slug?.includes('/cat/') ? (category as Category).slug : params.slug + '/cat/' + (category as Category).slug
 		}))
 	))).map(category => category); // Remover duplicatas
 

@@ -7,6 +7,7 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { Metadata } from 'next'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
+import { getMeUserServer } from '@/utilities/getMeUserServer'
 
 type Props = {
 	params: {
@@ -46,11 +47,13 @@ const StorePage: React.FC<Props> = async ({ params }) => {
 		},
 		depth: 3,
 	})) as PaginatedDocs<Store>
-
+	const { user } = await getMeUserServer()
+	console.log(user)
 	if (!storeFull) return notFound()
 
 	const store = storeFull.docs[0]
-	const catSlug = params.slugStore; // Supondo que catSlug seja o slug da loja
+	const catSlug = params.slugStore
+
 	const filteredProducts = store.products?.filter(product =>
 		(product as Product).categories?.some(category => (category as Category).slug === catSlug)
 	) as Product[];

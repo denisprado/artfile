@@ -115,7 +115,10 @@ const Products: CollectionConfig = {
             {
               type: 'array',
               name: 'files',
-              fields: [{ type: 'upload', relationTo: 'media', name: 'files' }],
+              fields: [
+                { type: 'upload', relationTo: 'media', name: 'file' },
+                { type: 'text', name: 'title' },
+              ],
             },
           ],
         },

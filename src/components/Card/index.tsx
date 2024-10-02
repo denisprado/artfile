@@ -24,15 +24,17 @@ export type CardProps = {
 export const Card: React.FC<CardProps> = (props) => {
 	const { card, link } = useClickableCard({})
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
-	const user = getMeUserClient()
-	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore } = doc as any
-	console.log(user)
-	const titleToUse = titleFromProps || title
 
 	const isProduct = relationTo === 'products'
 	const isStore = relationTo === 'stores'
 	const isOrder = relationTo === 'orders'
 	const isPost = relationTo === 'posts'
+
+	const user = getMeUserClient()
+
+	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore, id } = doc as any
+
+	const titleToUse = isOrder ? id : titleFromProps || title
 
 	const imgProduct = thumbnail?.sizes?.thumbnail?.filename
 	const imgStore = logoStore?.sizes?.thumbnail?.filename

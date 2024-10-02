@@ -103,7 +103,8 @@ export interface Product {
     | null;
   files?:
     | {
-        files?: (string | null) | Media;
+        file?: (string | null) | Media;
+        title?: string | null;
         id?: string | null;
       }[]
     | null;

@@ -1,27 +1,31 @@
 import type { Metadata } from 'next/types'
-
-import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
-import { getMeUserServer } from '@/utilities/getMeUserServer'
 import { User } from '@/payload-types'
+import { getMeUserServer } from '@/utilities/getMeUserServer'
+import { CollectionArchive } from '@/components/CollectionArchive'
 
-export const dynamic = 'force-static'
+// export const dynamic = 'force-static'
 export const revalidate = 600
 const COLLECTION = 'orders'
 export default async function Page() {
 	const payload = await getPayloadHMR({ config: configPromise })
+
 	const { user } = await getMeUserServer()
 	const orders = await payload.find({
 		collection: COLLECTION,
 		depth: 2,
 		limit: 12,
-
+		where: {
+			'createdBy.id': {
+				equals: user?.id
+			}
+		}
 	})
-	console.log(user?.id)
+
 	const myOrders = orders?.docs?.filter(order => {
 		const createdById = (order && order.createdBy as User)?.id; // Certifique-se de que isso está correto
 		return createdById === user?.id; // Comparação de IDs
@@ -44,11 +48,11 @@ export default async function Page() {
 				/>
 			</div>
 
-			{/* <CollectionArchive relationTo={COLLECTION} items={myOrders} /> */}
-			{<p>USer: {user?.id}</p>}
+			<CollectionArchive relationTo={COLLECTION} items={orders.docs} />
+			{/* {<p>USer: {user?.id}</p>}
 			{orders.docs.map(order => {
-				return <p key={order.id}>{order.id} - {myOrders.map(order => <p key={order.id}>{(order.createdBy as User)?.id}</p>)}</p>
-			})}
+				return <p key={order.id}>{order.id} - {myOrders.map(order => <span key={order.id}>{(order.createdBy as User)?.id}</span>)}</p>
+			})} */}
 
 			<div className="container">
 				{orders.totalPages > 1 && orders.page && (

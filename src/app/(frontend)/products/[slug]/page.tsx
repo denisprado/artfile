@@ -6,6 +6,7 @@ import { Category, Media, Product } from '@/payload-types'
 import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
+import { getMeUserServer } from '@/utilities/getMeUserServer'
 type Props = {
 	params: {
 		slug: string
@@ -34,23 +35,25 @@ const ProductPage = async ({ params }: Props) => {
 		where: { slug: { equals: params.slug } }
 	}).then((res) => res.docs[0] as unknown as Product | null)
 
+	const { user } = await getMeUserServer()
+
+	const purchases = user.purchases as Product[]
+	const isPurchased = purchases.some(purchase => purchase.id === product?.id) // Verifica se o produto foi comprado
+
+
 	if (!product) {
 		return notFound()
 	}
+
 	const SIZE = 'card'
-
 	const imgProduct = (product.thumbnail as Media)?.sizes?.[SIZE]?.filename
-
-
 	const imageUrlToUse =
 		product ? "/" + imgProduct : '/media/artfile-logo.svg'
-
 	const widthToUSe = product && imgProduct ? (product.thumbnail as Media)?.sizes?.[SIZE]?.width : 500
-
 	const heightToUSe = product && imgProduct ? (product.thumbnail as Media).sizes?.[SIZE]?.height : 500
-
-
 	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
+
+	const files = product.files
 
 	return (
 		<div className="container mx-auto px-4 py-8">
@@ -78,8 +81,14 @@ const ProductPage = async ({ params }: Props) => {
 							<span className="font-semibold">Categorias:</span> {categories?.join(', ')}
 						</div>
 					)}
+					{isPurchased && <h4>Arquivos neste produto</h4>}
+					<ul className='divide-y p-0'>
+						{isPurchased && product && (product?.files)?.map((file) => {
+							return <li key={file.id}><a target='_blank' key={file.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename}>{file.title} | {(file?.file as Media)?.filename}</a></li>
+						})}
+					</ul>
 
-					<AddToCartButtonWrapper product={product} />
+					{!isPurchased && <AddToCartButtonWrapper product={product} />}
 				</div>
 			</div>
 		</div>
