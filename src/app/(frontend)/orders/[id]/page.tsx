@@ -5,13 +5,7 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 
-type Props = {
-	params: {
-		id: string
-	}
-}
-
-const OrderPage = async ({ params }: Props) => {
+const OrderPage = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const order = await payload.find({
 		collection: 'orders',

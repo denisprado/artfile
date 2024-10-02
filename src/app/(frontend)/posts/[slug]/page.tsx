@@ -26,7 +26,8 @@ import PageClient from './page.client'
 //   return posts.docs?.map(({ slug }) => slug)
 // }
 
-export default async function Post({ params: { slug = '' } }) {
+export default async function Post({ params }) {
+	const slug = params.slug ? params.slug : ''
 	const url = '/posts/' + slug
 	const post = await queryPostBySlug({ slug })
 
@@ -58,23 +59,22 @@ export default async function Post({ params: { slug = '' } }) {
 }
 
 export async function generateMetadata({
-	params: { slug },
-}: {
-	params: { slug: string }
-}): Promise<Metadata> {
+	params
+}) {
+	const slug = params.slug
+
 	const post = await queryPostBySlug({ slug })
 
 	return generateMeta({ doc: post })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
-	const { isEnabled: draft } = draftMode()
+
 
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const result = await payload.find({
 		collection: 'posts',
-		draft,
 		limit: 1,
 		overrideAccess: true,
 		where: {

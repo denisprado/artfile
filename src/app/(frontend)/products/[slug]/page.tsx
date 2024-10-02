@@ -7,13 +7,8 @@ import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
-type Props = {
-	params: {
-		slug: string
-	}
-}
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({ params }) {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
@@ -28,7 +23,7 @@ export async function generateMetadata({ params }: Props) {
 	}
 }
 
-const ProductPage = async ({ params }: Props) => {
+const ProductPage = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
@@ -84,7 +79,7 @@ const ProductPage = async ({ params }: Props) => {
 					{isPurchased && <h4>Arquivos neste produto</h4>}
 					<ul className='divide-y p-0'>
 						{isPurchased && product && (product?.files)?.map((file) => {
-							return <li key={file.id}><a target='_blank' key={file.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename}>{file.title} | {(file?.file as Media)?.filename}</a></li>
+							return <li key={file.id} className='py-4'><a target='_blank' key={file.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename}>{file.title} | {(file?.file as Media)?.filename}</a></li>
 						})}
 					</ul>
 

@@ -23,15 +23,14 @@ import { draftMode } from 'next/headers'
 // 		.map(({ slug }) => slug)
 // }
 
-export default async function Page({ params: { slug = 'home' } }) {
-	const url = '/' + slug
+export default async function Page({ params }) {
+
+	const slug = params.slug ? params.slug : 'home'
 
 	let page: PageType | null
-
 	page = await queryPageBySlug({
-		slug,
+		params: { slug },
 	})
-
 
 	const layout = page?.layout
 	const hero = page?.hero
@@ -54,7 +53,9 @@ export default async function Page({ params: { slug = 'home' } }) {
 // }
 
 
-const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryPageBySlug = cache(async ({ params }) => {
+	const slug = params.slug
+
 	const draft = await draftMode()
 
 	const payload = await getPayloadHMR({ config: configPromise })

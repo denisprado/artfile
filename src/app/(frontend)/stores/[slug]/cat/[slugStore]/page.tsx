@@ -9,12 +9,7 @@ import { Metadata } from 'next'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 
-type Props = {
-	params: {
-		slug: string
-		slugStore: string
-	}
-}
+
 
 
 const COLLECTION = 'products'
@@ -37,7 +32,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 	}
 }
 
-const StorePage: React.FC<Props> = async ({ params }) => {
+const StorePage = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const storeFull = (await payload.find({

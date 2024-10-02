@@ -12,16 +12,8 @@ import Link from 'next/link'
 import CategoriesMenu, { Cat } from '@/components/CategoriesMenu'
 
 
-type Props = {
-	params: {
-		slug: string
-	},
-	children: React.ReactNode
-}
-
-
 const COLLECTION = 'products'
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }): Promise<Metadata> {
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const store = await payload.find({
@@ -39,7 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	}
 }
 
-const StorePageLayout: React.FC<Props> = async ({ params, children }) => {
+const StorePageLayout = async ({ params, children }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 
 
@@ -52,12 +44,6 @@ const StorePageLayout: React.FC<Props> = async ({ params, children }) => {
 	})) as PaginatedDocs<Store>
 
 	const categoriesWithProducts = storeFull.docs[0]?.products
-
-	function getSubstring(str, char) {
-		const lastIndex = str.firstIndexOf(char);
-		const slugFinal = lastIndex !== -1 ? str.substring(lastIndex + 1) : str;
-		return slugFinal
-	}
 
 	const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
 		(product as Product)?.categories?.map(category => ({
