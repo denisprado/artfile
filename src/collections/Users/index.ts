@@ -65,9 +65,19 @@ const Users: CollectionConfig = {
           label: 'CPF/CNPJ',
         },
         {
-          name: 'bankInfo',
-          type: 'textarea',
-          label: 'Informações bancárias',
+          name: 'agency',
+          type: 'text',
+          label: 'Agencia',
+        },
+        {
+          name: 'account',
+          type: 'text',
+          label: 'Conta com dígito',
+        },
+        {
+          name: 'bank',
+          type: 'text',
+          label: 'Banco',
         },
       ],
       admin: {

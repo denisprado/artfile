@@ -26,7 +26,7 @@ export const Card: React.FC<CardProps> = (props) => {
 	const { className, doc, relationTo, showCategories, title: titleFromProps } = props
 	const user = getMeUserClient()
 	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore } = doc as any
-
+	console.log(user)
 	const titleToUse = titleFromProps || title
 
 	const isProduct = relationTo === 'products'
@@ -98,10 +98,11 @@ export const Card: React.FC<CardProps> = (props) => {
 					<p>{sanitizedDescription}</p>
 				</div>}
 				{isProduct && price &&
-					<div className='flex flex-row justify-between w-full'>
+					<div className='flex flex-col gap-4 w-full'>
 						<div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
 
-						<AddToCartButton product={doc as Product} user={user as unknown as User} /></div>
+						<AddToCartButton product={doc as Product} user={user as unknown as User} />
+					</div>
 
 				}
 

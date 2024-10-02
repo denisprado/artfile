@@ -51,12 +51,19 @@ const StorePageLayout: React.FC<Props> = async ({ params, children }) => {
 		depth: 2,
 	})) as PaginatedDocs<Store>
 
-	const categoriesWithProducts = storeFull.docs[0].products
+	const categoriesWithProducts = storeFull.docs[0]?.products
+
+	const str = params.slug
+	const char = "/"
+	const lastIndex = str.lastIndexOf(char);
+	const slugFinal = lastIndex !== -1 ? str.substring(lastIndex + 1) : str;
+
+
 
 	const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
 		(product as Product)?.categories?.map(category => ({
 			title: (category as Category).title,
-			slug: (category as Category).slug // Supondo que o slug esteja disponível
+			slug: (category as Category).slug?.includes('/cat/') ? params.slug + '/cat/' + slugFinal : (category as Category).slug
 		}))
 	))).map(category => category); // Remover duplicatas
 
@@ -65,10 +72,10 @@ const StorePageLayout: React.FC<Props> = async ({ params, children }) => {
 	return (
 		<div className="container mx-auto px-4">
 			<div className='relative w-full h-80'>
-				<Image src={"/" + (store?.imageHeaderStore as Media)?.sizes?.widthFull?.filename!} alt={store.name} fill objectFit='cover' ></Image>
+				<Image src={"/" + (store?.imageHeaderStore as Media)?.sizes?.widthFull?.filename!} alt={store?.name} fill objectFit='cover' ></Image>
 				<div className='absolute w-32 h-32 left-6 -bottom-12'>
 
-					<Image src={"/" + (store?.logoStore as Media)?.sizes!.thumbnail?.filename} alt={store.name} fill objectFit='cover' className='rounded-full border-4 border-white'></Image>
+					<Image src={"/" + (store?.logoStore as Media)?.sizes!.thumbnail?.filename} alt={store?.name} fill objectFit='cover' className='rounded-full border-4 border-white'></Image>
 				</div>
 			</div>
 			<h1 className="text-3xl font-bold mt-16 mb-6">{store?.name}</h1>
@@ -108,6 +115,6 @@ export async function generateStaticParams() {
 	})
 
 	return stores.docs.map((store) => ({
-		storeId: store.id,
+		storeId: store?.id,
 	}))
 }

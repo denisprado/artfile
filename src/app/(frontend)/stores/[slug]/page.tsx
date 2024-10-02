@@ -51,7 +51,7 @@ const StorePage: React.FC<Props> = async ({ params }) => {
 	const store = storeFull.docs[0]
 	return (
 		<>
-			{store.products ? <CollectionArchive relationTo={COLLECTION} items={store.products as Product[]} container={false} /> : <>Essa loja ainda não tem nenhum produto</>}
+			{store?.products ? <CollectionArchive relationTo={COLLECTION} items={store?.products as Product[]} container={false} /> : <>Essa loja ainda não tem nenhum produto</>}
 		</>
 
 	)

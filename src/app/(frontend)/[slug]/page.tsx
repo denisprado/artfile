@@ -1,16 +1,11 @@
-import type { Metadata } from 'next'
 
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import { draftMode } from 'next/headers'
-import React, { cache } from 'react'
-import { homeStatic } from '@/endpoints/seed/home-static'
-
+import { cache } from 'react'
 import type { Page as PageType } from '@/payload-types'
-
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
-import { generateMeta } from '@/utilities/generateMeta'
+import { draftMode } from 'next/headers'
 
 // export async function generateStaticParams() {
 // 	const payload = await getPayloadHMR({ config: configPromise })
@@ -58,14 +53,15 @@ export default async function Page({ params: { slug = 'home' } }) {
 //   return generateMeta({ doc: page })
 // }
 
+
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
-	const { isEnabled: draft } = draftMode()
+	const draft = await draftMode()
 
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const result = await payload.find({
 		collection: 'pages',
-		draft,
+
 		limit: 1,
 		overrideAccess: true,
 		where: {
