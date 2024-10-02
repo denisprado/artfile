@@ -3,8 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 export type Cat = {
-	slug: string
-	title: string
+	slug?: string | null
+	title?: string | null
 } | undefined
 
 const CategoriesMenu = ({ uniqueCategoryNames }: { uniqueCategoryNames: Cat[] }) => {
