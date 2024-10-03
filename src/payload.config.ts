@@ -1,5 +1,4 @@
 // storage-adapter-import-placeholder
-import payloadConfig from '@payload-config'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/plugin-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
@@ -15,8 +14,9 @@ import {
   UnderlineFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
-import { buildConfig, getPayload } from 'payload'
+import { buildConfig } from 'payload'
 import { pt } from 'payload/i18n/pt'
 import sharp from 'sharp' // editor-import
 import { Page, Post } from 'src/payload-types'
@@ -31,7 +31,7 @@ import Stores from './collections/Stores'
 import Users from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
-import { s3Storage } from '@payloadcms/storage-s3'
+import { updateOrderStatus } from './utilities/updateOrderStatus'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -232,20 +232,3 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
 })
-
-async function updateOrderStatus(session: {
-  metadata: { order_id: any }
-  payment_status: 'unpaid' | 'paid'
-}) {
-  const orderId = session.metadata?.order_id
-  const payload = await getPayload({ config: payloadConfig })
-
-  await payload.update({
-    collection: 'orders',
-    id: orderId,
-    data: {
-      status: session.payment_status,
-      // Removendo o campo stripeSessionId, pois não existe no tipo esperado
-    },
-  })
-}

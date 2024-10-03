@@ -2,24 +2,25 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Category, Media, Product } from '@/payload-types'
+import { Category, Media, Order, Product } from '@/payload-types'
 import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
+import { DownloadIcon, LockIcon } from 'lucide-react'
 
 export async function generateMetadata({ params }) {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
 		where: { slug: { equals: params.slug } }
-	}) as unknown as Product | null
+	})
 
 	if (!product) return notFound()
 
 	return {
-		title: `${product.name} - Detalhes do Produto`,
-		description: product.description as string,
+		title: `${product.docs[0].name} - Detalhes do Produto`,
+		description: product.docs[0].description as string,
 	}
 }
 
@@ -27,13 +28,15 @@ const ProductPage = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
-		where: { slug: { equals: params.slug } }
+		where: { slug: { equals: params.slug } },
 	}).then((res) => res.docs[0] as unknown as Product | null)
 
 	const { user } = await getMeUserServer()
 
-	const purchases = user.purchases as Product[]
-	const isPurchased = purchases.some(purchase => purchase.id === product?.id) // Verifica se o produto foi comprado
+	const userPurchases = user?.purchases as Order[]
+	const isPurchased = userPurchases.some(purchase =>
+		purchase.products.some(p => p === product?.id)
+	); // Verifica se o produto foi comprado
 
 
 	if (!product) {
@@ -76,12 +79,22 @@ const ProductPage = async ({ params }) => {
 							<span className="font-semibold">Categorias:</span> {categories?.join(', ')}
 						</div>
 					)}
-					{isPurchased && <h4>Arquivos neste produto</h4>}
-					<ul className='divide-y p-0'>
-						{isPurchased && product && (product?.files)?.map((file) => {
-							return <li key={file.id} className='py-4'><a target='_blank' key={file.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename}>{file.title} | {(file?.file as Media)?.filename}</a></li>
-						})}
-					</ul>
+
+					{product && product.files && product.files?.length! > 0 ? <>
+						<h4>Arquivos neste produto</h4>
+						<ul className='divide-y p-0'>
+							{(product?.files)?.map((file) => {
+								return (
+									<li key={file.id} className='py-4'>
+										<a target='_blank' key={file.id} href={isPurchased ? 'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename : '/#'}>
+											<div className='flex gap-2'>{isPurchased ? <DownloadIcon color='green' /> : <LockIcon color='red' />} {file.title} | {(file?.file as Media)?.filename}
+											</div>
+										</a>
+									</li>)
+							})}
+						</ul>
+					</> : <p>Esse produto não tem arquivos.</p>
+					}
 
 					{!isPurchased && <AddToCartButtonWrapper product={product} />}
 				</div>

@@ -43,7 +43,7 @@ const StorePage = async ({ params }) => {
 		depth: 3,
 	})) as PaginatedDocs<Store>
 	const { user } = await getMeUserServer()
-	console.log(user)
+
 	if (!storeFull) return notFound()
 
 	const store = storeFull.docs[0]

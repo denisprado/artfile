@@ -6,6 +6,7 @@ import { stripePromise } from '@/lib/stripe'
 import { getMeUserClient } from '@/utilities/getMeUserClient'
 import type { User } from '@/payload-types'
 import qs from 'qs'
+import { Button } from '@/components/Button'
 
 const Cart: React.FC = () => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
@@ -41,26 +42,7 @@ const Cart: React.FC = () => {
 				})
 			})
 
-			const stringifiedQuery = qs.stringify({
-				where: {
-					id: {
-						equals: user?.id,
-					},
-				},
-			}, { addQueryPrefix: true });
 
-			const purchase = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users${stringifiedQuery}`, {
-				method: 'PATCH',
-				credentials: 'include',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					purchases: cart.map(item => (
-						item.product.id
-					)),
-				})
-			})
 
 			const orderResponse = await order.json()
 			const orderId = orderResponse?.doc?.id
@@ -130,13 +112,13 @@ const Cart: React.FC = () => {
 						<div className="mt-4 text-right">
 							<strong>Total: R$ {getCartTotal().toFixed(2)}</strong>
 						</div>
-						<button
+						{user ? <Button
 							onClick={handleCheckout}
-							className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full"
-							disabled={isLoading || !user}
+							className="mt-4  w-full"
+							appearance='primary'
+							disabled={isLoading || !user} label={isLoading ? 'Carregando...' : 'Finalizar Compra'}
 						>
-							{isLoading ? 'Carregando...' : 'Finalizar Compra'}
-						</button>
+						</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
 					</>
 				)}
 			</div>

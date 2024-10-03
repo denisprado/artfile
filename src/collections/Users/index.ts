@@ -49,10 +49,10 @@ const Users: CollectionConfig = {
       name: 'purchases',
       label: 'Minhas compras',
       type: 'relationship',
-      relationTo: 'products',
+      relationTo: 'orders',
       hasMany: true,
       hooks: {
-        // beforeChange: [resolveDuplicatePurchases],
+        beforeChange: [resolveDuplicatePurchases],
       },
     },
     {

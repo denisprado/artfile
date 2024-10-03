@@ -63,7 +63,7 @@ export interface User {
   id: string;
   name?: string | null;
   roles?: ('admin' | 'customer')[] | null;
-  purchases?: (string | Product)[] | null;
+  purchases?: (string | Order)[] | null;
   vendorDetails?: {
     cpfCnpj?: string | null;
     agency?: string | null;
@@ -80,6 +80,20 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "orders".
+ */
+export interface Order {
+  id: string;
+  createdBy?: (string | null) | User;
+  products: (string | Product)[];
+  totalAmount: number;
+  status: 'no_payment_required' | 'paid' | 'unpaid';
+  paymentId?: string | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -208,20 +222,6 @@ export interface Store {
   createdBy?: (string | null) | User;
   slug?: string | null;
   slugLock?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "orders".
- */
-export interface Order {
-  id: string;
-  createdBy?: (string | null) | User;
-  products: (string | Product)[];
-  totalAmount: number;
-  status: 'no_payment_required' | 'paid' | 'unpaid';
-  paymentId?: string | null;
   updatedAt: string;
   createdAt: string;
 }

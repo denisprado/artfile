@@ -20,7 +20,7 @@ export const getMeUserServer = async (args?: {
       Authorization: `JWT ${token}`,
     },
   })
-  console.log('meUserReq', meUserReq)
+
   const {
     user,
   }: {
