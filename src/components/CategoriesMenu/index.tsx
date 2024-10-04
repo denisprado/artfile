@@ -12,12 +12,13 @@ const CategoriesMenu = ({ uniqueCategoryNames }: { uniqueCategoryNames: Cat[] })
 
 	const pathname = usePathname()
 	const pathArray = pathname.split('/')
-	const catActive = pathArray[pathArray.length]
+	const catActive = pathArray[pathArray.length - 1]
+
 	return (
 
 		uniqueCategoryNames.map((category) => {
 			return (
-				<Link key={category && category!.slug} href={category?.slug!} className={cn('py-1 hover:underline-offset-1 ', catActive === category!.slug && 'border-l font-bold')}>{category?.title}</Link>
+				<Link key={category && category!.slug} href={category?.slug!} className={cn('py-1 hover:underline-offset-1 pl-4 transition-all animate-in', catActive === category!.slug && 'border-l border-l-black font-bold')}>{category?.title}</Link>
 			)
 		})
 

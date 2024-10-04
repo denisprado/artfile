@@ -27,18 +27,18 @@ export const CollectionArchive: React.FC<Props> = (props) => {
 	return (
 		<div className={cn(container && 'container')}>
 			<div>
-				<div className="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12 gap-y-4 gap-x-4 lg:gap-y-8 lg:gap-x-8 xl:gap-x-8">
+				<div className="grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12 gap-y-4 gap-x-4 lg:gap-y-8 lg:gap-x-8 xl:gap-x-8 custom-grid">
 					{items?.map((item: Post | Store | Product | Order | null, index: React.Key | null | undefined) => {
 						if (typeof item === 'object' && item !== null) {
 							return (
-								<div className="col-span-4" key={index}>
-									<Card
-										className="h-full"
-										doc={item as Post | Product | Store}
-										relationTo={relationTo}
-										showCategories
-									/>
-								</div>
+
+								<Card
+									doc={item as Post | Product | Store}
+									relationTo={relationTo}
+									showCategories
+									key={item.id}
+								/>
+
 							)
 						}
 

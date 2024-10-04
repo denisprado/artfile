@@ -108,3 +108,8 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+.custom-grid {
+  @apply grid;
+  grid-template-rows: repeat(4, auto) auto 1fr;
+}

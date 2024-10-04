@@ -8,8 +8,8 @@ import type { Post, Store, Product, User } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import Image from 'next/image' // Import Image from Next.js
-import AddToCartButtonWrapper from '@/app/(frontend)/products/[slug]/AddToCartButtonWrapper'
-import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
+import AddToCartButtonWrapper from '@/app/(frontend)/produtos/[slug]/AddToCartButtonWrapper'
+import AddToCartButton from '@/app/(frontend)/produtos/[slug]/AddCartButton'
 import { getMeUserClient } from '@/utilities/getMeUserClient'
 
 export type CardProps = {
@@ -54,61 +54,63 @@ export const Card: React.FC<CardProps> = (props) => {
 	return (
 		<article
 			className={cn(
-				'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+				'col-span-4  border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer grid grid-rows-subgrid row-span-6 gap-2',
 				className,
 			)}
 			ref={card.ref}
 		>
 			<div className="relative w-full">
-				{!imageUrlToUse && !meta?.image && <div className="">No image</div>}
+				{!imageUrlToUse && <Image src={'/media/logo-artfile.svg'} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
 				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
-			<div className="p-4">
-				{showCategories && categories && Array.isArray(categories) && categories.length > 0 && (
-					<div className="uppercase text-sm mb-4">
-						<div>
-							{categories.map((category: any, index: number) => {
-								if (typeof category === 'object') {
-									const { title: titleFromCategory } = category
-									const categoryTitle = titleFromCategory || 'Untitled category'
-									const isLast = index === categories.length - 1
 
-									return (
-										<Fragment key={index}>
-											{categoryTitle}
-											{!isLast && <Fragment>, &nbsp;</Fragment>}
-										</Fragment>
-									)
-								}
+			{showCategories && categories && Array.isArray(categories) && categories.length > 0 && (
+				<div className="uppercase text-sm px-4">
+					<div>
+						{categories.map((category: any, index: number) => {
+							if (typeof category === 'object') {
+								const { title: titleFromCategory } = category
+								const categoryTitle = titleFromCategory || 'Untitled category'
+								const isLast = index === categories.length - 1
 
-								return null
-							})}
-						</div>
+								return (
+									<Fragment key={index}>
+										{categoryTitle}
+										{!isLast && <Fragment>, &nbsp;</Fragment>}
+									</Fragment>
+								)
+							}
+
+							return null
+						})}
 					</div>
-				)}
-				{(titleToUse || name) && (
-					<div className="prose">
-						<h3>
-							<Link className="not-prose" href={href} ref={link.ref}>
-								{titleToUse || name}
-							</Link>
-						</h3>
-					</div>
-				)}
-				{description && <div className="mt-2">
-					<p>{sanitizedDescription}</p>
-				</div>}
-				{isProduct && price &&
-					<div className='flex flex-col gap-4 w-full'>
-						<div className="mt-2 text-xl font-bold">R$ {price.toFixed(2)}</div>
+				</div>
+			)}
+			{(titleToUse || name) && (
+				<div className="prose  px-4">
+					<h3>
+						<Link className="not-prose" href={href} ref={link.ref}>
+							{titleToUse || name}
+						</Link>
+					</h3>
+				</div>
+			)}
+			{<div className=" px-4">
+				<p className='m-0'>{sanitizedDescription}</p>
+			</div>}
+			{isProduct && price &&
+				<div className="mt-2 text-xl font-bold  px-4">R$ {price.toFixed(2)}</div>
+			}
+			{isProduct && price &&
+				<div className='p-4'>
+					<AddToCartButton product={doc as Product} user={user as unknown as User} />
+				</div>
 
-						<AddToCartButton product={doc as Product} user={user as unknown as User} />
-					</div>
 
-				}
+			}
 
-			</div>
+
 		</article>
 	)
 }
