@@ -7,15 +7,13 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { Metadata } from 'next'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
-import { getMeUserServer } from '@/utilities/getMeUserServer'
-
-
-
 
 const COLLECTION = 'products'
 export async function generateMetadata({ params }): Promise<Metadata> {
 
 	const payload = await getPayloadHMR({ config: configPromise })
+
+
 
 	const store = await payload.find({
 		collection: 'stores',
@@ -42,15 +40,14 @@ const StorePage = async ({ params }) => {
 		},
 		depth: 3,
 	})) as PaginatedDocs<Store>
-	const { user } = await getMeUserServer()
 
 	if (!storeFull) return notFound()
 
 	const store = storeFull.docs[0]
-	const catSlug = params.slugStore
+	const catSlug = params.cat
 
-	const filteredProducts = store.products?.filter(product =>
-		(product as Product).categories?.some(category => (category as Category).slug === catSlug)
+	const filteredProducts = catSlug === 'all' ? store?.products : store?.products?.filter(product =>
+		(product as Product).categories?.some(category => (category as Category).slug === params.cat)
 	) as Product[];
 
 	return (

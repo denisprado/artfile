@@ -1,15 +1,12 @@
 import { notFound } from 'next/navigation'
-import React from 'react'
 
+import CategoriesMenu from '@/components/CategoriesMenu'
 import { Category, Media, Product, Store } from '@/payload-types'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
-import { Button } from '@/components/Button'
-import Link from 'next/link'
-import CategoriesMenu, { Cat } from '@/components/CategoriesMenu'
 
 
 const COLLECTION = 'products'
@@ -22,6 +19,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 			slug: { equals: params.slug },
 		},
 	})
+
 
 	if (!store) return {}
 
@@ -45,10 +43,12 @@ const StorePageLayout = async ({ params, children }) => {
 
 	const categoriesWithProducts = storeFull.docs[0]?.products
 
+
+
 	const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
 		(product as Product)?.categories?.map(category => ({
 			title: (category as Category).title,
-			slug: params.slug?.includes('/cat/') ? (category as Category).slug : params.slug + '/cat/' + (category as Category).slug
+			slug: (category as Category).slug
 		}))
 	))).map(category => category); // Remover duplicatas
 

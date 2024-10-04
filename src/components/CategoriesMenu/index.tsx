@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from "@/utilities/cn"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 export type Cat = {
@@ -10,12 +11,15 @@ export type Cat = {
 const CategoriesMenu = ({ uniqueCategoryNames }: { uniqueCategoryNames: Cat[] }) => {
 
 	const pathname = usePathname()
-	console.log(pathname)
+	const pathArray = pathname.split('/')
+	const catActive = pathArray[pathArray.length]
 	return (
 
-		uniqueCategoryNames.map((category) => (
-			<Link key={category && category!.slug} href={category?.slug!} className='py-1 hover:underline-offset-1'>{category?.title}</Link>
-		))
+		uniqueCategoryNames.map((category) => {
+			return (
+				<Link key={category && category!.slug} href={category?.slug!} className={cn('py-1 hover:underline-offset-1 ', catActive === category!.slug && 'border-l font-bold')}>{category?.title}</Link>
+			)
+		})
 
 	)
 }

@@ -1,4 +1,4 @@
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import React from 'react'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
@@ -33,24 +33,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 const StorePage = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 
-
-	const storeFull = (await payload.find({
-		collection: 'stores',
-		where: {
-			slug: { equals: params.slug },
-		},
-		depth: 2,
-	})) as PaginatedDocs<Store>
+	redirect(`/stores/${params.slug}/cat/all`)
 
 
-	if (!storeFull) return notFound()
-	const store = storeFull.docs[0]
-	return (
-		<>
-			{store?.products ? <CollectionArchive relationTo={COLLECTION} items={store?.products as Product[]} container={false} /> : <>Essa loja ainda não tem nenhum produto</>}
-		</>
-
-	)
 }
 
 export default StorePage
