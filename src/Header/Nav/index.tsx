@@ -8,6 +8,7 @@ import { CMSLink } from '@/components/Link'
 import { useCart } from '@/contexts/CartContext'
 import { randomUUID } from 'crypto'
 import { ShoppingCartIcon } from 'lucide-react'
+import Search from '@/components/ui/search'
 
 export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
 	const { getCartCountItems } = useCart()
@@ -26,6 +27,7 @@ export const HeaderNav: React.FC<{ header: HeaderType }> = ({ header }) => {
 
 	return (
 		<nav className="flex gap-3 items-center">
+			<Search placeholder={'Buscar produto ou loja...'} />
 			{navItems.map(({ link }, i) => {
 				return <CMSLink key={i} {...link} appearance="link" />
 			})}

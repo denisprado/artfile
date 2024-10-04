@@ -16,7 +16,7 @@
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
     "reinstall": "cross-env NODE_OPTIONS=--no-deprecation rm -rf node_modules && rm pnpm-lock.yaml && pnpm --ignore-workspace install",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
-		"localStripeListen": "stripe listen --forward-to localhost:3000/api/stripe/webhooks"
+    "localStripeListen": "stripe listen --forward-to localhost:3000/api/stripe/webhooks"
   },
   "dependencies": {
     "@payloadcms/db-mongodb": "3.0.0-beta.110",
@@ -59,7 +59,8 @@
     "sharp": "0.32.6",
     "stripe": "^16.10.0",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.1.6",
