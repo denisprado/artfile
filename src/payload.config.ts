@@ -32,6 +32,7 @@ import Users from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { updateOrderStatus } from './utilities/updateOrderStatus'
+import { searchPlugin } from '@payloadcms/plugin-search'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -196,6 +197,13 @@ export default buildConfig({
           secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
         },
         region: process.env.S3_REGION!,
+      },
+    }),
+    searchPlugin({
+      collections: ['products', 'stores'],
+      defaultPriorities: {
+        products: 20,
+        stores: 10,
       },
     }),
     formBuilderPlugin({

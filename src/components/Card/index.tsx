@@ -54,7 +54,7 @@ export const Card: React.FC<CardProps> = (props) => {
 	return (
 		<article
 			className={cn(
-				'col-span-4  border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer grid grid-rows-subgrid row-span-6 gap-2',
+				'col-span-3  border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer grid grid-rows-subgrid row-span-6 gap-2',
 				className,
 			)}
 			ref={card.ref}

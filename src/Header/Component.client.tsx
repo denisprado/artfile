@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo'
+import Search from '@/components/ui/search'
 import { HeaderNav } from './Nav'
 
 interface HeaderClientProps {
@@ -19,6 +20,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 	const { headerTheme, setHeaderTheme } = useHeaderTheme()
 	const pathname = usePathname()
 
+
 	useEffect(() => {
 		setHeaderTheme(null)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,6 +31,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [headerTheme])
 
+
 	return (
 		<header
 			className="container relative z-20 py-8 flex justify-between"
@@ -37,6 +40,9 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 			<Link href="/">
 				<Logo />
 			</Link>
+			<div className='pl-20 pr-2 w-full relative'>
+				<Search placeholder={'Buscar produto ou loja...'} />
+			</div>
 			<HeaderNav header={header} />
 		</header>
 	)

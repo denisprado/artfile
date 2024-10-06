@@ -16,9 +16,10 @@ import { MetaDescriptionComponent as MetaDescriptionComponent_14 } from '@payloa
 import { PreviewComponent as PreviewComponent_15 } from '@payloadcms/plugin-seo/client'
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_16 } from '@payloadcms/richtext-lexical/client'
 import { BlocksFeatureClient as BlocksFeatureClient_17 } from '@payloadcms/richtext-lexical/client'
-import { default as default_18 } from 'src/components/Icon'
-import { default as default_19 } from 'src/components/Logo'
-import { CreateAccount as CreateAccount_20 } from 'src/components/CreateAccount'
+import { LinkToDoc as LinkToDoc_18 } from '@payloadcms/plugin-search/client'
+import { default as default_19 } from 'src/components/Icon'
+import { default as default_20 } from 'src/components/Logo'
+import { CreateAccount as CreateAccount_21 } from 'src/components/CreateAccount'
 
 export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_0,
@@ -39,7 +40,8 @@ export const importMap = {
   "@payloadcms/plugin-seo/client#PreviewComponent": PreviewComponent_15,
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_16,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_17,
-  "./components/Icon#default": default_18,
-  "./components/Logo#default": default_19,
-  "/components/CreateAccount#CreateAccount": CreateAccount_20
+  "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_18,
+  "./components/Icon#default": default_19,
+  "./components/Logo#default": default_20,
+  "/components/CreateAccount#CreateAccount": CreateAccount_21
 }
