@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import { stripePromise } from '@/lib/stripe'
 import { getMeUserClient } from '@/utilities/getMeUserClient'
@@ -90,39 +90,41 @@ const Cart: React.FC = () => {
 	}
 
 	return (
-		<div className="pt-24 pb-24">
-			<div className="container mb-16">
-				<h2 className="text-2xl font-bold mb-4">Carrinho de Compras</h2>
-				{cart.length === 0 ? (
-					<p>Seu carrinho está vazio.</p>
-				) : (
-					<>
-						{cart.map((item) => (
-							<div key={item.product.id} className="flex justify-between items-center mb-2">
-								<span>{item.product.name} (x{item.quantity})</span>
-								<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
-								<button
-									onClick={() => removeFromCart(item.product.id)}
-									className="text-red-500 hover:text-red-700"
-								>
-									Remover
-								</button>
+		<Suspense>
+			<div className="pt-24 pb-24">
+				<div className="container mb-16">
+					<h2 className="text-2xl font-bold mb-4">Carrinho de Compras</h2>
+					{cart.length === 0 ? (
+						<p>Seu carrinho está vazio.</p>
+					) : (
+						<>
+							{cart.map((item) => (
+								<div key={item.product.id} className="flex justify-between items-center mb-2">
+									<span>{item.product.name} (x{item.quantity})</span>
+									<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
+									<button
+										onClick={() => removeFromCart(item.product.id)}
+										className="text-red-500 hover:text-red-700"
+									>
+										Remover
+									</button>
+								</div>
+							))}
+							<div className="mt-4 text-right">
+								<strong>Total: R$ {getCartTotal().toFixed(2)}</strong>
 							</div>
-						))}
-						<div className="mt-4 text-right">
-							<strong>Total: R$ {getCartTotal().toFixed(2)}</strong>
-						</div>
-						{user ? <Button
-							onClick={handleCheckout}
-							className="mt-4  w-full"
-							appearance='primary'
-							disabled={isLoading || !user} label={isLoading ? 'Carregando...' : 'Finalizar Compra'}
-						>
-						</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
-					</>
-				)}
+							{user ? <Button
+								onClick={handleCheckout}
+								className="mt-4  w-full"
+								appearance='primary'
+								disabled={isLoading || !user} label={isLoading ? 'Carregando...' : 'Finalizar Compra'}
+							>
+							</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
+						</>
+					)}
+				</div>
 			</div>
-		</div>
+		</Suspense>
 	)
 }
 

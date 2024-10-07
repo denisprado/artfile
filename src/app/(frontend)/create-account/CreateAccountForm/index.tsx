@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useCallback, useRef, useState } from 'react'
+import React, { Suspense, useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -21,7 +21,7 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
 	const searchParams = useSearchParams()
-	const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
+	const allParams = <Suspense>{searchParams.toString()}</Suspense> ? `?${searchParams.toString()}` : ''
 	const { login } = useAuth()
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
@@ -76,7 +76,7 @@ const CreateAccountForm: React.FC = () => {
 		<form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
 			<p>
 				{`This is where new customers can signup and create a new account. To manage all users, `}
-				<Link href="/admin/collections/users">login to the admin dashboard</Link>
+				<Link href="/admin/collections/users">Login</Link>
 				{'.'}
 			</p>
 			<Message error={error} className={classes.message} />

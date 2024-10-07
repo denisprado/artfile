@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { cn } from 'src/utilities/cn'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
-import React from 'react'
+import React, { Suspense } from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
 import { Footer } from '@/Footer/Component'
@@ -37,7 +37,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						/>
 						<LivePreviewListener />
 						<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
-							<Header />
+							<Suspense>
+								<Header />
+							</Suspense>
 							<main>
 								{children}
 							</main>

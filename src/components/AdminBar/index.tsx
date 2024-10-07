@@ -19,7 +19,7 @@ const collectionLabels = {
 	},
 }
 
-const Title: React.FC = () => <span>Dashboard</span>
+const Title: React.FC = () => <span>Painel de Administração</span>
 
 export const AdminBar: React.FC<{
 	adminBarProps?: PayloadAdminBarProps
