@@ -16,6 +16,7 @@ import './globals.css'
 import { draftMode } from 'next/headers'
 import { CartProvider } from '@/contexts/CartContext'
 import './_css/app.scss'
+import { CategoriesMenu } from '@/CategoriesMenu/Component'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = draftMode()
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 						<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
 							<Suspense>
 								<Header />
+								<CategoriesMenu />
 							</Suspense>
 							<main>
 								{children}

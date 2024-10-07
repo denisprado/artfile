@@ -32,6 +32,7 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
+    categoriesMenu: CategoriesMenu;
   };
   locale: null;
   user: User & {
@@ -800,6 +801,30 @@ export interface Header {
  * via the `definition` "footer".
  */
 export interface Footer {
+  id: string;
+  navItems?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?: {
+            relationTo: 'pages';
+            value: string | Page;
+          } | null;
+          url?: string | null;
+          label: string;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categoriesMenu".
+ */
+export interface CategoriesMenu {
   id: string;
   navItems?:
     | {

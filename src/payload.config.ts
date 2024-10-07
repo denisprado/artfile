@@ -33,6 +33,7 @@ import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { updateOrderStatus } from './utilities/updateOrderStatus'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { CategoriesMenu } from './CategoriesMenu/config'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -137,7 +138,7 @@ export default buildConfig({
   collections: [Users, Products, Stores, Orders, Media, Pages, Posts, Categories],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, CategoriesMenu],
   i18n: { supportedLanguages: { pt } },
   plugins: [
     // redirectsPlugin({
