@@ -19,19 +19,19 @@
     "localStripeListen": "stripe listen --forward-to localhost:3000/api/stripe/webhooks"
   },
   "dependencies": {
-    "@payloadcms/db-mongodb": "3.0.0-beta.110",
-    "@payloadcms/live-preview-react": "3.0.0-beta.110",
-    "@payloadcms/next": "3.0.0-beta.110",
-    "@payloadcms/plugin-cloud": "3.0.0-beta.110",
-    "@payloadcms/plugin-form-builder": "3.0.0-beta.110",
-    "@payloadcms/plugin-nested-docs": "3.0.0-beta.110",
-    "@payloadcms/plugin-redirects": "3.0.0-beta.110",
-    "@payloadcms/plugin-search": "3.0.0-beta.110",
-    "@payloadcms/plugin-seo": "3.0.0-beta.110",
-    "@payloadcms/plugin-stripe": "3.0.0-beta.110",
-    "@payloadcms/richtext-lexical": "3.0.0-beta.110",
-    "@payloadcms/storage-s3": "3.0.0-beta.110",
-    "@payloadcms/ui": "3.0.0-beta.110",
+    "@payloadcms/db-mongodb": "beta",
+    "@payloadcms/live-preview-react": "beta",
+    "@payloadcms/next": "beta",
+    "@payloadcms/plugin-cloud": "beta",
+    "@payloadcms/plugin-form-builder": "beta",
+    "@payloadcms/plugin-nested-docs": "beta",
+    "@payloadcms/plugin-redirects": "beta",
+    "@payloadcms/plugin-search": "beta",
+    "@payloadcms/plugin-seo": "beta",
+    "@payloadcms/plugin-stripe": "beta",
+    "@payloadcms/richtext-lexical": "beta",
+    "@payloadcms/storage-s3": "beta",
+    "@payloadcms/ui": "beta",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
@@ -50,12 +50,12 @@
     "micro": "^10.0.1",
     "micro-cors": "^0.1.1",
     "next": "v15.0.0-canary.160",
-    "payload": "3.0.0-beta.110",
+    "payload": "beta",
     "payload-admin-bar": "^1.0.6",
     "prism-react-renderer": "^2.3.1",
     "qs": "^6.13.0",
-    "react": "19.0.0-rc-5dcb0097-20240918",
-    "react-dom": "19.0.0-rc-5dcb0097-20240918",
+    "react": "19.0.0-rc-3edc000d-20240926",
+    "react-dom": "19.0.0-rc-3edc000d-20240926",
     "react-hook-form": "7.45.4",
     "sharp": "0.32.6",
     "stripe": "^16.10.0",
@@ -69,29 +69,29 @@
     "@tailwindcss/typography": "^0.5.13",
     "@types/escape-html": "^1.0.2",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "18.11.3",
-    "@types/react": "npm:types-react@19.0.0-rc.0",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0",
+    "@types/node": "22.5.4",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "autoprefixer": "^10.4.19",
     "copyfiles": "^2.4.1",
     "eslint": "^8",
-    "eslint-config-next": "15.0.0-canary.160",
+		"eslint-config-next": "15.0.0-canary.160",
     "postcss": "^8.4.38",
     "prettier": "^3.0.3",
     "tailwindcss": "^3.4.3",
-    "typescript": "5.5.4"
+    "typescript": "5.6.2"
   },
-  "engines": {
+	"engines": {
     "node": "^18.20.2 || >=20.9.0"
   },
   "pnpm": {
     "overrides": {
-      "@types/react": "npm:types-react@19.0.0-rc.0",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0"
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
     }
   },
   "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.0",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.0"
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

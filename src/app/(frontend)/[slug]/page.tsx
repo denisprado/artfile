@@ -9,21 +9,21 @@ import { draftMode } from 'next/headers'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
 
-export async function generateStaticParams() {
-	const payload = await getPayloadHMR({ config: configPromise })
-	const pages = await payload.find({
-		collection: 'pages',
-		draft: false,
-		limit: 1000,
-		overrideAccess: false,
-	})
+// export async function generateStaticParams() {
+// 	const payload = await getPayloadHMR({ config: configPromise })
+// 	const pages = await payload.find({
+// 		collection: 'pages',
+// 		draft: false,
+// 		limit: 1000,
+// 		overrideAccess: false,
+// 	})
 
-	return pages.docs
-		?.filter((doc) => {
-			return doc.slug !== 'home'
-		})
-		.map(({ slug }) => slug)
-}
+// 	return pages.docs
+// 		?.filter((doc) => {
+// 			return doc.slug !== 'home'
+// 		})
+// 		.map(({ slug }) => slug)
+// }
 
 export default async function Page({ params }) {
 
@@ -46,13 +46,13 @@ export default async function Page({ params }) {
 	)
 }
 
-export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
-	const page = await queryPageBySlug({
-		params: slug,
-	})
+// export async function generateMetadata({ params: { slug = 'home' } }): Promise<Metadata> {
+// 	const page = await queryPageBySlug({
+// 		params: slug,
+// 	})
 
-	return generateMeta({ doc: page })
-}
+// 	return generateMeta({ doc: page })
+// }
 
 
 const queryPageBySlug = cache(async ({ params }) => {
