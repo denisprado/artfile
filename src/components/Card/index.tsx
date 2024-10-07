@@ -8,8 +8,8 @@ import type { Post, Store, Product, User } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import Image from 'next/image' // Import Image from Next.js
-import AddToCartButtonWrapper from '@/app/(frontend)/produtos/[slug]/AddToCartButtonWrapper'
-import AddToCartButton from '@/app/(frontend)/produtos/[slug]/AddCartButton'
+import AddToCartButtonWrapper from '@/app/(frontend)/products/[slug]/AddToCartButtonWrapper'
+import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
 import { getMeUserClient } from '@/utilities/getMeUserClient'
 
 export type CardProps = {
