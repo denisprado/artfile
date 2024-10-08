@@ -8,6 +8,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { draftMode } from 'next/headers'
 import { Metadata } from 'next'
 import { generateMeta } from '@/utilities/generateMeta'
+import PageContainer from '@/components/PageContainer'
 
 // export async function generateStaticParams() {
 // 	const payload = await getPayloadHMR({ config: configPromise })
@@ -38,11 +39,11 @@ export default async function Page({ params }) {
 	const hero = page?.hero
 
 	return (
-		<article className="pt-16 pb-24">
+		<PageContainer>
 
 			<RenderHero {...hero} />
 			<RenderBlocks blocks={layout} />
-		</article>
+		</PageContainer>
 	)
 }
 

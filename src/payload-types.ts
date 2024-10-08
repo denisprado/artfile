@@ -136,6 +136,7 @@ export interface Category {
   title: string;
   slug?: string | null;
   slugLock?: boolean | null;
+  stick?: boolean | null;
   createdBy?: (string | null) | User;
   parent?: (string | null) | Category;
   breadcrumbs?:
@@ -826,6 +827,9 @@ export interface Footer {
  */
 export interface CategoriesMenu {
   id: string;
+  showStick?: boolean | null;
+  showOther?: boolean | null;
+  showGlobal?: boolean | null;
   navItems?:
     | {
         link: {

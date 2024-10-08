@@ -22,11 +22,7 @@ export default async function Page() {
 
 	return (
 		<PageContainer>
-			<div className="container mb-16">
-				<div className="prose dark:prose-invert max-w-none">
-					<h1>Produtos</h1>
-				</div>
-			</div>
+			<ProductsPageTitle />
 
 			<div className="container mb-8">
 				<PageRange
@@ -46,6 +42,15 @@ export default async function Page() {
 			</div>
 		</PageContainer>
 	)
+
+}
+
+export function ProductsPageTitle() {
+	return <div className="container mb-16">
+		<div className="prose dark:prose-invert max-w-none">
+			<h1>Produtos</h1>
+		</div>
+	</div>
 }
 
 export function generateMetadata(): Metadata {

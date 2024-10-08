@@ -25,6 +25,7 @@ const buttonVariants = cva(
 				link: 'text-primary items-start justify-start underline-offset-4 hover:underline',
 				outline: 'border border-border bg-background hover:bg-card hover:text-accent-foreground',
 				badge: 'border border-border bg-background hover:bg-card hover:text-accent-foreground rounded-full',
+				badgeActive: ' rounded-full bg-primary text-primary-foreground hover:bg-primary/90',
 				secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
 			},
 		},

@@ -7,6 +7,7 @@ import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
+import { ProductsPageTitle } from '../../page';
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -27,11 +28,7 @@ export default async function Page({ params }) {
 
 	return (
 		<PageContainer>
-			<div className="container mb-16">
-				<div className="prose dark:prose-invert max-w-none">
-					<h3>Produtos</h3>
-				</div>
-			</div>
+			<ProductsPageTitle />
 
 			<div className="container mb-8">
 				<PageRange

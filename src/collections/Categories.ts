@@ -27,6 +27,10 @@ const Categories: CollectionConfig = {
     },
     ...slugField(),
     {
+      name: 'stick',
+      type: 'checkbox',
+    },
+    {
       name: 'createdBy',
       type: 'relationship',
       relationTo: 'users',

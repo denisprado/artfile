@@ -11,6 +11,21 @@ export const CategoriesMenu: GlobalConfig = {
   },
   fields: [
     {
+      name: 'showStick',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
+      name: 'showOther',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
+      name: 'showGlobal',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
