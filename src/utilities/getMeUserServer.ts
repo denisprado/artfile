@@ -3,6 +3,11 @@ import { redirect } from 'next/navigation'
 
 import type { User } from '../payload-types'
 
+export type UserServer = Promise<{
+  user: User
+  token: string | undefined
+}>
+
 export const getMeUserServer = async (args?: {
   nullUserRedirect?: string
   validUserRedirect?: string

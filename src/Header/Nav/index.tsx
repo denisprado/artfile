@@ -7,10 +7,14 @@ import { CMSLink } from '@/components/Link'
 import { useCart } from '@/contexts/CartContext'
 import { ShoppingCartIcon } from 'lucide-react'
 
+import { UserServer } from '@/utilities/getMeUserServer'
 
 
-export const HeaderNav = ({ header }: {
+
+
+export const HeaderNav = async ({ header, user }: {
 	header: HeaderType
+	user: UserServer
 }) => {
 	const { getCartCountItems } = useCart()
 	const navItems = header?.navItems || []
@@ -29,7 +33,7 @@ export const HeaderNav = ({ header }: {
 		url: '/cart',
 	}
 
-
+	console.log(user, typeof user)
 	return (
 		<nav className="flex gap-3 items-center flex-1">
 
@@ -37,6 +41,7 @@ export const HeaderNav = ({ header }: {
 				return <CMSLink key={i} {...link} appearance="link" />
 				// Corrigido o erro de tipo de SearchTable, garantindo que seja renderizado apenas se for um componente válido.
 			})}
+			{(await user).user !== null ? <CMSLink label={'Minhas compras'} appearance={"link"} url={'/orders'} /> : <CMSLink label={'Entrar'} appearance={"link"} url={'/admin'}></CMSLink>}
 			<CMSLink key={cart.id} {...cart} appearance={"link"} >{cartCount}</CMSLink>
 		</nav>
 	)
