@@ -17,7 +17,6 @@ export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories }) =>
 	const { headerTheme, setHeaderTheme } = useHeaderTheme()
 	const pathname = usePathname()
 
-
 	useEffect(() => {
 		setHeaderTheme(null)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -31,7 +30,7 @@ export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories }) =>
 
 	return (
 		<nav
-			className="container relative z-20 py-8 flex justify-between"
+			className="container relative z-20 py-2 flex items-center justify-between"
 			{...(theme ? { 'data-theme': theme } : {})}
 		>
 

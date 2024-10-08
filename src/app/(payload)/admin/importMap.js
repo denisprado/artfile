@@ -19,7 +19,8 @@ import { BlocksFeatureClient as BlocksFeatureClient_17 } from '@payloadcms/richt
 import { LinkToDoc as LinkToDoc_18 } from '@payloadcms/plugin-search/client'
 import { default as default_19 } from 'src/components/Icon'
 import { default as default_20 } from 'src/components/Logo'
-import { CreateAccount as CreateAccount_21 } from 'src/components/CreateAccount'
+import { default as default_21 } from '@/components/CreateAccountLink'
+import { CreateAccount as CreateAccount_22 } from 'src/components/CreateAccount'
 
 export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_0,
@@ -43,5 +44,6 @@ export const importMap = {
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_18,
   "./components/Icon#default": default_19,
   "./components/Logo#default": default_20,
-  "/components/CreateAccount#CreateAccount": CreateAccount_21
+  "@/components/CreateAccountLink#default": default_21,
+  "/components/CreateAccount#CreateAccount": CreateAccount_22
 }

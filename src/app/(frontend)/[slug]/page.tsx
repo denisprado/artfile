@@ -40,7 +40,6 @@ export default async function Page({ params }) {
 
 	return (
 		<PageContainer>
-
 			<RenderHero {...hero} />
 			<RenderBlocks blocks={layout} />
 		</PageContainer>

@@ -16,7 +16,7 @@ export const CategoriesMenuNav = ({ categories }: {
 	const navItems = categories?.navItems || []
 	const pathname = usePathname()
 	return (
-		<nav className="flex gap-3 items-center flex-1">
+		<nav className="flex gap-3 items-center  justify-center flex-1">
 
 			{navItems.map(({ link }, i) => {
 				return <CMSLink key={i} {...link} appearance={pathname === link.url ? "badgeActive" : "badge"} />
