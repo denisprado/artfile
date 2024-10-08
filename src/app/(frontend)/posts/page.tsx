@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import PageContainer from '@/components/PageContainer';
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -20,7 +21,7 @@ export default async function Page() {
 	})
 
 	return (
-		<div className="pt-24 pb-24">
+		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
 					<h1>Posts</h1>
@@ -43,7 +44,7 @@ export default async function Page() {
 					<Pagination page={posts.page} totalPages={posts.totalPages} />
 				)}
 			</div>
-		</div>
+		</PageContainer>
 	)
 }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next/types'
+import PageContainer from '@/components/PageContainer';
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
@@ -10,20 +11,25 @@ import React from 'react'
 export const dynamic = 'force-static'
 export const revalidate = 600
 const COLLECTION = 'products'
-export default async function Page() {
+export default async function Page({ params }) {
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const posts = await payload.find({
 		collection: COLLECTION,
 		depth: 1,
 		limit: 12,
+		where: {
+			'categories.slug': {
+				equals: params.slug
+			}
+		}
 	})
 
 	return (
-		<div className="pt-24 pb-24">
+		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
-					<h1>Produtos</h1>
+					<h3>Produtos</h3>
 				</div>
 			</div>
 
@@ -43,7 +49,7 @@ export default async function Page() {
 					<Pagination page={posts.page} totalPages={posts.totalPages} />
 				)}
 			</div>
-		</div>
+		</PageContainer>
 	)
 }
 

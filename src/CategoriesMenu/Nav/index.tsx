@@ -18,7 +18,7 @@ export const CategoriesMenuNav = ({ categories }: {
 		<nav className="flex gap-3 items-center flex-1">
 
 			{navItems.map(({ link }, i) => {
-				return <CMSLink key={i} {...link} appearance="link" />
+				return <CMSLink key={i} {...link} appearance="badge" />
 				// Corrigido o erro de tipo de SearchTable, garantindo que seja renderizado apenas se for um componente válido.
 			})}
 

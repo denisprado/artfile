@@ -7,6 +7,7 @@ import { getMeUserClient } from '@/utilities/getMeUserClient'
 import type { User } from '@/payload-types'
 import qs from 'qs'
 import { Button } from '@/components/Button'
+import PageContainer from '@/components/PageContainer'
 
 const Cart: React.FC = () => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
@@ -91,7 +92,7 @@ const Cart: React.FC = () => {
 
 	return (
 		<Suspense>
-			<div className="pt-24 pb-24">
+			<PageContainer>
 				<div className="container mb-16">
 					<h2 className="text-2xl font-bold mb-4">Carrinho de Compras</h2>
 					{cart.length === 0 ? (
@@ -123,7 +124,7 @@ const Cart: React.FC = () => {
 						</>
 					)}
 				</div>
-			</div>
+			</PageContainer>
 		</Suspense>
 	)
 }

@@ -7,6 +7,7 @@ import CreateAccountForm from './CreateAccountForm'
 
 import classes from './index.module.scss'
 import { Gutter } from '@/components/Gutter'
+import PageContainer from '@/components/PageContainer'
 
 export default async function CreateAccount() {
 	await getMeUserServer({
@@ -17,13 +18,13 @@ export default async function CreateAccount() {
 
 	return (
 		<Gutter className={classes.createAccount}>
-			<div className="pt-24 pb-24">
+			<PageContainer>
 				<div className="container mb-16">
 
 					<h1>Criar conta</h1>
 					<CreateAccountForm />
 				</div>
-			</div>
+			</PageContainer>
 		</Gutter>
 	)
 }

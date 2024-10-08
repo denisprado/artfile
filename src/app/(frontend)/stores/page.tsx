@@ -1,11 +1,11 @@
 import type { Metadata } from 'next/types'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
+import PageContainer from '@/components/PageContainer'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
-import React from 'react'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -20,7 +20,7 @@ export default async function Page() {
 	})
 
 	return (
-		<div className="pt-24 pb-24">
+		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
 					<h1>Lojas</h1>
@@ -43,7 +43,7 @@ export default async function Page() {
 					<Pagination page={posts.page} totalPages={posts.totalPages} />
 				)}
 			</div>
-		</div>
+		</PageContainer>
 	)
 }
 

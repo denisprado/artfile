@@ -7,6 +7,7 @@ import React from 'react'
 import { User } from '@/payload-types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import { CollectionArchive } from '@/components/CollectionArchive'
+import PageContainer from '@/components/PageContainer'
 
 // export const dynamic = 'force-static'
 export const revalidate = 600
@@ -32,7 +33,7 @@ export default async function Page() {
 	}) || [] // Adicionando um fallback para evitar undefined
 
 	return (
-		<div className="pt-24 pb-24">
+		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
 					<h1>MInhas compras</h1>
@@ -59,7 +60,7 @@ export default async function Page() {
 					<Pagination page={orders.page} totalPages={orders.totalPages} />
 				)}
 			</div>
-		</div>
+		</PageContainer>
 	)
 }
 
