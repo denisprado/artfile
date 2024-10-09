@@ -4,7 +4,7 @@ export default function Return() {
 	return (
 		<div className="container">
 			<div className="banner">
-				<h2>DENIS PRADO FORIGO CONSULTORIA EM TECNOLOGIA DA INFORMACAO</h2>
+				<h2>Artfile</h2>
 			</div>
 			<div className="content">
 				<h2>Details submitted</h2>
