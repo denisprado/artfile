@@ -7,12 +7,12 @@ export default function Return() {
 				<h2>Artfile</h2>
 			</div>
 			<div className="content">
-				<h2>Details submitted</h2>
-				<p>That's everything we need for now</p>
+				<h2>Sua conta foi criada</h2>
+				<p>Isso é tudo que precisamos por agora</p>
 			</div>
 			<div className="info-callout">
 				<p>
-					This is a sample app for Stripe-hosted Connect onboarding. <a href="https://docs.stripe.com/connect/onboarding/quickstart?connect-onboarding-surface=hosted" target="_blank" rel="noopener noreferrer">View docs</a>
+					<a href="https://docs.stripe.com/connect/onboarding/quickstart?connect-onboarding-surface=hosted" target="_blank" rel="noopener noreferrer">Veja seus dados</a>
 				</p>
 			</div>
 		</div>

@@ -4,11 +4,7 @@
 import type { CategoriesMenu as CategoriesMenuType } from '@/payload-types'
 
 import { CMSLink } from '@/components/Link'
-import { useCart } from '@/contexts/CartContext'
-import { ShoppingCartIcon } from 'lucide-react'
 import { usePathname } from 'next/navigation'
-
-
 
 export const CategoriesMenuNav = ({ categories }: {
 	categories: CategoriesMenuType

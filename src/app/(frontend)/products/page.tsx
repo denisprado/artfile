@@ -8,10 +8,10 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
 import PageContainer from '@/components/PageContainer'
 
-export const dynamic = 'force-static'
 export const revalidate = 600
-const COLLECTION = 'products'
+
 export default async function Page() {
+	const COLLECTION = 'products'
 	const payload = await getPayloadHMR({ config: configPromise })
 
 	const posts = await payload.find({
@@ -19,6 +19,14 @@ export default async function Page() {
 		depth: 1,
 		limit: 12,
 	})
+
+	const ProductsPageTitle = () => {
+		return <div className="container mb-16">
+			<div className="prose dark:prose-invert max-w-none">
+				<h1>Produtos</h1>
+			</div>
+		</div>
+	}
 
 	return (
 		<PageContainer>
@@ -43,14 +51,6 @@ export default async function Page() {
 		</PageContainer>
 	)
 
-}
-
-export function ProductsPageTitle() {
-	return <div className="container mb-16">
-		<div className="prose dark:prose-invert max-w-none">
-			<h1>Produtos</h1>
-		</div>
-	</div>
 }
 
 export function generateMetadata(): Metadata {

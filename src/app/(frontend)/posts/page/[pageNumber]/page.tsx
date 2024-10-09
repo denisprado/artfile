@@ -8,7 +8,6 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
 import PageContainer from '@/components/PageContainer'
 
-export const dynamic = 'force-static'
 export const revalidate = 600
 
 export default async function Page({ params }) {

@@ -42,9 +42,7 @@ export default function Refresh() {
 				<h2>DENIS PRADO FORIGO CONSULTORIA EM TECNOLOGIA DA INFORMACAO</h2>
 			</div>
 			<div className="content">
-				<h2>Add information to start accepting money</h2>
-				<p>DENIS PRADO FORIGO CONSULTORIA EM TECNOLOGIA DA INFORMACAO is the world's leading air travel platform: join our team of pilots to help people travel faster.</p>
-				{error && <p className="error">Something went wrong!</p>}
+				{error && <p className="error">Algo deu errado!</p>}
 			</div>
 			<div className="dev-callout">
 				{connectedAccountId && <p>Your connected account ID is: <code className="bold">{connectedAccountId}</code></p>}

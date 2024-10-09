@@ -8,7 +8,6 @@ import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
 
-export const dynamic = 'force-static'
 export const revalidate = 600
 
 export default async function Page() {

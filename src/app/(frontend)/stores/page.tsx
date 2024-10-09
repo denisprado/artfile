@@ -7,7 +7,6 @@ import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 
-export const dynamic = 'force-static'
 export const revalidate = 600
 export default async function Page() {
 	const COLLECTION = 'stores'
