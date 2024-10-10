@@ -5,5 +5,5 @@ export const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHAB
 import Stripe from 'stripe'
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2022-08-01', // Use a versão mais recente da API
+  apiVersion: '2024-09-30.acacia', // Use a versão mais recente da API
 })
