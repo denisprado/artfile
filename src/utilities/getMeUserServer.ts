@@ -17,7 +17,7 @@ export const getMeUserServer = async (args?: {
 }> => {
   const { nullUserRedirect, validUserRedirect } = args || {}
   const cookieStore = cookies()
-  const token = (await cookieStore).get('payload-token')?.value
+  const token = cookieStore.get('payload-token')?.value
 
   const meUserReq = await fetch(`${process.env.NEXT_PUBLIC_PAYLOAD_URL}/api/users/me`, {
     credentials: 'include',

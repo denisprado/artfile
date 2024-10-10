@@ -12,28 +12,31 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
     }
 
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      payment_intent_data: { metadata: { orderId } },
-      line_items: items.map((item: { name: string; price: number; quantity: any }) => ({
-        price_data: {
-          currency: 'brl',
-          product_data: {
-            name: item.name,
+    const session = await stripe.checkout.sessions.create(
+      {
+        payment_method_types: ['card'],
+        payment_intent_data: { metadata: { orderId } },
+        line_items: items.map((item: { name: string; price: number; quantity: any }) => ({
+          price_data: {
+            currency: 'brl',
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: Math.round(item.price * 100), // Stripe usa centavos
           },
-          unit_amount: Math.round(item.price * 100), // Stripe usa centavos
-        },
-        quantity: item.quantity,
-      })),
+          quantity: item.quantity,
+        })),
 
-      mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/cancel`,
-      metadata: {
-        user_id: userId,
-        order_id: orderId,
+        mode: 'payment',
+        success_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/cancel`,
+        metadata: {
+          user_id: userId,
+          order_id: orderId,
+        },
       },
-    })
+      { stripeAccount: '{{CONNECTED_ACCOUNT_ID}}' },
+    )
 
     return NextResponse.json({ session: session })
   } catch (err) {

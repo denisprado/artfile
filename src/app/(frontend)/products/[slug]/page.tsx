@@ -34,7 +34,7 @@ const ProductPage = async ({ params }) => {
 	const { user } = await getMeUserServer()
 
 	const userPurchases = user?.purchases as Order[]
-	const isPurchased = userPurchases.some(purchase =>
+	const isPurchased = userPurchases?.some(purchase =>
 		purchase.products.some(p => p === product?.id)
 	); // Verifica se o produto foi comprado
 
