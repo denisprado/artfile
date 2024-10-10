@@ -1,13 +1,23 @@
 'use client'
 import { useState } from "react";
 import { CMSLink } from "../Link"
+import { getPayload } from 'payload'
+import config from '@payload-config'
+import { getMeUserClient } from "@/utilities/getMeUserClient";
+import { User } from "@/payload-types";
+import { Button } from "../Button";
 
-const CreateAccountLink = () => {
+const CreateAccountLink = async () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
 	const [accountLinkCreatePending, setAccountLinkCreatePending] = useState(false);
 	const [error, setError] = useState(false);
 	const [wichError, setWichError] = useState()
 	const [connectedAccountId, setConnectedAccountId] = useState();
+
+	const user = getMeUserClient().then(user => user)
+
+	const payload = await getPayload({ config })
+
 	return (
 		<>
 			{!accountCreatePending && !connectedAccountId && (
@@ -19,13 +29,20 @@ const CreateAccountLink = () => {
 							method: "POST",
 						})
 							.then((response) => response.json())
-							.then((json) => {
+							.then(async (json) => {
 								setAccountCreatePending(false);
 
 								const { account, error } = json;
 
 								if (account) {
 									setConnectedAccountId(account);
+									await payload.update({
+										collection: 'users',
+										id: (user.user!).id,
+										data: {
+											"stripe-connected-account": connectedAccountId
+										},
+									})
 								}
 
 								if (error) {
@@ -34,11 +51,13 @@ const CreateAccountLink = () => {
 							});
 					}}
 				>
-					Não tenho um conta. Cadastrar.
+					Quero vender arquivos.
 				</a>
 			)}
 			{connectedAccountId && !accountLinkCreatePending && (
-				<button
+				<Button
+					label="Informar meus dados de vendedor
+"
 					onClick={async () => {
 						setAccountLinkCreatePending(true);
 						setError(false);
@@ -71,8 +90,7 @@ const CreateAccountLink = () => {
 						}
 					}}
 				>
-					Add information
-				</button>
+				</Button>
 			)}
 			{error && <p className="error">Something went wrong!{wichError}</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (

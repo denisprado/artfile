@@ -40,10 +40,18 @@ const Users: CollectionConfig = {
           value: 'admin',
         },
         {
-          label: 'customer',
+          label: 'Consumidor',
           value: 'customer',
         },
+        {
+          label: 'Vendedor',
+          value: 'vendor',
+        },
       ],
+    },
+    {
+      name: 'stripe-connected-account',
+      type: 'text',
     },
     {
       name: 'purchases',
@@ -53,35 +61,6 @@ const Users: CollectionConfig = {
       hasMany: true,
       hooks: {
         beforeChange: [resolveDuplicatePurchases],
-      },
-    },
-    {
-      name: 'vendorDetails',
-      type: 'group',
-      fields: [
-        {
-          name: 'cpfCnpj',
-          type: 'text',
-          label: 'CPF/CNPJ',
-        },
-        {
-          name: 'agency',
-          type: 'text',
-          label: 'Agencia',
-        },
-        {
-          name: 'account',
-          type: 'text',
-          label: 'Conta com dígito',
-        },
-        {
-          name: 'bank',
-          type: 'text',
-          label: 'Banco',
-        },
-      ],
-      admin: {
-        condition: (data) => data.isVendor,
       },
     },
   ],

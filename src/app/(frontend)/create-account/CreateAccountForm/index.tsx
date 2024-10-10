@@ -60,10 +60,10 @@ const CreateAccountForm: React.FC = () => {
 			}, 1000)
 
 			try {
-				await login(data)
+				// await login(data)
 				clearTimeout(timer)
 				if (redirect) router.push(redirect as string)
-				else router.push(`/account?success=${encodeURIComponent('Conta crida com sucesso')}`)
+				else router.push(`/api/account`)
 			} catch (_) {
 				clearTimeout(timer)
 				setError('Houve um erro com as credenciais fornecidas.')
@@ -81,7 +81,7 @@ const CreateAccountForm: React.FC = () => {
 				required
 				register={register}
 				error={errors.name}
-				type="email"
+				type="text"
 			/>
 			<Input
 				name="email"

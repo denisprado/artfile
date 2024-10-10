@@ -64,14 +64,9 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   name?: string | null;
-  roles?: ('admin' | 'customer')[] | null;
+  roles?: ('admin' | 'customer' | 'vendor')[] | null;
+  'stripe-connected-account'?: string | null;
   purchases?: (string | Order)[] | null;
-  vendorDetails?: {
-    cpfCnpj?: string | null;
-    agency?: string | null;
-    account?: string | null;
-    bank?: string | null;
-  };
   updatedAt: string;
   createdAt: string;
   email: string;
