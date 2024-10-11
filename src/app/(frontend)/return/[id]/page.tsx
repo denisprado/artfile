@@ -1,3 +1,4 @@
+import CreateAccountLink from "@/components/CreateAccountLink";
 import React from "react";
 
 export default function Return() {
@@ -8,7 +9,7 @@ export default function Return() {
 			</div>
 			<div className="content">
 				<h2>Sua conta foi criada</h2>
-				<p>Isso é tudo que precisamos por agora</p>
+				<p>Agora você pode se <CreateAccountLink /></p>
 			</div>
 			<div className="info-callout">
 				<p>

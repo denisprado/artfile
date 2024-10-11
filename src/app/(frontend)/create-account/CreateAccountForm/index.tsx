@@ -11,6 +11,7 @@ import { Message } from '@/components/Message'
 import { useAuth } from '@/providers/Auth'
 
 import classes from './index.module.scss'
+import createAccountLink from '@/components/CreateAccountLink'
 
 type FormData = {
 	name: string
@@ -26,6 +27,7 @@ const CreateAccountForm: React.FC = () => {
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
+	const [userCreated, setUserCreated] = useState<boolean>(false)
 
 	const {
 		register,
@@ -59,11 +61,13 @@ const CreateAccountForm: React.FC = () => {
 				setLoading(true)
 			}, 1000)
 
+			const dataUser = await response.json()
+
 			try {
-				// await login(data)
+				await login({ email: data.email, password: data.password })
 				clearTimeout(timer)
 				if (redirect) router.push(redirect as string)
-				else router.push(`/api/account`)
+				else router.push(`/return/${dataUser.doc.id}`)
 			} catch (_) {
 				clearTimeout(timer)
 				setError('Houve um erro com as credenciais fornecidas.')

@@ -1,22 +1,31 @@
 'use client'
 import { useState } from "react";
-import { CMSLink } from "../Link"
-import { getPayload } from 'payload'
-import config from '@payload-config'
-import { getMeUserClient } from "@/utilities/getMeUserClient";
-import { User } from "@/payload-types";
 import { Button } from "../Button";
 
-const CreateAccountLink = async () => {
+const CreateAccountLink = () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
 	const [accountLinkCreatePending, setAccountLinkCreatePending] = useState(false);
 	const [error, setError] = useState(false);
 	const [wichError, setWichError] = useState()
 	const [connectedAccountId, setConnectedAccountId] = useState();
 
-	const user = getMeUserClient().then(user => user)
 
-	const payload = await getPayload({ config })
+	const getUser = async () => {
+		try {
+			const req = await fetch('/api/users/me', {
+				method: "GET",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+			const data = await req.json()
+			return data.user
+		} catch (err) {
+			console.log(err)
+			return err
+		}
+	}
 
 	return (
 		<>
@@ -35,13 +44,18 @@ const CreateAccountLink = async () => {
 								const { account, error } = json;
 
 								if (account) {
+									const user = await getUser()
 									setConnectedAccountId(account);
-									await payload.update({
-										collection: 'users',
-										id: (user.user!).id,
-										data: {
-											"stripe-connected-account": connectedAccountId
+									await fetch('/api/users' + user.id, {
+										method: 'PATCH',
+										credentials: 'include',
+										headers: {
+											"Content-Type": "application/json",
 										},
+										body: JSON.stringify({
+											"stripe-connected-account": connectedAccountId
+
+										}),
 									})
 								}
 
