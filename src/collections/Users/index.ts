@@ -50,7 +50,7 @@ const Users: CollectionConfig = {
       ],
     },
     {
-      name: 'stripe-connected-account',
+      name: 'stripe',
       type: 'text',
     },
     {

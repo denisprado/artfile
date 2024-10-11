@@ -64,10 +64,9 @@ const CreateAccountForm: React.FC = () => {
 			const dataUser = await response.json()
 
 			try {
-				await login({ email: data.email, password: data.password })
 				clearTimeout(timer)
 				if (redirect) router.push(redirect as string)
-				else router.push(`/return/${dataUser.doc.id}`)
+				else router.push(`/admin/login`)
 			} catch (_) {
 				clearTimeout(timer)
 				setError('Houve um erro com as credenciais fornecidas.')

@@ -8,7 +8,7 @@ export default function Return() {
 				<h2>Artfile</h2>
 			</div>
 			<div className="content">
-				<h2>Sua conta foi criada</h2>
+				<h2>Sua conta foi criada com sucesso.</h2>
 				<p>Agora você pode se <CreateAccountLink /></p>
 			</div>
 			<div className="info-callout">

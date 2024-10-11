@@ -30,7 +30,9 @@ const CreateAccountLink = () => {
 	return (
 		<>
 			{!accountCreatePending && !connectedAccountId && (
-				<a href="#"
+				<Button href="#"
+					label="Quero vender arquivos."
+					appearance="primary"
 					onClick={async () => {
 						setAccountCreatePending(true);
 						setError(false);
@@ -46,14 +48,15 @@ const CreateAccountLink = () => {
 								if (account) {
 									const user = await getUser()
 									setConnectedAccountId(account);
-									await fetch('/api/users' + user.id, {
+									console.log("connectedAccountId", connectedAccountId)
+									await fetch('/api/users/' + user.id, {
 										method: 'PATCH',
 										credentials: 'include',
 										headers: {
 											"Content-Type": "application/json",
 										},
 										body: JSON.stringify({
-											"stripe-connected-account": connectedAccountId
+											"stripe": connectedAccountId
 
 										}),
 									})
@@ -65,13 +68,13 @@ const CreateAccountLink = () => {
 							});
 					}}
 				>
-					Quero vender arquivos.
-				</a>
+
+				</Button>
 			)}
 			{connectedAccountId && !accountLinkCreatePending && (
 				<Button
-					label="Informar meus dados de vendedor
-"
+					label="Informar meus dados de vendedor"
+					appearance="secondary"
 					onClick={async () => {
 						setAccountLinkCreatePending(true);
 						setError(false);
@@ -92,7 +95,6 @@ const CreateAccountLink = () => {
 							const { url, error } = json;
 							setWichError(url)
 
-							console.log("url", json, url);
 							if (url) {
 								window.location.href = url;
 							} else if (error) {

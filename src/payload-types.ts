@@ -65,7 +65,7 @@ export interface User {
   id: string;
   name?: string | null;
   roles?: ('admin' | 'customer' | 'vendor')[] | null;
-  'stripe-connected-account'?: string | null;
+  stripe?: string | null;
   purchases?: (string | Order)[] | null;
   updatedAt: string;
   createdAt: string;

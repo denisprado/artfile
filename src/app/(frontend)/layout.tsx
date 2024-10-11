@@ -37,9 +37,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							}}
 						/>
 						<LivePreviewListener />
-						<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
+						<div className='grid min-h-[100dvh] grid-rows-[auto_auto_1fr_auto] '>
 							<Suspense>
 								<Header />
+							</Suspense>
+							<Suspense>
 								<CategoriesMenu />
 							</Suspense>
 							<main>

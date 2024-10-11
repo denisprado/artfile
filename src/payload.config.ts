@@ -54,16 +54,16 @@ export default buildConfig({
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       // beforeLogin: ['@/components/BeforeLogin'],
-      afterLogin: ['@/components/CreateAccountLink'],
+      // afterLogin: ['@/components/CreateAccountLink'],
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
-      // beforeDashboard: ['@/components/BeforeDashboard'],
-      views: {
-        customView: {
-          Component: '/components/CreateAccount#CreateAccount',
-          path: '/signup',
-        },
-      },
+      beforeDashboard: ['@/components/BeforeDashboard'],
+      // views: {
+      //   customView: {
+      //     Component: '/components/CreateAccount#CreateAccount',
+      //     path: '/signup',
+      //   },
+      // },
       graphics: {
         Logo: { path: './components/Logo' },
         Icon: { path: './components/Icon' },
