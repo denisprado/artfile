@@ -72,7 +72,7 @@ const CreateAccountForm: React.FC = () => {
 				setError('Houve um erro com as credenciais fornecidas.')
 			}
 		},
-		[login, router, searchParams],
+		[router, searchParams],
 	)
 
 	return (

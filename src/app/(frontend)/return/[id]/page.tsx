@@ -1,15 +1,13 @@
+import { Button } from "@/components/Button";
 import CreateAccountLink from "@/components/CreateAccountLink";
 import React from "react";
 
 export default function Return() {
 	return (
 		<div className="container">
-			<div className="banner">
-				<h2>Artfile</h2>
-			</div>
 			<div className="content">
 				<h2>Sua conta foi criada com sucesso.</h2>
-				<p>Agora você pode se <CreateAccountLink /></p>
+				<Button label="Cadastre seu primeiro produto e comece a vender" href="/admin/collections/products/create" appearance="secondary"></Button>
 			</div>
 			<div className="info-callout">
 				<p>

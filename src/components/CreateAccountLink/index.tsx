@@ -1,14 +1,19 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../Button";
+import { Banner } from "@payloadcms/ui";
+import { User } from "@/payload-types";
 
-const CreateAccountLink = () => {
+const CreateAccountLink = ({ user: userComp }) => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
 	const [accountLinkCreatePending, setAccountLinkCreatePending] = useState(false);
 	const [error, setError] = useState(false);
 	const [wichError, setWichError] = useState()
-	const [connectedAccountId, setConnectedAccountId] = useState();
 
+
+
+	const [user, setUser] = useState<User | null>(userComp)
+	const [connectedAccountId, setConnectedAccountId] = useState<string | null>(null);
 
 	const getUser = async () => {
 		try {
@@ -20,6 +25,7 @@ const CreateAccountLink = () => {
 				},
 			})
 			const data = await req.json()
+			setUser(data.user)
 			return data.user
 		} catch (err) {
 			console.log(err)
@@ -29,7 +35,8 @@ const CreateAccountLink = () => {
 
 	return (
 		<>
-			{!accountCreatePending && !connectedAccountId && (
+			{!user?.stripe && !accountCreatePending && !connectedAccountId && (
+
 				<Button href="#"
 					label="Quero vender arquivos."
 					appearance="primary"
@@ -47,8 +54,9 @@ const CreateAccountLink = () => {
 
 								if (account) {
 									const user = await getUser()
+									setUser(user)
 									setConnectedAccountId(account);
-									console.log("connectedAccountId", connectedAccountId)
+
 									await fetch('/api/users/' + user.id, {
 										method: 'PATCH',
 										credentials: 'include',
@@ -56,8 +64,8 @@ const CreateAccountLink = () => {
 											"Content-Type": "application/json",
 										},
 										body: JSON.stringify({
-											"stripe": connectedAccountId
-
+											roles: 'vendor',
+											stripe: account,
 										}),
 									})
 								}
@@ -108,12 +116,12 @@ const CreateAccountLink = () => {
 				>
 				</Button>
 			)}
-			{error && <p className="error">Something went wrong!{wichError}</p>}
+			{error && <p className="error">Algo deu errado!</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
 				<div className="dev-callout">
-					{connectedAccountId && <p>Your connected account ID is: <code className="bold">{connectedAccountId}</code></p>}
-					{accountCreatePending && <p>Creating a connected account...</p>}
-					{accountLinkCreatePending && <p>Creating a new Account Link...</p>}
+					{connectedAccountId && <Banner type="info">O ide da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>}
+					{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
+					{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
 				</div>
 			)}</>
 	)
