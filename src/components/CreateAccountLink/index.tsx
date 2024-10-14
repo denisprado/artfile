@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useState } from "react";
-import { Button } from "../Button";
-import { Banner } from "@payloadcms/ui";
 import { User } from "@/payload-types";
+import { Banner } from "@payloadcms/ui";
+import { useState } from "react";
+import Stripe from "stripe";
+import { Button } from "../Button";
 
 const CreateAccountLink = ({ user: userComp }) => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
@@ -10,10 +11,10 @@ const CreateAccountLink = ({ user: userComp }) => {
 	const [error, setError] = useState(false);
 	const [wichError, setWichError] = useState()
 
-
-
 	const [user, setUser] = useState<User | null>(userComp)
 	const [connectedAccountId, setConnectedAccountId] = useState<string | null>(null);
+	const [detailsSubmitted, setDetailsSubmited] = useState<boolean>(false)
+
 
 	const getUser = async () => {
 		try {
@@ -32,6 +33,38 @@ const CreateAccountLink = ({ user: userComp }) => {
 			return err
 		}
 	}
+
+	const getVerify = async (account: string) => {
+		try {
+			const accountVerify = await fetch('/api/account-verify', {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					account: account,
+				}),
+			})
+			const data = await accountVerify.json()
+			await fetch('/api/users/' + user!.id, {
+				method: 'PATCH',
+				credentials: 'include',
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					detailsSubmited: data.details_submitted,
+
+				}),
+			})
+			setDetailsSubmited(data.details_submitted)
+			return data.details_submitted
+		} catch (err) {
+			console.log(err)
+			return err
+		}
+	}
+	console.log(!!connectedAccountId, !accountLinkCreatePending, !user?.detailsSubmited, !!user?.stripe)
 
 	return (
 		<>
@@ -56,7 +89,7 @@ const CreateAccountLink = ({ user: userComp }) => {
 									const user = await getUser()
 									setUser(user)
 									setConnectedAccountId(account);
-
+									getVerify(account)
 									await fetch('/api/users/' + user.id, {
 										method: 'PATCH',
 										credentials: 'include',
@@ -79,7 +112,7 @@ const CreateAccountLink = ({ user: userComp }) => {
 
 				</Button>
 			)}
-			{connectedAccountId && !accountLinkCreatePending && (
+			{(!!connectedAccountId && !accountLinkCreatePending) || (!user?.detailsSubmited && !!user?.stripe) ? (
 				<Button
 					label="Informar meus dados de vendedor"
 					appearance="secondary"
@@ -87,13 +120,14 @@ const CreateAccountLink = ({ user: userComp }) => {
 						setAccountLinkCreatePending(true);
 						setError(false);
 						try {
+							console.log(connectedAccountId)
 							const response = await fetch("/api/account-link", {
 								method: "POST",
 								headers: {
 									"Content-Type": "application/json",
 								},
 								body: JSON.stringify({
-									account: connectedAccountId,
+									account: connectedAccountId ? connectedAccountId : user?.stripe,
 								}),
 							});
 							const json = await response.json();
@@ -108,6 +142,7 @@ const CreateAccountLink = ({ user: userComp }) => {
 							} else if (error) {
 								setError(true);
 							}
+							connectedAccountId && getVerify(connectedAccountId)
 						} catch (err) {
 							setAccountLinkCreatePending(false);
 							setError(true); // Define erro se a requisição falhar
@@ -115,11 +150,11 @@ const CreateAccountLink = ({ user: userComp }) => {
 					}}
 				>
 				</Button>
-			)}
+			) : <></>}
 			{error && <p className="error">Algo deu errado!</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
 				<div className="dev-callout">
-					{connectedAccountId && <Banner type="info">O ide da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>}
+					{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>}
 					{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
 					{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
 				</div>

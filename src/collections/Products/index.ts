@@ -1,19 +1,18 @@
-import { isAdmin } from '@/access/isAdmin'
-import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
+import { isAdminOrVendor } from '@/access/isAdminOrVendor'
+import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy copy'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
-import { read } from 'fs'
 import { CollectionConfig } from 'payload'
-import { title } from 'process'
 
 const Products: CollectionConfig = {
   slug: 'products',
   labels: { plural: 'Produtos', singular: 'Produto' },
 
   access: {
-    read: isAdminOrCreatedBy,
-    update: isAdminOrCreatedBy,
-    delete: isAdminOrCreatedBy,
+    create: isAdminOrVendor,
+    read: isAdminOrVendorAndCreatedBy,
+    update: isAdminOrVendorAndCreatedBy,
+    delete: isAdminOrVendorAndCreatedBy,
   },
   admin: {
     useAsTitle: 'name',

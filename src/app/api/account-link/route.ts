@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
     try {
       const requ = await req.json()
       const account = requ.account
-      console.log(req)
 
       const accountLink = await stripe.accountLinks.create({
         account: account,

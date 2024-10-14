@@ -66,6 +66,7 @@ export interface User {
   name?: string | null;
   roles?: ('admin' | 'customer' | 'vendor')[] | null;
   stripe?: string | null;
+  detailsSubmited?: boolean | null;
   purchases?: (string | Order)[] | null;
   updatedAt: string;
   createdAt: string;

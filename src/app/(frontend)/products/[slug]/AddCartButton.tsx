@@ -1,11 +1,9 @@
 'use client'
 
-import React from 'react'
 import { useCart } from '@/contexts/CartContext'
 import type { Product, User } from '@/payload-types'
-import Link from 'next/link'
+import React from 'react'
 
-import { ShoppingCartIcon } from 'lucide-react'
 import { Button } from '@/components/Button'
 // import { usePathname, useRouter } from 'next/navigation' // Adicione esta importação
 
@@ -20,7 +18,7 @@ const AddToCartButton: React.FC<Props> = ({ product, user }) => {
 	// const pathname = usePathname() // Inicialize o router
 
 	const handleAddToCart = () => {
-		addToCart(product)
+		addToCart(product, user?.stripe as string)
 	}
 	// const handleLoginRedirect = () => {
 	// 	router.push('/admin?redirect=' + encodeURIComponent(pathname)) // Redireciona para a página de login

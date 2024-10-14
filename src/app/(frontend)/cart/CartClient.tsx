@@ -48,7 +48,8 @@ const CartClient: React.FC<{ user: User | null, stripe: Stripe | null }> = ({ us
 						quantity: item.quantity,
 					})),
 					userId: user?.id,
-					orderId: orderId
+					orderId: orderId,
+					userStripe: user?.stripe
 				}),
 			});
 

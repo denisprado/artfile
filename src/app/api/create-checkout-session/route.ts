@@ -6,7 +6,7 @@ import payloadConfig from '@payload-config'
 export async function POST(req: Request) {
   try {
     const body = await req.json()
-    const { items, userId, orderId } = body
+    const { items, userId, orderId, userStripe } = body
 
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
           order_id: orderId,
         },
       },
-      { stripeAccount: '{{CONNECTED_ACCOUNT_ID}}' },
+      { stripeAccount: userStripe },
     )
 
     return NextResponse.json({ session: session })

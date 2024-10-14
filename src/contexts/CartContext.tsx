@@ -6,11 +6,12 @@ import { Product } from '@/payload-types'
 type CartItem = {
 	product: Product
 	quantity: number
+	userStripe: string
 }
 
 type CartContextType = {
 	cart: CartItem[]
-	addToCart: (product: Product) => void
+	addToCart: (product: Product, userStripe: string) => void
 	removeFromCart: (productId: string) => void
 	clearCart: () => void
 	getCartTotal: () => number
@@ -37,8 +38,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 		localStorage.setItem('cart', JSON.stringify(cart))
 	}, [cart])
 
-	const addToCart = (product: Product) => {
+	const addToCart = (product: Product, userStripe: string) => {
 		setCart(currentCart => {
+			const existingStripeId = currentCart.length > 0 && currentCart[0].userStripe
+			const isSameExistingStripeId = existingStripeId === userStripe
 			const existingItem = currentCart.find(item => item.product.id === product.id)
 			if (existingItem) {
 				return currentCart.map(item =>
@@ -47,7 +50,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 						: item
 				)
 			}
-			return [...currentCart, { product, quantity: 1 }]
+			return isSameExistingStripeId ? [...currentCart, { product, quantity: 1, userStripe: userStripe }] : currentCart
 		})
 	}
 

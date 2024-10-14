@@ -54,6 +54,11 @@ const Users: CollectionConfig = {
       type: 'text',
     },
     {
+      name: 'detailsSubmited',
+      type: 'checkbox',
+      defaultValue: false,
+    },
+    {
       name: 'purchases',
       label: 'Minhas compras',
       type: 'relationship',

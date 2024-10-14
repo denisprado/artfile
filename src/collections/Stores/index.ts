@@ -1,10 +1,17 @@
+import { isAdminOrVendor } from '@/access/isAdminOrVendor'
+import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy copy'
 import { slugField } from '@/fields/slug'
 import { CollectionConfig } from 'payload'
 
 const Stores: CollectionConfig = {
   slug: 'stores',
   labels: { plural: 'Lojas', singular: 'Loja' },
-
+  access: {
+    create: isAdminOrVendor,
+    read: isAdminOrVendorAndCreatedBy,
+    update: isAdminOrVendorAndCreatedBy,
+    delete: isAdminOrVendorAndCreatedBy,
+  },
   admin: {
     useAsTitle: 'name',
   },
