@@ -4,21 +4,22 @@ import React, { useEffect } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
 import { Button } from '@/components/Button'
+import PageContainer from '@/components/PageContainer'
 
 const SuccessPage: React.FC = () => {
 	const { clearCart } = useCart()
 
 	useEffect(() => {
 		clearCart()
-	}, [clearCart])
+	}, [])
 
 	return (
-		<div className="container mx-auto px-4 py-8 text-center">
+		<PageContainer>
 			<h1 className="text-3xl font-bold mb-4">Compra realizada com sucesso!</h1>
 			<p className="mb-4">Obrigado por sua compra.</p>
-			<Button href="/orders" label='Acesse Minhas Compras para acessar os arquivos' />
+			<Button appearance='primary' href="/orders" label='Minhas Compras' />
 
-		</div>
+		</PageContainer>
 	)
 }
 

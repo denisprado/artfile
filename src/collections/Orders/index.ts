@@ -21,12 +21,11 @@ const Orders: CollectionConfig = {
       relationTo: 'users',
       required: true,
       access: {
-        update: () => false,
+        update: isAdmin,
       },
       admin: {
         readOnly: true,
         position: 'sidebar',
-        condition: (data) => Boolean(data?.createdBy),
       },
     },
     {

@@ -2,12 +2,9 @@
 
 import { Button } from '@/components/Button'
 import { useCart } from '@/contexts/CartContext'
-import { stripe } from '@/lib/stripe'
 import { User } from '@/payload-types'
-import { Stripe } from '@stripe/stripe-js'
-import { redirect } from 'next/navigation'
-import React from 'react'
 import { useRouter } from 'next/navigation'
+import React from 'react'
 
 const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
@@ -47,7 +44,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 					})),
 					userId: user?.id,
 					orderId: orderId,
-					userStripe: (cart[0].product.createdBy as User).stripe
+					userStripe: (cart[0]?.product?.createdBy as User)?.stripe
 				}),
 			});
 

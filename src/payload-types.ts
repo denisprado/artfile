@@ -85,7 +85,7 @@ export interface User {
  */
 export interface Order {
   id: string;
-  createdBy?: (string | null) | User;
+  createdBy: string | User;
   products: (string | Product)[];
   totalAmount: number;
   status: 'no_payment_required' | 'paid' | 'unpaid';

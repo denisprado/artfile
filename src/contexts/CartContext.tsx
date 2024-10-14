@@ -41,12 +41,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	const addToCart = (product: Product) => {
 		setCart(currentCart => {
 			// const existingStripeId = currentCart.length > 0 && currentCart[0].userStripe
-			// const isSameExistingStripeId = existingStripeId === userStripe
 			const existingItem = currentCart.find(item => item.product.id === product.id)
 			const accountConnectedStripe = currentCart.find(item => item.product.createdBy)?.userStripe || ''
+			const receivedStripe = (((product as Product).createdBy as Product['createdBy']) as User)?.stripe
+
+			if (accountConnectedStripe && (accountConnectedStripe !== receivedStripe)) {
+				alert("Já existem produtos de outra loja no carrinho de compras. Esvazie o carrinho para adicionar esse produto")
+				return [...currentCart]
+			}
 
 			if (existingItem) {
-
 				return currentCart.map(item =>
 					item.product.id === product.id
 						? { ...item, quantity: item.quantity + 1 }

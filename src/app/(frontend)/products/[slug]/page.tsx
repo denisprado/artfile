@@ -2,7 +2,7 @@ import React from 'react'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Category, Media, Order, Product } from '@/payload-types'
+import { Category, Media, Order, Product, User } from '@/payload-types'
 import AddToCartButtonWrapper from './AddToCartButtonWrapper'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
@@ -33,11 +33,9 @@ const ProductPage = async ({ params }) => {
 
 	const { user } = await getMeUserServer()
 
-	const userPurchases = user?.purchases as Order[]
-	const isPurchased = userPurchases?.some(purchase =>
-		purchase.products.some(p => p === product?.id)
-	); // Verifica se o produto foi comprado
+	const userPurchases = user?.purchases as User['purchases']
 
+	const isPurchased = userPurchases?.some(userPurchase => ((userPurchase as Order).products as Product[]).some(prod => prod.id === product?.id))
 
 	if (!product) {
 		return notFound()
@@ -50,8 +48,6 @@ const ProductPage = async ({ params }) => {
 	const widthToUSe = product && imgProduct ? (product.thumbnail as Media)?.sizes?.[SIZE]?.width : 500
 	const heightToUSe = product && imgProduct ? (product.thumbnail as Media).sizes?.[SIZE]?.height : 500
 	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
-
-	const files = product.files
 
 	return (
 		<div className="container mx-auto px-4 py-8">
