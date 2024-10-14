@@ -9,12 +9,12 @@ import { stripePromise } from '@/lib/stripe'
 
 const Cart: React.FC = async () => {
 	const { user } = await getMeUserServer() // Carregando o usuário no servidor
-	const stripe = await stripePromise;
+	const stripe = stripePromise;
 	return (
 		<PageContainer>
 			<div className="container mb-16">
 				<h2 className="text-2xl font-bold mb-4">Carrinho de Compras</h2>
-				<CartClient user={user} stripe={stripe} /> {/* Passando o usuário para o componente de cliente */}
+				<CartClient user={user} /> {/* Passando o usuário para o componente de cliente */}
 			</div>
 		</PageContainer>
 	)

@@ -104,7 +104,7 @@ export interface Product {
   slugLock?: boolean | null;
   description?: string | null;
   price: number;
-  createdBy?: (string | null) | User;
+  createdBy: string | User;
   categories?: (string | Category)[] | null;
   thumbnail: string | Media;
   images?:

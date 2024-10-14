@@ -2,19 +2,19 @@
 
 import { Button } from '@/components/Button'
 import { useCart } from '@/contexts/CartContext'
+import { stripe } from '@/lib/stripe'
 import { User } from '@/payload-types'
 import { Stripe } from '@stripe/stripe-js'
+import { redirect } from 'next/navigation'
 import React from 'react'
+import { useRouter } from 'next/navigation'
 
-
-const CartClient: React.FC<{ user: User | null, stripe: Stripe | null }> = ({ user, stripe }) => {
+const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
-
+	const router = useRouter()
 	const handleCheckout = async () => {
 		try {
-
-			const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/
-      create`, {
+			const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/create`, {
 				method: 'POST',
 				credentials: 'include',
 				headers: {
@@ -30,8 +30,6 @@ const CartClient: React.FC<{ user: User | null, stripe: Stripe | null }> = ({ us
 					status: 'unpaid'
 				})
 			})
-
-
 
 			const orderResponse = await order.json()
 			const orderId = orderResponse?.doc?.id
@@ -49,31 +47,21 @@ const CartClient: React.FC<{ user: User | null, stripe: Stripe | null }> = ({ us
 					})),
 					userId: user?.id,
 					orderId: orderId,
-					userStripe: user?.stripe
+					userStripe: (cart[0].product.createdBy as User).stripe
 				}),
 			});
 
 			const { session } = await response.json();
 			const sessionId = session?.id
+			if (session && session.url) {
 
+				router.push(session.url)
+			}
 
 			if (!response.ok) {
 				throw new Error('Network response was not ok');
 			}
 
-
-
-
-			// Redirecionar para o checkout do Stripe
-
-			if (stripe) {
-				const { error } = await stripe.redirectToCheckout({ sessionId });
-				if (error) {
-					console.error('Stripe redirect error:', error);
-				}
-			} else {
-				console.error('Stripe não foi inicializado corretamente');
-			}
 		} catch (error) {
 			console.error('Error initiating checkout:', error);
 		}
@@ -89,6 +77,7 @@ const CartClient: React.FC<{ user: User | null, stripe: Stripe | null }> = ({ us
 						<div key={item.product.id} className="flex justify-between items-center mb-2">
 							<span>{item.product.name} (x{item.quantity})</span>
 							<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
+							<span>{(item.product.createdBy as User).stripe} (x{item.quantity})</span>
 							<button
 								onClick={() => removeFromCart(item.product.id)}
 								className="text-red-500 hover:text-red-700"

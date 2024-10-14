@@ -12,13 +12,13 @@ type Props = {
 	user: User | null
 }
 
-const AddToCartButton: React.FC<Props> = ({ product, user }) => {
+const AddToCartButton: React.FC<Props> = ({ product }) => {
 	const { addToCart } = useCart()
 	// const router = useRouter()
 	// const pathname = usePathname() // Inicialize o router
 
 	const handleAddToCart = () => {
-		addToCart(product, user?.stripe as string)
+		addToCart(product)
 	}
 	// const handleLoginRedirect = () => {
 	// 	router.push('/admin?redirect=' + encodeURIComponent(pathname)) // Redireciona para a página de login

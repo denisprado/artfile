@@ -4,6 +4,7 @@ import { authenticated } from '../../access/authenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 import { isAdmin } from '@/access/isAdmin'
 import adminsAndUser from './access/adminsAndUser'
+import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -11,16 +12,19 @@ const Users: CollectionConfig = {
 
   auth: true,
   access: {
-    create: () => true,
+    create: adminsOrNotUnauthenticated,
     read: adminsAndUser,
     update: adminsAndUser,
     delete: isAdmin,
   },
   admin: {
-    useAsTitle: 'email',
+    useAsTitle: 'name',
+    defaultColumns: ['name', 'email', 'purchases'],
   },
+
   fields: [
     {
+      label: 'Nome',
       name: 'name',
       type: 'text',
     },
@@ -30,9 +34,16 @@ const Users: CollectionConfig = {
       required: true,
     },
     {
+      label: 'Tipo de usuário',
       name: 'roles',
       type: 'select',
       hasMany: true,
+      access: {
+        update: isAdmin,
+      },
+      admin: {
+        position: 'sidebar',
+      },
       defaultValue: ['customer'],
       options: [
         {
@@ -52,11 +63,24 @@ const Users: CollectionConfig = {
     {
       name: 'stripe',
       type: 'text',
+      access: {
+        update: isAdmin,
+      },
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
+      label: 'Dados bancários enviados',
       name: 'detailsSubmited',
       type: 'checkbox',
       defaultValue: false,
+      access: {
+        update: isAdmin,
+      },
+      admin: {
+        position: 'sidebar',
+      },
     },
     {
       name: 'purchases',

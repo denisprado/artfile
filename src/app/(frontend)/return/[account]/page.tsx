@@ -1,47 +1,25 @@
 import { Button } from "@/components/Button";
-import CreateAccountLink from "@/components/CreateAccountLink";
+import { stripe } from "@/lib/stripe";
 import { getMeUserServer } from "@/utilities/getMeUserServer";
-import React from "react";
+import configPromise from '@payload-config';
+import { getPayloadHMR } from '@payloadcms/next/utilities';
 
 export default async function Return({ params }) {
 
 	const { user } = await getMeUserServer()
-	/** Trocar pela REST Api do payloadcms */
-	try {
-		const getVerify = async () => {
-			try {
-				const accountVerify = await fetch('/api/account-verify', {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						account: params?.account,
-					}),
-				})
-				const data = await accountVerify.json()
-				await fetch('/api/users/' + user!.id, {
-					method: 'PATCH',
-					credentials: 'include',
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({
-						detailsSubmited: data.details_submitted,
 
-					}),
-				})
+	const payload = await getPayloadHMR({ config: configPromise })
+	const accountReturned = await stripe.accounts.retrieve(params.account)
 
-				return data.details_submitted
-			} catch (err) {
-				console.log(err)
-				return err
-			}
+	await payload.update({
+		collection: 'users',
+		where: {
+			id: { equals: user?.id! }
+		},
+		data: {
+			detailsSubmited: accountReturned.details_submitted
 		}
-	} catch (err) {
-		console.log(err)
-		return err
-	}
+	})
 
 
 	return (

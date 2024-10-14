@@ -1,5 +1,5 @@
 import { isAdminOrVendor } from '@/access/isAdminOrVendor'
-import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy copy'
+import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy'
 import { slugField } from '@/fields/slug'
 import { CollectionConfig } from 'payload'
 

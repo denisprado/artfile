@@ -1,5 +1,6 @@
+import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrVendor } from '@/access/isAdminOrVendor'
-import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy copy'
+import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { CollectionConfig } from 'payload'
@@ -72,12 +73,10 @@ const Products: CollectionConfig = {
               relationTo: 'users',
               required: true,
               access: {
-                update: () => false,
+                update: isAdmin,
               },
               admin: {
-                readOnly: true,
                 position: 'sidebar',
-                condition: (data) => Boolean(data?.createdBy),
               },
             },
             {
@@ -86,6 +85,7 @@ const Products: CollectionConfig = {
               admin: {
                 position: 'sidebar',
               },
+
               hasMany: true,
               relationTo: 'categories',
             },
