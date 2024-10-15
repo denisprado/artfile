@@ -61,7 +61,8 @@ const ProductPage = async ({ params }) => {
 							className="w-full h-auto rounded-lg shadow-lg"
 							width={widthToUSe!}
 							height={heightToUSe!}
-							objectFit='cover'
+							style={{ objectFit: 'cover' }}
+							priority
 						/>
 					)}
 				</div>

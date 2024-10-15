@@ -14,7 +14,6 @@ const filename = fileURLToPath(import.meta.url)
 export const Media: CollectionConfig = {
   slug: 'media',
   labels: { plural: 'Mídias', singular: 'Mídia' },
-
   access: {
     create: isAdminOrCreatedBy,
     delete: isAdminOrCreatedBy,
@@ -42,7 +41,7 @@ export const Media: CollectionConfig = {
     imageSizes: [
       {
         name: 'thumbnail',
-        width: 300,
+        width: 340,
         height: 300,
         position: 'centre',
       },

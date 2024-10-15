@@ -96,6 +96,9 @@ importers:
       lucide-react:
         specifier: ^0.378.0
         version: 0.378.0(react@19.0.0-rc-5dcb0097-20240918)
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
       micro:
         specifier: ^10.0.1
         version: 10.0.1
@@ -157,6 +160,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.6
         version: 9.0.7
+      '@types/md5':
+        specifier: ^2.3.5
+        version: 2.3.5
       '@types/node':
         specifier: 18.11.3
         version: 18.11.3
@@ -178,6 +184,9 @@ importers:
       eslint-config-next:
         specifier: 15.0.0-canary.160
         version: 15.0.0-canary.160(eslint@8.57.1)(typescript@5.5.4)
+      i:
+        specifier: ^0.3.7
+        version: 0.3.7
       postcss:
         specifier: ^8.4.38
         version: 8.4.47
@@ -1736,6 +1745,9 @@ packages:
   '@types/jsonwebtoken@9.0.7':
     resolution: {integrity: sha512-ugo316mmTYBl2g81zDFnZ7cfxlut3o+/EQdaP7J8QN2kY6lJ22hmQYCK5EHcJHbrW+dkCGSCPgbG8JtYj6qSrg==}
 
+  '@types/md5@2.3.5':
+    resolution: {integrity: sha512-/i42wjYNgE6wf0j2bcTX6kuowmdL/6PE4IVitMpm2eYKBUuYCprdcWVK+xEF0gcV6ufMCRhtxmReGfc6hIK7Jw==}
+
   '@types/node@18.11.3':
     resolution: {integrity: sha512-fNjDQzzOsZeKZu5NATgXUPsaFaTxeRgFXoosrHivTl8RGeV733OLawXsGfEk9a8/tySyZUyiZ6E8LcjPFZ2y1A==}
 
@@ -3075,6 +3087,10 @@ packages:
   http-status@1.6.2:
     resolution: {integrity: sha512-oUExvfNckrpTpDazph7kNG8sQi5au3BeTo0idaZFXEhTaJKu7GNJCLHI0rYY2wljm548MSTM+Ljj/c6anqu2zQ==}
     engines: {node: '>= 0.4.0'}
+
+  i@0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -6986,6 +7002,8 @@ snapshots:
     dependencies:
       '@types/node': 18.11.3
 
+  '@types/md5@2.3.5': {}
+
   '@types/node@18.11.3': {}
 
   '@types/parse-json@4.0.2': {}
@@ -8716,6 +8734,8 @@ snapshots:
       toidentifier: 1.0.0
 
   http-status@1.6.2: {}
+
+  i@0.3.7: {}
 
   iconv-lite@0.4.24:
     dependencies:

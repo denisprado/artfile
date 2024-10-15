@@ -26,13 +26,12 @@ const AddToCartButton: React.FC<Props> = ({ product }) => {
 
 
 	const handleAddToCart = () => {
-		console.log(userStripe)
 		userStripe && addToCart(product, userStripe)
 	}
 
 	return (
 		<Button
-			className='no-click'
+			href='#'
 			onClick={handleAddToCart}
 			label='Adicionar ao carrinho' appearance='secondary'
 		>

@@ -1,16 +1,13 @@
-import React from 'react'
-import { getMeUserServer } from '@/utilities/getMeUserServer'
-import AddToCartButton from './AddCartButton'
 import type { Product } from '@/payload-types'
+import React from 'react'
+import AddToCartButton from './AddCartButton'
 
 type Props = {
 	product: Product
 }
 
 const AddToCartButtonWrapper: React.FC<Props> = async ({ product }) => {
-	const { user } = await getMeUserServer()
-
-	return <AddToCartButton product={product} user={user!} />
+	return <AddToCartButton product={product} />
 }
 
 export default AddToCartButtonWrapper

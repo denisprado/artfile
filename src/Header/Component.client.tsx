@@ -42,7 +42,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, user }) => {
 				<Logo />
 			</Link>
 			<div className='pl-20 pr-2 w-full relative'>
-				<Search placeholder={'Buscar produto ou loja...'} />
+				<Search placeholder={'Buscar no site todo...'} />
 			</div>
 			<HeaderNav header={header} user={user} />
 		</header>

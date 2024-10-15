@@ -4,7 +4,7 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Post, Product, Store, User } from '@/payload-types'
+import type { Order, Post, Product, Store, User } from '@/payload-types'
 
 import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
 import { Media } from '@/components/Media'
@@ -14,7 +14,7 @@ import Image from 'next/image'; // Import Image from Next.js
 export type CardProps = {
 	alignItems?: 'center'
 	className?: string
-	doc: Post | Store | Product
+	doc: Post | Store | Product | Order
 	relationTo: 'posts' | 'stores' | 'products' | 'orders'
 	showCategories?: boolean
 	title?: string
@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = (props) => {
 			"/" + imgStore : '/media/artfile-logo.svg'
 
 
-	const widthToUSe = isProduct && imgProduct ? thumbnail?.sizes?.thumbnail?.width : isStore && imgStore ? logoStore?.sizes?.thumbnail?.width : 500
+	const widthToUSe = isProduct && imgProduct ? thumbnail?.sizes?.thumbnail?.width : isStore && imgStore ? logoStore?.sizes?.thumbnail?.width : 340
 
 	const heightToUse = (isProduct && imgProduct) ? thumbnail?.sizes?.thumbnail?.height : (isStore && imgStore) ? logoStore?.sizes?.thumbnail?.height : 300
 
@@ -56,9 +56,9 @@ export const Card: React.FC<CardProps> = (props) => {
 			)}
 			ref={card.ref}
 		>
-			<div className="relative w-full">
-				{!imageUrlToUse && <Image src={'/media/logo-artfile.svg'} alt={title || name} width={widthToUSe} height={heightToUse} />}
-				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} width={widthToUSe} height={heightToUse} />}
+			<div className="relative w-full aspect-square">
+				{!imageUrlToUse && <Image src={'/media/logo-artfile.svg'} alt={title || name} fill style={{ objectFit: 'cover' }} />}
+				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} fill style={{ objectFit: 'cover' }} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 

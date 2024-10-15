@@ -31,11 +31,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<body className='overflow-x-hidden overflow-y-scroll'>
 				<Providers>
 					<CartProvider>
-						<AdminBar
-							adminBarProps={{
-								preview: isEnabled,
-							}}
-						/>
 						<LivePreviewListener />
 						<div className='grid min-h-[100dvh] grid-rows-[auto_auto_1fr_auto] '>
 							<Suspense>

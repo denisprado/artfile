@@ -17,12 +17,14 @@ interface Props {
   external?: boolean
   newTab?: boolean
   scroll?: boolean
+  noClick?: boolean
 }
 
 function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,
   scroll = true,
+  noClick = false,
 }: Props): UseClickableCardType<T> {
   const router = useRouter()
   const card = useRef<T>(null)
@@ -36,22 +38,16 @@ function useClickableCard<T extends HTMLElement>({
       if (e.target) {
         const target = e.target as Element
 
-        // Verifica se o elemento clicado tem a classe 'no-click'
-
-        if (target.classList.contains('no-click')) {
-          return // Ignora o clique se for o elemento que não deve abrir o link
-        }
-
         const timeNow = +new Date()
         const parent = target?.closest('a')
 
-        pressedButton.current = e.button
+        pressedButton!.current = e.button
 
         if (!parent) {
-          hasActiveParent.current = false
-          timeDown.current = timeNow
+          hasActiveParent!.current! = false
+          timeDown!.current! = timeNow
         } else {
-          hasActiveParent.current = true
+          hasActiveParent!.current! = true
         }
       }
     },
@@ -63,15 +59,15 @@ function useClickableCard<T extends HTMLElement>({
     (e: MouseEvent) => {
       if (link.current?.href) {
         const timeNow = +new Date()
-        const difference = timeNow - timeDown.current
+        const difference = timeNow - timeDown!.current
 
         if (link.current?.href && difference <= 250) {
-          if (!hasActiveParent.current && pressedButton.current === 0 && !e.ctrlKey) {
+          if (!hasActiveParent!.current && pressedButton!.current === 0 && !e.ctrlKey) {
             if (external) {
               const target = newTab ? '_blank' : '_self'
-              window.open(link.current.href, target)
+              window.open(link!.current.href, target)
             } else {
-              router.push(link.current.href, { scroll })
+              router.push(link!.current.href, { scroll })
             }
           }
         }
