@@ -4,13 +4,12 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Post, Store, Product, User } from '@/payload-types'
+import type { Post, Product, Store, User } from '@/payload-types'
 
-import { Media } from '@/components/Media'
-import Image from 'next/image' // Import Image from Next.js
-import AddToCartButtonWrapper from '@/app/(frontend)/products/[slug]/AddToCartButtonWrapper'
 import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
-import { getMeUserClient } from '@/utilities/getMeUserClient'
+import { Media } from '@/components/Media'
+import Image from 'next/image'; // Import Image from Next.js
+
 
 export type CardProps = {
 	alignItems?: 'center'
@@ -29,8 +28,6 @@ export const Card: React.FC<CardProps> = (props) => {
 	const isStore = relationTo === 'stores'
 	const isOrder = relationTo === 'orders'
 	const isPost = relationTo === 'posts'
-
-	const user = getMeUserClient()
 
 	const { slug, categories, meta, title, name, description, price, imageUrl, thumbnail, logoStore, id } = doc as any
 
@@ -104,10 +101,8 @@ export const Card: React.FC<CardProps> = (props) => {
 			}
 			{isProduct && price &&
 				<div className='p-4'>
-					<AddToCartButton product={doc as Product} user={user as unknown as User} />
+					<AddToCartButton product={doc as Product} />
 				</div>
-
-
 			}
 
 

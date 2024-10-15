@@ -1,7 +1,7 @@
 'use client'
 
 import { useCart } from '@/contexts/CartContext'
-import type { Product, User } from '@/payload-types'
+import type { Product } from '@/payload-types'
 import React from 'react'
 
 import { Button } from '@/components/Button'
@@ -9,22 +9,14 @@ import { Button } from '@/components/Button'
 
 type Props = {
 	product: Product
-	user: User | null
 }
 
 const AddToCartButton: React.FC<Props> = ({ product }) => {
 	const { addToCart } = useCart()
-	// const router = useRouter()
-	// const pathname = usePathname() // Inicialize o router
 
 	const handleAddToCart = () => {
 		addToCart(product)
 	}
-	// const handleLoginRedirect = () => {
-	// 	router.push('/admin?redirect=' + encodeURIComponent(pathname)) // Redireciona para a página de login
-	// }
-
-
 
 	return (
 		<Button
