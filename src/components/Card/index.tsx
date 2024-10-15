@@ -57,8 +57,8 @@ export const Card: React.FC<CardProps> = (props) => {
 			ref={card.ref}
 		>
 			<div className="relative w-full">
-				{!imageUrlToUse && <Image src={'/media/logo-artfile.svg'} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
-				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} layout="responsive" width={widthToUSe} height={heightToUse} />}
+				{!imageUrlToUse && <Image src={'/media/logo-artfile.svg'} alt={title || name} width={widthToUSe} height={heightToUse} />}
+				{imageUrlToUse && <Image src={imageUrlToUse} alt={title || name} width={widthToUSe} height={heightToUse} />}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 

@@ -13,6 +13,7 @@ type Props = {
 const AddToCartButton: React.FC<Props> = ({ product }) => {
 	const { addToCart } = useCart()
 	const [userStripe, setUserStripe] = useState('')
+
 	useEffect(() => {
 		async function fetchData() {
 			const userStripe = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${(product?.createdBy as User)?.id}`)
@@ -20,11 +21,12 @@ const AddToCartButton: React.FC<Props> = ({ product }) => {
 			setUserStripe(user?.stripe)
 			return user
 		}
-		fetchData()
+		product && fetchData()
 	}, [product])
 
 
 	const handleAddToCart = () => {
+		console.log(userStripe)
 		userStripe && addToCart(product, userStripe)
 	}
 
@@ -32,7 +34,7 @@ const AddToCartButton: React.FC<Props> = ({ product }) => {
 		<Button
 			className='no-click'
 			onClick={handleAddToCart}
-			type='button' label='Adicionar ao carrinho' appearance='secondary'
+			label='Adicionar ao carrinho' appearance='secondary'
 		>
 		</Button>
 	)

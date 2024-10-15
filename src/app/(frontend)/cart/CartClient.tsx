@@ -85,12 +85,33 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 					{Object.entries(groupedItems).map(([stripeId, items]) => (
 						<div key={stripeId}>
 							<h3>Loja: {stripeId}</h3>
-							{items.map((item) => (
-								<div key={item.product.id} className="flex justify-between items-center mb-2">
-									<span>{item.product.name} (x{item.quantity})</span>
-									<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
-								</div>
-							))}
+							<table className="min-w-full border">
+								<thead>
+									<tr className='border'>
+										<th className="text-left">Produto</th>
+										<th className="text-right">Quantidade</th>
+										<th className="text-right">Preço</th>
+										<th className="text-right">Ações</th>
+									</tr>
+								</thead>
+								<tbody>
+									{items.map((item) => (
+										<tr key={item.product.id} >
+											<td className="text-left">{item.product.name}</td>
+											<td className="text-right">{item.quantity}</td>
+											<td className="text-right">R$ {(item.product.price * item.quantity).toFixed(2)}</td>
+											<td className="text-right">
+												<Button
+													onClick={() => removeFromCart(item.product.id)}
+													className="ml-4"
+													appearance='none'
+													label='Remover'
+												/>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
 							<div className="mt-4 text-right">
 								<strong>Total: R$ {items.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2)}</strong>
 							</div>

@@ -13,7 +13,7 @@ const Users: CollectionConfig = {
   auth: true,
   access: {
     create: adminsOrNotUnauthenticated,
-    read: adminsAndUser,
+    read: () => true,
     update: adminsAndUser,
     delete: isAdmin,
   },
