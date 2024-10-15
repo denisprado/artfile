@@ -1,14 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
-import { getPayload } from 'payload'
-import payloadConfig from '@payload-config'
-import { redirect } from 'next/navigation'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const { items, userId, orderId, userStripe } = body
-    console.log(userStripe)
+
     if (!items || items.length === 0) {
       return NextResponse.json({ error: 'No items provided' }, { status: 400 })
     }

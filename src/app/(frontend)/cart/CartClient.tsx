@@ -9,7 +9,7 @@ import React from 'react'
 const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 	const { cart, removeFromCart, getCartTotal } = useCart()
 	const router = useRouter()
-	const handleCheckout = async () => {
+	const handleCheckout = async (items: typeof cart) => {
 		try {
 			const order = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/orders/create`, {
 				method: 'POST',
@@ -18,7 +18,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					products: cart.map(item => (
+					products: items.map(item => (
 						item.product.id
 					)),
 					totalAmount: getCartTotal(),
@@ -37,10 +37,11 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({
-					items: cart.map(item => ({
+					items: items.map(item => ({
 						name: item.product.name,
 						price: item.product.price,
 						quantity: item.quantity,
+						userStripe: (cart[0]?.product?.createdBy as User)?.stripe
 					})),
 					userId: user?.id,
 					orderId: orderId,
@@ -49,9 +50,8 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 			});
 
 			const { session } = await response.json();
-			const sessionId = session?.id
-			if (session && session.url) {
 
+			if (session && session.url) {
 				router.push(session.url)
 			}
 
@@ -64,35 +64,45 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 		}
 	}
 
+	const groupedItems = cart.reduce((acc, item) => {
+		const stripeId = (item.product.createdBy as User).stripe;
+
+		if (stripeId && !acc[stripeId]) {
+			acc[stripeId] = [];
+		}
+		if (stripeId) {
+			acc[stripeId].push(item);
+		}
+		return acc;
+	}, {} as Record<string, typeof cart>);
+
 	return (
 		<>
 			{cart.length === 0 ? (
 				<p>Seu carrinho está vazio.</p>
 			) : (
 				<>
-					{cart.map((item) => (
-						<div key={item.product.id} className="flex justify-between items-center mb-2">
-							<span>{item.product.name} (x{item.quantity})</span>
-							<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
-							<span>{(item.product.createdBy as User).stripe} (x{item.quantity})</span>
-							<button
-								onClick={() => removeFromCart(item.product.id)}
-								className="text-red-500 hover:text-red-700"
+					{Object.entries(groupedItems).map(([stripeId, items]) => (
+						<div key={stripeId}>
+							<h3>Loja: {stripeId}</h3>
+							{items.map((item) => (
+								<div key={item.product.id} className="flex justify-between items-center mb-2">
+									<span>{item.product.name} (x{item.quantity})</span>
+									<span>R$ {(item.product.price * item.quantity).toFixed(2)}</span>
+								</div>
+							))}
+							<div className="mt-4 text-right">
+								<strong>Total: R$ {items.reduce((total, item) => total + item.product.price * item.quantity, 0).toFixed(2)}</strong>
+							</div>
+							{user ? <Button
+								onClick={() => handleCheckout(items)}
+								className="mt-4 w-full"
+								appearance='primary'
+								label='Finalizar Compra'
 							>
-								Remover
-							</button>
+							</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
 						</div>
 					))}
-					<div className="mt-4 text-right">
-						<strong>Total: R$ {getCartTotal().toFixed(2)}</strong>
-					</div>
-					{user ? <Button
-						onClick={handleCheckout}
-						className="mt-4 w-full"
-						appearance='primary'
-						label='Finalizar Compra'
-					>
-					</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
 				</>
 			)}
 		</>
