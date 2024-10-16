@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 		collection: 'pages',
 		draft: false,
 		limit: 1000,
-		overrideAccess: false,
+
 	})
 
 	const params = pages.docs

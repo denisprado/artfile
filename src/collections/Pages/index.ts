@@ -20,29 +20,34 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
-import { isAdmin } from '@/access/isAdmin'
 export const Pages: CollectionConfig = {
   slug: 'pages',
-  labels: { plural: 'Páginas', singular: 'Página' },
-
   access: {
-    create: isAdmin,
-    delete: isAdmin,
-    read: isAdmin,
-    update: isAdmin,
+    create: authenticated,
+    delete: authenticated,
+    read: authenticatedOrPublished,
+    update: authenticated,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'pages',
         })
+
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
-    preview: (doc) =>
-      generatePreviewPath({ path: `/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+    preview: (data) => {
+      const path = generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'pages',
+      })
+
+      return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
+    },
     useAsTitle: 'title',
   },
   fields: [
@@ -69,33 +74,33 @@ export const Pages: CollectionConfig = {
           ],
           label: 'Content',
         },
-        {
-          name: 'meta',
-          label: 'SEO',
-          fields: [
-            OverviewField({
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-              imagePath: 'meta.image',
-            }),
-            MetaTitleField({
-              hasGenerateFn: true,
-            }),
-            MetaImageField({
-              relationTo: 'media',
-            }),
+        // {
+        //   name: 'meta',
+        //   label: 'SEO',
+        //   fields: [
+        //     OverviewField({
+        //       titlePath: 'meta.title',
+        //       descriptionPath: 'meta.description',
+        //       imagePath: 'meta.image',
+        //     }),
+        //     MetaTitleField({
+        //       hasGenerateFn: true,
+        //     }),
+        //     MetaImageField({
+        //       relationTo: 'media',
+        //     }),
 
-            MetaDescriptionField({}),
-            PreviewField({
-              // if the `generateUrl` function is configured
-              hasGenerateFn: true,
+        //     MetaDescriptionField({}),
+        //     PreviewField({
+        //       // if the `generateUrl` function is configured
+        //       hasGenerateFn: true,
 
-              // field paths to match the target field for data
-              titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
-            }),
-          ],
-        },
+        //       // field paths to match the target field for data
+        //       titlePath: 'meta.title',
+        //       descriptionPath: 'meta.description',
+        //     }),
+        //   ],
+        // },
       ],
     },
     {

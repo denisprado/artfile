@@ -35,6 +35,7 @@ import { updateOrderStatus } from './utilities/updateOrderStatus'
 import { searchPlugin } from '@payloadcms/plugin-search'
 import { CategoriesMenu } from './CategoriesMenu/config'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -185,10 +186,10 @@ export default buildConfig({
     nestedDocsPlugin({
       collections: ['categories'],
     }),
-    // seoPlugin({
-    //   generateTitle,
-    //   generateURL,
-    // }),
+    seoPlugin({
+      generateTitle,
+      generateURL,
+    }),
     s3Storage({
       collections: {
         media: true,
