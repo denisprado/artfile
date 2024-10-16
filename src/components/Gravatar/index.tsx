@@ -20,10 +20,12 @@ export const GravatarAccountIcon = ({ user }: { user: User }) => {
 	const query = `?${params}`
 
 	return (
-		<Image
+		// eslint-disable-next-line @next/next/no-img-element
+		<img
 			alt={user?.name!}
-			className="gravatar-account"
+			className="gravatar-account hover:outline-2 hover:outline hover:outline-black"
 			height={25}
+
 			src={`https://www.gravatar.com/avatar/${hash}?${query}`}
 			style={{ borderRadius: '50%' }}
 			width={25}

@@ -1,14 +1,23 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionAfterLogoutHook, CollectionConfig } from 'payload'
 
 import { authenticated } from '../../access/authenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 import { isAdmin } from '@/access/isAdmin'
 import adminsAndUser from './access/adminsAndUser'
 import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
+import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
+
+const afterLogoutHook: CollectionAfterLogoutHook = async ({ req }) => {
+  redirect('/')
+}
 
 const Users: CollectionConfig = {
   slug: 'users',
   labels: { plural: 'Usuários', singular: 'Usuário' },
+  hooks: {
+    afterLogout: [afterLogoutHook],
+  },
 
   auth: true,
   access: {

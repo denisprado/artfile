@@ -21,7 +21,14 @@ const nextConfig = {
 		],
 	},
 	reactStrictMode: true,
-	redirects,
+	// redirects: async () => [
+	// 	{
+	// 		source: '/admin/logout',
+	// 		destination: '/',
+	// 		permanent: true, // ou true, se você quiser que seja um redirecionamento permanente
+	// 	},
+	// ],
+	// redirects,
 	webpack: (config, { isServer }) => {
 		if (!isServer) {
 			config.resolve.fallback = {
