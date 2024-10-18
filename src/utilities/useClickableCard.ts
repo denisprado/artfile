@@ -24,20 +24,22 @@ function useClickableCard<T extends HTMLElement>({
   external = false,
   newTab = false,
   scroll = true,
-  noClick = false,
 }: Props): UseClickableCardType<T> {
   const router = useRouter()
   const card = useRef<T>(null)
   const link = useRef<HTMLAnchorElement>(null)
-  const timeDown = useRef<number>(0)
-  const hasActiveParent = useRef<boolean>(false)
-  const pressedButton = useRef<number>(0)
+  let timeDown = useRef<number>(0)
+  let hasActiveParent = useRef<boolean>(false)
+  let pressedButton = useRef<number>(0)
 
   const handleMouseDown = useCallback(
     (e: MouseEvent) => {
       if (e.target) {
         const target = e.target as Element
 
+        if (target.childNodes[0].textContent === 'Adicionar ao carrinho') {
+          return // Ignora o clique se for o elemento que não deve abrir o link
+        }
         const timeNow = +new Date()
         const parent = target?.closest('a')
 
