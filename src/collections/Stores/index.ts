@@ -1,3 +1,4 @@
+import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrVendor } from '@/access/isAdminOrVendor'
 import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy'
 import { slugField } from '@/fields/slug'
@@ -8,7 +9,7 @@ const Stores: CollectionConfig = {
   labels: { plural: 'Lojas', singular: 'Loja' },
   access: {
     create: isAdminOrVendor,
-    read: isAdminOrVendorAndCreatedBy,
+    read: () => true,
     update: isAdminOrVendorAndCreatedBy,
     delete: isAdminOrVendorAndCreatedBy,
   },
@@ -68,7 +69,7 @@ const Stores: CollectionConfig = {
       relationTo: 'users',
       required: true,
       access: {
-        update: () => false,
+        update: isAdmin,
       },
       admin: {
         readOnly: true,

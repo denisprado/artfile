@@ -21,7 +21,7 @@ export const HeaderNav = async ({ header, user }: {
 		<span className="sr-only">Notifications</span><ShoppingCartIcon></ShoppingCartIcon>{cartCountNumber > 0 ? <span className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{cartCountNumber}</span> : <></>}</span>
 
 	const cart = {
-		id: '1234',
+
 		newTab: false,
 		url: '/cart',
 	}
@@ -34,8 +34,8 @@ export const HeaderNav = async ({ header, user }: {
 				// Corrigido o erro de tipo de SearchTable, garantindo que seja renderizado apenas se for um componente válido.
 			})}
 			{(await user).user !== null ? <CMSLink label={'Compras'} appearance={"link"} url={'/orders/products'} /> : <CMSLink label={'Entrar'} appearance={"link"} url={'/admin'}></CMSLink>}
-			<CMSLink key={cart.id} {...cart} appearance={"link"} >{cartCount}</CMSLink>
-			<Link key={cart.id} href={'/admin'} className='w-8 h-8 flex justify-center items-center'><GravatarAccountIcon user={(await user).user} /></Link>
+			<CMSLink {...cart} appearance={"link"} >{cartCount}</CMSLink>
+			<Link href={'/admin'} className='w-8 h-8 flex justify-center items-center'><GravatarAccountIcon user={(await user).user} /></Link>
 
 		</nav>
 	)
