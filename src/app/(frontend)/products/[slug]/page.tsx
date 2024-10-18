@@ -52,19 +52,42 @@ const ProductPage = async ({ params }) => {
 	return (
 		<div className="container mx-auto px-4 py-8">
 
-			<div className="grid md:grid-cols-2 gap-8">
-				<div>
-					{product.thumbnail && (
-						<Image
-							src={imageUrlToUse}
-							alt={product?.name!}
-							className="w-full h-auto rounded-lg shadow-lg"
-							width={widthToUSe!}
-							height={heightToUSe!}
-							style={{ objectFit: 'cover' }}
-							priority
-						/>
-					)}
+			<div className="grid md:grid-cols-2 gap-8 border border-red-50">
+				<div className='grid grid-cols-1 gap-4 sm:grid-cols-12 border border-red-500'>
+					{product.images?.length! > 0 && <div className='col-span-2 border border-red-700 flex flex-col gap-2'>
+						{
+							(product.images as Product['images'])?.map(image => {
+								return image && (
+									<div className='w-full' key={image.id}>
+										<Image
+											src={"/" + (image.images as Media)?.sizes?.thumbnail?.filename!}
+											alt={product?.name!}
+											className="w-full h-7 rounded-lg shadow-lg"
+											width={300}
+											height={300}
+											style={{ objectFit: 'cover' }}
+											priority
+										/>
+									</div>
+								)
+							})
+						}
+
+					</div>}
+					<div className='col-span-10'>
+
+						{product.thumbnail && (
+							<Image
+								src={imageUrlToUse}
+								alt={product?.name!}
+								className="w-full h-auto rounded-lg shadow-lg"
+								width={widthToUSe!}
+								height={heightToUSe!}
+								style={{ objectFit: 'cover' }}
+								priority
+							/>
+						)}
+					</div>
 				</div>
 
 				<div>
