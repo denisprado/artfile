@@ -21,13 +21,17 @@ const Products: CollectionConfig = {
     livePreview: {
       url: ({ data }) => {
         const path = generatePreviewPath({
-          path: `/products/${typeof data?.slug === 'string' ? data.slug : ''}`,
+          slug: `/products/${typeof data.doc?.slug === 'string' ? data.doc.slug : ''}`,
+          collection: 'products',
         })
         return `${process.env.NEXT_PUBLIC_SERVER_URL}${path}`
       },
     },
     preview: (doc) =>
-      generatePreviewPath({ path: `/products/${typeof doc?.slug === 'string' ? doc.slug : ''}` }),
+      generatePreviewPath({
+        slug: `/products/${typeof doc?.slug === 'string' ? doc.slug : ''}`,
+        collection: 'products',
+      }),
   },
   hooks: {
     beforeChange: [
