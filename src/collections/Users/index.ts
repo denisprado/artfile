@@ -8,16 +8,16 @@ import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { NextResponse } from 'next/server'
 import { redirect } from 'next/navigation'
 
-const afterLogoutHook: CollectionAfterLogoutHook = async ({ req }) => {
-  redirect('/')
-}
+// const afterLogoutHook: CollectionAfterLogoutHook = async ({ req }) => {
+//   redirect('/')
+// }
 
 const Users: CollectionConfig = {
   slug: 'users',
   labels: { plural: 'Usuários', singular: 'Usuário' },
-  hooks: {
-    afterLogout: [afterLogoutHook],
-  },
+  // hooks: {
+  //   afterLogout: [afterLogoutHook],
+  // },
 
   auth: true,
   access: {
