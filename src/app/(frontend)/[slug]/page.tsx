@@ -12,6 +12,7 @@ import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
+import PageContainer from '@/components/PageContainer'
 
 export async function generateStaticParams() {
 	const payload = await getPayloadHMR({ config: configPromise })
@@ -58,14 +59,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 	const { hero, layout } = page
 
 	return (
-		<article className="pt-16 pb-24">
+		<PageContainer>
 			<PageClient />
 			{/* Allows redirects for valid pages too */}
 			<PayloadRedirects disableNotFound url={url} />
 
 			{hero && <RenderHero {...hero} />}
 			{layout && <RenderBlocks blocks={layout} />}
-		</article>
+		</PageContainer>
 	)
 }
 

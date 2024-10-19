@@ -21,7 +21,21 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-	const [cart, setCart] = useState<CartItem[]>([])
+	const [cart, setCart] = useState<CartItem[]>(() => {
+		// Recupera o carrinho do localStorage apenas no cliente
+		if (typeof window !== 'undefined') {
+			const storedCart = localStorage.getItem('cart');
+			return storedCart ? JSON.parse(storedCart) : [];
+		}
+		return []; // Retorna um array vazio se estiver no servidor
+	});
+
+	useEffect(() => {
+		// Atualiza o localStorage sempre que o carrinho mudar
+		if (typeof window !== 'undefined') {
+			localStorage.setItem('cart', JSON.stringify(cart));
+		}
+	}, [cart]);
 
 	useEffect(() => {
 		const savedCart = localStorage.getItem('cart')
@@ -32,6 +46,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 				setCart(parsedCart)
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {

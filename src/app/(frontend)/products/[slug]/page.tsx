@@ -8,8 +8,59 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import configPromise from '@payload-config'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import { DownloadIcon, LockIcon } from 'lucide-react'
+import Carrousel from '@/components/Carrousel'
 
-export async function generateMetadata({ params }) {
+type ProductPageProps = {
+	params: { slug: string };
+}
+
+const ProductFiles: React.FC<{ product: Product; isPurchased: boolean }> = ({ product, isPurchased }) => {
+	if (!product.files || product.files.length === 0) {
+		return <p>Esse produto não tem arquivos.</p>
+	}
+
+	const fileBaseUrl = process.env.NEXT_PUBLIC_S3_BUCKET_URL || 'https://plato-artfile.s3.us-east-2.amazonaws.com/';
+
+	const numberOfFiles = product.files.length
+
+	const initialNumberOfCols = numberOfFiles < 4 ?
+		numberOfFiles === 3 ?
+			"col-span-4" :
+			numberOfFiles < 3 ?
+				"col-span-6" : "col-span-4" :
+		"col-span-3"
+
+	return (
+		<>
+			<h6>Arquivos neste produto</h6>
+			<div className='grid grid-cols-12 gap-4'>
+				{product.files.map((file) => (
+
+					<a
+						key={file.id} className={initialNumberOfCols}
+						target='_blank'
+						rel='noopener noreferrer'
+						href={isPurchased ? `${fileBaseUrl}${(file.file as Media)?.filename}` : '/#'}
+					>
+						<span className='flex flex-col gap-2'>
+							<Image
+								src={`/${(file.file as Media)?.sizes?.thumbnail?.filename || ''}`}
+								alt={(file.file as Media).filename || 'Imagem do arquivo'}
+								width={(file.file as Media)?.sizes?.thumbnail?.width || 100}
+								height={(file.file as Media)?.sizes?.thumbnail?.height || 100}
+							/>
+							{isPurchased ? <span className='flex gap-2 items-center'><DownloadIcon color='green' /><span className='hover:underline'>Baixar</span></span> : <span className='flex gap-2 items-center'><LockIcon color='red' /><span className='hover:underline'>Comprar</span></span>}
+							<span className='font-medium text-pretty mb-8'>{file.title} </span>
+						</span>
+					</a>
+
+				))}
+			</div>
+		</>
+	)
+}
+
+export async function generateMetadata({ params }: ProductPageProps) {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
@@ -24,7 +75,7 @@ export async function generateMetadata({ params }) {
 	}
 }
 
-const ProductPage = async ({ params }) => {
+const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 	const payload = await getPayloadHMR({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
@@ -32,89 +83,36 @@ const ProductPage = async ({ params }) => {
 	}).then((res) => res.docs[0] as unknown as Product | null)
 
 	const { user } = await getMeUserServer()
-
 	const userPurchases = user?.purchases as User['purchases']
 
-	const isPurchased = userPurchases?.some(userPurchase => ((userPurchase as Order).products as Product[]).some(prod => prod.id === product?.id))
+	// Garantindo que isPurchased seja sempre um booleano
+	const isPurchased = userPurchases?.some(userPurchase =>
+		((userPurchase as Order).products as Product[]).some(prod => prod.id === product?.id)
+	) ?? false; // Se for undefined, assume false
 
 	if (!product) {
 		return notFound()
 	}
 
-	const SIZE = 'card'
-	const imgProduct = (product.thumbnail as Media)?.sizes?.[SIZE]?.filename
-	const imageUrlToUse =
-		product ? "/" + imgProduct : '/media/artfile-logo.svg'
-	const widthToUSe = product && imgProduct ? (product.thumbnail as Media)?.sizes?.[SIZE]?.width : 500
-	const heightToUSe = product && imgProduct ? (product.thumbnail as Media).sizes?.[SIZE]?.height : 500
 	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
 
 	return (
 		<div className="container mx-auto px-4 py-8">
 
-			<div className="grid md:grid-cols-2 gap-8 border border-red-50">
-				<div className='grid grid-cols-1 gap-4 sm:grid-cols-12 border border-red-500'>
-					{product.images?.length! > 0 && <div className='col-span-2 border border-red-700 flex flex-col gap-2'>
-						{
-							(product.images as Product['images'])?.map(image => {
-								return image && (
-									<div className='w-full' key={image.id}>
-										<Image
-											src={"/" + (image.images as Media)?.sizes?.thumbnail?.filename!}
-											alt={product?.name!}
-											className="w-full h-7 rounded-lg shadow-lg"
-											width={300}
-											height={300}
-											style={{ objectFit: 'cover' }}
-											priority
-										/>
-									</div>
-								)
-							})
-						}
-
-					</div>}
-					<div className='col-span-10'>
-
-						{product.thumbnail && (
-							<Image
-								src={imageUrlToUse}
-								alt={product?.name!}
-								className="w-full h-auto rounded-lg shadow-lg"
-								width={widthToUSe!}
-								height={heightToUSe!}
-								style={{ objectFit: 'cover' }}
-								priority
-							/>
-						)}
-					</div>
-				</div>
+			<div className="grid md:grid-cols-2 gap-8">
+				<Carrousel product={product} />
 
 				<div>
-					<h1 className="text-3xl font-bold mb-4">{product?.name}</h1>
+					<span className="text-3xl font-bold mb-4">{product?.name}</span>
 					<p className="text-gray-600 mb-4">{product?.description}</p>
 					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
 					{product?.categories && (
 						<div className="mb-4">
-							<span className="font-semibold">Categorias:</span> {categories?.join(', ')}
+							<span className="font-semibold">{categories?.length! > 1 ? "Categorias:" : "Categoria:"}</span> {categories?.join(', ')}
 						</div>
 					)}
 
-					{product && product.files && product.files?.length! > 0 ? <>
-						<h4>Arquivos neste produto</h4>
-						<ul className='divide-y p-0'>
-							{(product?.files)?.map((file) => {
-								return (
-									<li key={file.id} className='py-4'>
-										<a target='_blank' key={file.id} href={isPurchased ? 'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media)?.filename : '/#'}>
-											<div className='flex gap-2'>{isPurchased ? <DownloadIcon color='green' /> : <LockIcon color='red' />} {file.title} | {(file?.file as Media)?.filename}
-											</div>
-										</a>
-									</li>)
-							})}
-						</ul>
-					</> : <p>Esse produto não tem arquivos.</p>
-					}
+					<ProductFiles product={product} isPurchased={isPurchased} />
 
 					{!isPurchased && <AddToCartButtonWrapper product={product} />}
 				</div>

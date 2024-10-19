@@ -40,6 +40,12 @@ export const Media: CollectionConfig = {
     staticDir: 'public',
     imageSizes: [
       {
+        name: 'carrouselThumb',
+        width: 100,
+        height: 100,
+        position: 'centre',
+      },
+      {
         name: 'thumbnail',
         width: 340,
         height: 300,
