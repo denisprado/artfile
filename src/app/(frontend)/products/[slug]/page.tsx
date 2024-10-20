@@ -9,56 +9,13 @@ import configPromise from '@payload-config'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import { DownloadIcon, LockIcon } from 'lucide-react'
 import Carrousel from '@/components/Carrousel'
+import CollectionProductFiles from '@/components/CollectionProductFiles'
 
 type ProductPageProps = {
 	params: { slug: string };
 }
 
-const ProductFiles: React.FC<{ product: Product; isPurchased: boolean }> = ({ product, isPurchased }) => {
-	if (!product.files || product.files.length === 0) {
-		return <p>Esse produto não tem arquivos.</p>
-	}
 
-	const fileBaseUrl = process.env.NEXT_PUBLIC_S3_BUCKET_URL || 'https://plato-artfile.s3.us-east-2.amazonaws.com/';
-
-	const numberOfFiles = product.files.length
-
-	const initialNumberOfCols = numberOfFiles < 4 ?
-		numberOfFiles === 3 ?
-			"col-span-4" :
-			numberOfFiles < 3 ?
-				"col-span-6" : "col-span-4" :
-		"col-span-3"
-
-	return (
-		<>
-			<h6>Arquivos neste produto</h6>
-			<div className='grid grid-cols-12 gap-4'>
-				{product.files.map((file) => (
-
-					<a
-						key={file.id} className={initialNumberOfCols}
-						target='_blank'
-						rel='noopener noreferrer'
-						href={isPurchased ? `${fileBaseUrl}${(file.file as Media)?.filename}` : '/#'}
-					>
-						<span className='flex flex-col gap-2'>
-							<Image
-								src={`/${(file.file as Media)?.sizes?.thumbnail?.filename || ''}`}
-								alt={(file.file as Media).filename || 'Imagem do arquivo'}
-								width={(file.file as Media)?.sizes?.thumbnail?.width || 100}
-								height={(file.file as Media)?.sizes?.thumbnail?.height || 100}
-							/>
-							{isPurchased ? <span className='flex gap-2 items-center'><DownloadIcon color='green' /><span className='hover:underline'>Baixar</span></span> : <span className='flex gap-2 items-center'><LockIcon color='red' /><span className='hover:underline'>Comprar</span></span>}
-							<span className='font-medium text-pretty mb-8'>{file.title} </span>
-						</span>
-					</a>
-
-				))}
-			</div>
-		</>
-	)
-}
 
 export async function generateMetadata({ params }: ProductPageProps) {
 	const payload = await getPayloadHMR({ config: configPromise })
@@ -99,10 +56,11 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 	return (
 		<div className="container mx-auto px-4 py-8">
 
-			<div className="grid md:grid-cols-2 gap-8">
-				<Carrousel product={product} />
-
-				<div>
+			<div className="grid grid-cols-1 sm:grid-cols-12 gap-20">
+				<div className='col-span-7'>
+					<Carrousel product={product} />
+				</div>
+				<div className='col-span-5'>
 					<span className="text-3xl font-bold mb-4">{product?.name}</span>
 					<p className="text-gray-600 mb-4">{product?.description}</p>
 					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
@@ -112,7 +70,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 						</div>
 					)}
 
-					<ProductFiles product={product} isPurchased={isPurchased} />
+					<CollectionProductFiles product={product} isPurchased={isPurchased} />
 
 					{!isPurchased && <AddToCartButtonWrapper product={product} />}
 				</div>

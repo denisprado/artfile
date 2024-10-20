@@ -10,6 +10,8 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import PageContainer from '@/components/PageContainer'
 import { TabsField } from '@payloadcms/ui'
 import { DownloadIcon, LockIcon } from 'lucide-react'
+import CollectionProductFiles from '@/components/CollectionProductFiles'
+import Carrousel from '@/components/Carrousel'
 // export const dynamic = 'force-static'
 export const revalidate = 600
 const COLLECTION = 'orders'
@@ -29,7 +31,7 @@ export default async function Page() {
 	})
 
 	const files = Array.from(new Set(orders.docs.flatMap(order =>
-		(order.products as Product[]).flatMap(prod => (prod.files as Product['files']))
+		(order.products as Product[])
 	)));
 	console.table(files)
 
@@ -37,24 +39,40 @@ export default async function Page() {
 		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
-					<h1>Meus Produtos</h1>
+					<h1>Minhas compras</h1>
 				</div>
 			</div>
 
 
 			<div className='container'>
 
-				<ul className='divide-y p-0'>
+				<div className='grid-cols-1 sm:grid-cols-12 gap-8'>
 					{(files)?.map((file) => {
 						return (
-							<li key={file!.id} className='py-4'>
-								<a target='_blank' key={file!.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media).filename}>
-									<div className='flex gap-2'>{<DownloadIcon color='green' />} {file?.title} | {(file?.file as Media).filename}
+							// <li key={file!.id} className='py-4'>
+							// 	<a target='_blank' key={file!.id} href={'https://plato-artfile.s3.us-east-2.amazonaws.com/' + (file?.file as Media).filename}>
+							// 		<div className='flex gap-2'>{<DownloadIcon color='green' />} {file?.title} | {(file?.file as Media).filename}
+							// 		</div>
+							// 	</a>
+							// </li>
+							<div className='grid grid-cols-1 sm:grid-cols-12 gap-16 border-b-2 p-8' key={file.id} >
+								<div className='col-span-4'>
+									<div className='w-full'>
+										<Carrousel product={file} position='bottom' />
 									</div>
-								</a>
-							</li>)
+								</div>
+								<div className='col-span-8'>
+									<div className='w-full'>
+										<h3>{file.name}</h3>
+										<h3>{file.description}</h3>
+										<h3>{file.price}</h3>
+									</div>
+									<CollectionProductFiles isPurchased={true} product={file} />
+								</div>
+							</div>
+						)
 					})}
-				</ul>
+				</div>
 			</div>
 
 			{/* <CollectionArchive relationTo={COLLECTION} items={orders.docs} /> */}
