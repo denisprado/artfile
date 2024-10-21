@@ -1,6 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 
 import redirects from './redirects.js'
+import { $addUpdateTag } from 'lexical';
 
 const NEXT_PUBLIC_SERVER_URL = process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000'
 
@@ -26,6 +27,7 @@ const nextConfig = {
 	// 		source: '/admin/logout',
 	// 		destination: '/',
 	// 		permanent: true, // ou true, se você quiser que seja um redirecionamento permanente
+
 	// 	},
 	// ],
 	// redirects,

@@ -48,17 +48,18 @@ export const HeaderNav = ({ header }: {
 	);
 
 	return (
-		<nav className="flex gap-3 items-center flex-1 ml-10">
+		<nav className="flex gap-4 items-center justify-end ml-10">
 			{navItems.map(({ link }, i) => (
 				<CMSLink key={i} {...link} appearance="link" />
 			))}
-			{user !== null ? (
-				<CMSLink label={'Compras'} appearance={"link"} url={'/orders/products'} />
+			{/* {user !== null ? (
+				<CMSLink label={'Minhas Compras'} appearance={"link"} url={'/orders/products'} />
 			) : (
 				<CMSLink label={'Entrar'} appearance={"link"} url={'/admin'} />
-			)}
+			)} */}
 			<CMSLink url={'/cart'} appearance={"link"}>{cartCount}</CMSLink>
-			<Link href={'/admin'} className='w-8 h-8 flex justify-center items-center'>
+			<Link href={'/admin'} className='gap-2 flex justify-center items-center'>
+				{<CMSLink label={user === null ? 'Entrar ou Cadastrar' : user?.name} appearance={"link"} url={'/admin'} />}
 				<GravatarAccountIcon user={user!} />
 			</Link>
 		</nav>
