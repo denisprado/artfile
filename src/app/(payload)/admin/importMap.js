@@ -20,7 +20,8 @@ import { LinkToDoc as LinkToDoc_18 } from '@payloadcms/plugin-search/client'
 import { default as default_19 } from '@/components/LogoAdmin'
 import { default as default_20 } from 'src/components/Icon'
 import { default as default_21 } from 'src/components/Logo'
-import { default as default_22 } from '@/components/BeforeDashboard'
+import { default as default_22 } from '@/components/CreateAccount'
+import { default as default_23 } from '@/components/BeforeDashboard'
 
 export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_0,
@@ -45,5 +46,6 @@ export const importMap = {
   "@/components/LogoAdmin#default": default_19,
   "./components/Icon#default": default_20,
   "./components/Logo#default": default_21,
-  "@/components/BeforeDashboard#default": default_22
+  "@/components/CreateAccount#default": default_22,
+  "@/components/BeforeDashboard#default": default_23
 }

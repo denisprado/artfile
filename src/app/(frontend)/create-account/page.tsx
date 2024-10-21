@@ -21,7 +21,7 @@ export default async function CreateAccount() {
 			<PageContainer>
 				<div className="container mb-16">
 
-					<h1>Criar conta</h1>
+					<h2>Criar conta</h2>
 					<CreateAccountForm />
 				</div>
 			</PageContainer>
