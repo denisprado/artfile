@@ -10,6 +10,7 @@ import { getMeUserServer } from '@/utilities/getMeUserServer'
 import { DownloadIcon, LockIcon } from 'lucide-react'
 import Carrousel from '@/components/Carrousel'
 import CollectionProductFiles from '@/components/CollectionProductFiles'
+import { Button } from '@/components/Button'
 
 type ProductPageProps = {
 	params: { slug: string };
@@ -63,7 +64,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 				<div className='col-span-5'>
 					<span className="text-3xl font-bold mb-4">{product?.name}</span>
 					<p className="text-gray-600 mb-4">{product?.description}</p>
-					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toFixed(2)}</p>
+					<p className="text-2xl font-bold mb-4">R$ {product?.price?.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
 					{product?.categories && (
 						<div className="mb-4">
 							<span className="font-semibold">{categories?.length! > 1 ? "Categorias:" : "Categoria:"}</span> {categories?.join(', ')}
@@ -71,8 +72,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 					)}
 
 					<CollectionProductFiles product={product} isPurchased={isPurchased} />
-
-					{!isPurchased && <AddToCartButtonWrapper product={product} />}
+					<div className='grid gap-4 py-4'>
+						{!isPurchased && <Button appearance='primary' href="/cart" label='Comprar' />}
+						{!isPurchased && <AddToCartButtonWrapper product={product} />}
+					</div>
 				</div>
 			</div>
 		</div>

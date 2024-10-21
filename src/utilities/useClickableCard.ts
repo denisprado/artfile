@@ -17,7 +17,6 @@ interface Props {
   external?: boolean
   newTab?: boolean
   scroll?: boolean
-  noClick?: boolean
 }
 
 function useClickableCard<T extends HTMLElement>({
@@ -37,9 +36,6 @@ function useClickableCard<T extends HTMLElement>({
       if (e.target) {
         const target = e.target as Element
 
-        if (target?.childNodes[0]?.textContent === 'Adicionar ao carrinho') {
-          return // Ignora o clique se for o elemento que não deve abrir o link
-        }
         const timeNow = +new Date()
         const parent = target?.closest('a')
 

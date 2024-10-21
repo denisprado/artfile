@@ -4,6 +4,7 @@ import React, { ElementType } from 'react'
 import Link from 'next/link'
 
 import classes from './index.module.scss'
+import { ShoppingBagIcon } from 'lucide-react'
 
 export type Props = {
 	label?: string
@@ -44,8 +45,8 @@ export const Button: React.FC<Props> = ({
 		.join(' ')
 
 	const content = (
-		<div className={classes.content}>
-			<span className={classes.label}>{label}</span>
+		<div className={'flex justify-around items-stretch'}>
+			<span className={'text-center flex items-center'}>{label}</span>
 		</div>
 	)
 

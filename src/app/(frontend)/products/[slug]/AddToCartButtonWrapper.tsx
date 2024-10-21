@@ -1,13 +1,10 @@
-import type { Product } from '@/payload-types'
 import React from 'react'
-import AddToCartButton from './AddCartButton'
+import AddToCartButton, { Props } from './AddCartButton'
 
-type Props = {
-	product: Product
-}
 
-const AddToCartButtonWrapper: React.FC<Props> = async ({ product }) => {
-	return <AddToCartButton product={product} />
+
+const AddToCartButtonWrapper: React.FC<Props> = async ({ product, appearence, label }) => {
+	return <AddToCartButton product={product} label={label} appearence={appearence} />
 }
 
 export default AddToCartButtonWrapper

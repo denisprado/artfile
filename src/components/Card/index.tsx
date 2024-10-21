@@ -53,6 +53,9 @@ export const Card: React.FC<CardProps> = (props) => {
 					fill
 					style={{ objectFit: 'cover' }}
 				/>
+				{isProduct && price && (
+					<div className="absolute bottom-4 bg-white rounded-md ml-4 -mt-2 text-sm font-bold px-1">R$ {price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</div>
+				)}
 				{meta?.image && typeof meta.image !== 'string' && <Media resource={meta.image} size="360px" />}
 			</div>
 
@@ -61,7 +64,7 @@ export const Card: React.FC<CardProps> = (props) => {
 					<div>
 						{categories.map((category: any, index: number) => {
 							if (typeof category === 'object') {
-								const categoryTitle = category.title || 'Untitled category';
+								const categoryTitle = "#" + category.title || 'Untitled category';
 								const isLast = index === categories.length - 1;
 
 								return (
@@ -92,12 +95,9 @@ export const Card: React.FC<CardProps> = (props) => {
 			</div>
 
 			{isProduct && price && (
-				<div className="mt-2 text-xl font-bold px-4">R$ {price.toFixed(2)}</div>
-			)}
-
-			{isProduct && price && (
-				<div className='p-4'>
-					<AddToCartButton product={doc as Product} />
+				<div className='flex flex-row gap-4 p-4'>
+					{/* <div className='flex-1'><AddToCartButton product={doc as Product} label='Comprar' appearence='primary' /></div> */}
+					{/* <div><AddToCartButton product={doc as Product} /></div> */}
 				</div>
 			)}
 		</article>
