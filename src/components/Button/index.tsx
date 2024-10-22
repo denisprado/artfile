@@ -1,13 +1,13 @@
 'use client'
 
-import React, { ElementType } from 'react'
+import React, { ElementType, ReactNode } from 'react'
 import Link from 'next/link'
 
 import classes from './index.module.scss'
 import { ShoppingBagIcon } from 'lucide-react'
 
 export type Props = {
-	label?: string
+	label?: string | ReactNode
 	appearance?: 'default' | 'primary' | 'secondary' | 'none'
 	el?: 'button' | 'link' | 'a'
 	onClick?: () => void

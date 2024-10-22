@@ -3,6 +3,8 @@
 import { Button } from '@/components/Button'
 import { useCart } from '@/contexts/CartContext'
 import { Store, User } from '@/payload-types'
+import { Trash, Trash2Icon, TrashIcon } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useEffect, useState } from 'react'
@@ -17,7 +19,7 @@ const formatCurrency = (value: number) => {
 }
 
 const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
-	const { cart, removeFromCart, getCartTotal } = useCart()
+	const { cart, removeFromCart, getCartTotal, updateCartQuantity } = useCart()
 	const router = useRouter()
 	const [stores, setStores] = useState<Store[]>([])
 
@@ -112,9 +114,9 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 					{Object.entries(groupedItems).map(([userId, items]) => (
 						<div key={userId} className='mb-8'>
 							<h5>{getStoreNameByuserId(userId, stores)}</h5>
-							<table className="min-w-full border">
+							<table className="min-w-full border-y p-4">
 								<thead>
-									<tr className='border'>
+									<tr className='border-y'>
 										<th className="text-left">Produto</th>
 										<th className="text-right">Quantidade</th>
 										<th className="text-right">Preço</th>
@@ -124,16 +126,29 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 								<tbody>
 									{items.map((item) => (
 										<tr key={item.product.id} >
-											<td className="text-left">{item.product.name}</td>
-											<td className="text-right">{item.quantity}</td>
+											<td className="text-left p-2">{item.product.name}</td>
+											<td className="text-right">
+												<input
+													type="number"
+													value={item.quantity}
+													min="1"
+													onChange={(e) => {
+														const newQuantity = Math.max(1, Number(e.target.value)); // Garante que a quantidade não seja menor que 1
+														// Atualiza a quantidade no carrinho
+														// Você precisará implementar a lógica para atualizar a quantidade no contexto do carrinho
+														updateCartQuantity(item.product.id, newQuantity);
+													}}
+													className="w-16 text-right border"
+												/>
+											</td>
 											<td className="text-right">{formatCurrency(item.product.price * item.quantity)}</td>
 											<td className="text-right">
-												<Button
+												<button
 													onClick={() => removeFromCart(item.product.id)}
-													className="ml-4"
-													appearance='none'
-													label='Remover'
-												/>
+												>
+													<Trash2Icon color='red' />
+												</button>
+
 											</td>
 										</tr>
 									))}
@@ -148,7 +163,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 										onClick={() => handleCheckout(items)}
 										className="mt-2 mb-8 "
 										appearance='primary'
-										label='Finalizar Compra'
+										label={'Finalizar Compra'}
 									>
 									</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
 								</div>

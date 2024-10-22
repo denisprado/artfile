@@ -30,7 +30,6 @@ const AddToCartButton: React.FC<Props> = ({ product, label = "Adicionar ao carri
 
 
 	const handleAddToCart = () => {
-
 		userStripe && addToCart(product, userStripe)
 		referer === 'cart' && router.push('/cart')
 	}

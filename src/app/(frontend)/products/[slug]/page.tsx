@@ -11,6 +11,7 @@ import { DownloadIcon, LockIcon } from 'lucide-react'
 import Carrousel from '@/components/Carrousel'
 import CollectionProductFiles from '@/components/CollectionProductFiles'
 import { Button } from '@/components/Button'
+import AddToCartButton from './AddCartButton'
 
 type ProductPageProps = {
 	params: { slug: string };
@@ -73,7 +74,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
 					<CollectionProductFiles product={product} isPurchased={isPurchased} />
 					<div className='grid gap-4 py-4'>
-						{!isPurchased && <Button appearance='primary' href="/cart" label='Comprar' />}
+						{!isPurchased && <AddToCartButton referer="cart" label='Comprar' product={product} appearence='primary' />}
 						{!isPurchased && <AddToCartButtonWrapper product={product} />}
 					</div>
 				</div>
