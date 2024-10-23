@@ -10,6 +10,9 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import PageContainer from '@/components/PageContainer'
 import { TabsField } from '@payloadcms/ui'
 import formattedDate from '@/utilities/formatDate'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { DataTable } from './data-table'
+import { columns } from './columns'
 // export const dynamic = 'force-static'
 export const revalidate = 600
 const COLLECTION = 'orders'
@@ -28,6 +31,10 @@ export default async function Page() {
 		}
 	})
 
+	// Reorganiza as ordens em duas arrays
+	const paidOrders = orders.docs.filter(order => order.status === 'paid');
+	const unpaidOrders = orders.docs.filter(order => order.status === 'unpaid');
+
 	const listProducts = (products: Product[]) => {
 		return (
 			<ul>
@@ -44,8 +51,6 @@ export default async function Page() {
 				</div>
 			</div>
 
-
-
 			{/* <div className="container mb-8">
 				<PageRange
 					collection={COLLECTION}
@@ -54,21 +59,9 @@ export default async function Page() {
 					totalDocs={orders.totalDocs}
 				/>
 			</div> */}
-
-			<ul className='divide-x space-x-2'>
-				{orders.docs.map(order => {
-					const date = new Date(order.createdAt);
-					const formatted = formattedDate(date)
-					return (
-						<li key={order.id} >{formatted} - {order.id} - {order.status === 'paid' ? "Pago" : "Não pago"}
-							{<div className=''>
-								<p>Produtos: </p>
-								<div>{listProducts((order.products as Product[]))}</div>
-							</div>}
-						</li>
-					)
-				})}
-			</ul>
+			<div className="container mb-8">
+				<DataTable columns={columns} data={orders.docs} />
+			</div>
 			{/* {<p>USer: {user?.id}</p>}
 			{orders.docs.map(order => {
 				return <p key={order.id}>{order.id} - {myOrders.map(order => <span key={order.id}>{(order.createdBy as User)?.id}</span>)}</p>
