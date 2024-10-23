@@ -6,12 +6,14 @@ import React, { useEffect, useState } from 'react'
 import type { CategoriesMenu } from '@/payload-types'
 
 import { CategoriesMenuNav } from './Nav'
+import MegaMenu from '@/components/MegaMenu'
 
 interface HeaderClientProps {
 	categories: CategoriesMenu
+	isVendor: boolean
 }
 
-export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories }) => {
+export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories, isVendor }) => {
 	/* Storing the value in a useState to avoid hydration errors */
 	const [theme, setTheme] = useState<string | null>(null)
 	const { headerTheme, setHeaderTheme } = useHeaderTheme()
@@ -34,7 +36,7 @@ export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories }) =>
 			{...(theme ? { 'data-theme': theme } : {})}
 		>
 
-			<CategoriesMenuNav categories={categories} />
+			{isVendor ? <MegaMenu /> : <CategoriesMenuNav categories={categories} />}
 		</nav>
 	)
 }

@@ -11,9 +11,29 @@ import {
 import { ChevronDown } from 'lucide-react'
 import { User } from '@/payload-types'
 import { GravatarAccountIcon } from '@/components/Gravatar'
+import { checkRole } from '@/collections/Users/checkRole'
+import { useAuth } from '@/providers/Auth'
+
 
 
 export const UserMenu = ({ user }: { user: User }) => {
+
+	const handleLogout = async () => {
+		try {
+			const req = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/users/logout', {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+
+		} catch (err) {
+			console.log(err)
+		}
+		window.location.reload()
+	}
+
 	return (<DropdownMenu>
 		<DropdownMenuTrigger asChild>
 			<Button variant="link" className="flex items-center">
@@ -31,7 +51,7 @@ export const UserMenu = ({ user }: { user: User }) => {
 			<DropdownMenuItem>
 				<Link href="/orders/products" className="w-full">Minhas compras</Link>
 			</DropdownMenuItem>
-			{user && user.roles && user.roles.some(role => role === 'vendor') && (
+			{checkRole(["admin", "vendor"], user) && (
 				<>
 					<DropdownMenuSeparator />
 					<DropdownMenuLabel>Área do Vendedor</DropdownMenuLabel>
@@ -46,6 +66,9 @@ export const UserMenu = ({ user }: { user: User }) => {
 					</DropdownMenuItem>
 				</>
 			)}
+			<DropdownMenuItem>
+				<span className="w-full" onClick={() => handleLogout()}>Sair</span>
+			</DropdownMenuItem>
 		</DropdownMenuContent>
 	</DropdownMenu>)
 }
