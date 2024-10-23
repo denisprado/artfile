@@ -25,6 +25,11 @@ const Categories: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'description',
+      type: 'text',
+      required: true,
+    },
     ...slugField(),
     {
       name: 'stick',

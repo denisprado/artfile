@@ -3,7 +3,7 @@ import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
-import type { CategoriesMenu } from '@/payload-types'
+import type { CategoriesMenu, Category } from '@/payload-types'
 
 import { CategoriesMenuNav } from './Nav'
 import MegaMenu from '@/components/MegaMenu'
@@ -11,9 +11,10 @@ import MegaMenu from '@/components/MegaMenu'
 interface HeaderClientProps {
 	categories: CategoriesMenu
 	isVendor: boolean
+	megaMenuCategories: Category[]
 }
 
-export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories, isVendor }) => {
+export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories, isVendor, megaMenuCategories }) => {
 	/* Storing the value in a useState to avoid hydration errors */
 	const [theme, setTheme] = useState<string | null>(null)
 	const { headerTheme, setHeaderTheme } = useHeaderTheme()
@@ -36,7 +37,7 @@ export const CategoriesClient: React.FC<HeaderClientProps> = ({ categories, isVe
 			{...(theme ? { 'data-theme': theme } : {})}
 		>
 
-			{isVendor ? <MegaMenu /> : <CategoriesMenuNav categories={categories} />}
+			{isVendor ? <MegaMenu categories={megaMenuCategories} /> : <CategoriesMenuNav categories={categories} />}
 		</nav>
 	)
 }

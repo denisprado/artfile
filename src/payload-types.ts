@@ -131,6 +131,7 @@ export interface Product {
 export interface Category {
   id: string;
   title: string;
+  description: string;
   slug?: string | null;
   slugLock?: boolean | null;
   stick?: boolean | null;
