@@ -1,7 +1,7 @@
 'use client'
 
-import { GravatarAccountIcon } from '@/components/Gravatar'
 import { CMSLink } from '@/components/Link'
+import UserMenu from '@/components/UserMenu'
 import { useCart } from '@/contexts/CartContext'
 import type { Header as HeaderType, User } from '@/payload-types'
 import { ShoppingCartIcon } from 'lucide-react'
@@ -58,10 +58,17 @@ export const HeaderNav = ({ header }: {
 				<CMSLink label={'Entrar'} appearance={"link"} url={'/admin'} />
 			)} */}
 			<CMSLink url={'/cart'} appearance={"link"}>{cartCount}</CMSLink>
-			<Link href={'/admin'} className='gap-2 flex justify-center items-center'>
-				{<CMSLink label={user === null ? 'Entrar ou Cadastrar' : user?.name} appearance={"link"} url={'/admin'} />}
-				<GravatarAccountIcon user={user!} />
-			</Link>
+			{user === null || user === undefined ?
+				<div className="flex gap-2">
+					<Link href={'/admin'} className='gap-2 flex justify-center items-center'>Entrar ou Cadastrar</Link>
+				</div> :
+				<div className="flex gap-2">
+					{/* <CMSLink label={user?.name} appearance={"link"} url={'/admin'} /><GravatarAccountIcon user={user!} /> */}
+					<UserMenu user={user!} />
+				</div>
+			}
+
+
 		</nav>
 	);
 }

@@ -1,10 +1,8 @@
 'use client'
 
 import md5 from 'md5'
-import React from 'react'
 
 import { User } from '@/payload-types'
-import Image from 'next/image'
 
 export const GravatarAccountIcon = ({ user }: { user: User }) => {
 
