@@ -62,7 +62,7 @@ export const UserMenu = ({ user }: { user: User }) => {
 						<Link href="/admin/collections/products" className="w-full">Meus Produtos</Link>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
-						<Link href="/admin/collections/orders" className="w-full">Minhas Vendas</Link>
+						<Link href="/admin/collections/orders/sale" className="w-full">Minhas Vendas</Link>
 					</DropdownMenuItem>
 				</>
 			)}
