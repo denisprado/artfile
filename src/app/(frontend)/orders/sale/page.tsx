@@ -31,17 +31,17 @@ export default async function Page() {
 		}
 	})
 
-	// Reorganiza as ordens em duas arrays
-	const paidOrders = orders.docs.filter(order => order.status === 'paid');
-	const unpaidOrders = orders.docs.filter(order => order.status === 'unpaid');
+	// // Reorganiza as ordens em duas arrays
+	// const paidOrders = orders.docs.filter(order => order.status === 'paid');
+	// const unpaidOrders = orders.docs.filter(order => order.status === 'unpaid');
 
-	const listProducts = (products: Product[]) => {
-		return (
-			<ul>
-				{products.map(product => <li>{product.name} - {product.price}</li>)}
-			</ul>
-		)
-	}
+	// const listProducts = (products: Product[]) => {
+	// 	return (
+	// 		<ul>
+	// 			{products.map(product => <li>{product.name} - {product.price}</li>)}
+	// 		</ul>
+	// 	)
+	// }
 
 	return (
 		<PageContainer>

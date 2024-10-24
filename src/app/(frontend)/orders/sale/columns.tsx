@@ -25,7 +25,6 @@ export const columns: ColumnDef<Order>[] = [
 	{
 		accessorKey: "products",
 		header: "Produtos",
-
 		// cell: async ({ row }) => {
 		// 	'use server'
 		// 	const data = formattedDate(row.getValue('createdAt'))
