@@ -165,7 +165,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 										appearance='primary'
 										label={'Finalizar Compra'}
 									>
-									</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin'></Button>}
+									</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin/login?redirect=/cart'></Button>}
 								</div>
 							</div>
 						</div>

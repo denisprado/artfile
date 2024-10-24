@@ -9,12 +9,18 @@ import classes from './index.module.scss'
 import { Gutter } from '@/components/Gutter'
 import PageContainer from '@/components/PageContainer'
 
-export default async function CreateAccount() {
+export default async function CreateAccount({
+	searchParams,
+}: {
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
 	await getMeUserServer({
 		validUserRedirect: `/account?warning=${encodeURIComponent(
 			'Não é possível criar uma nova conta enquanto estiver logado, por favor, faça logout e tente novamente.',
 		)}`,
 	})
+
+
 
 	return (
 		<Gutter className={classes.createAccount}>

@@ -52,7 +52,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export default buildConfig({
   admin: {
-    // routes: { logout: '/logoutUser' },
+    // routes: { logout: '/logout-inactivity?redirect=/cart' },
     components: {
       // beforeNavLinks: ['@/components/LogoAdmin'],
       header: ['@/components/LogoAdmin'],

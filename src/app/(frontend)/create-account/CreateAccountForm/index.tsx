@@ -66,7 +66,7 @@ const CreateAccountForm: React.FC = () => {
 			try {
 				clearTimeout(timer)
 				if (redirect) router.push(redirect as string)
-				else router.push(`/admin/login`)
+				else router.push(`/admin/login?redirect=${redirect}`)
 			} catch (_) {
 				clearTimeout(timer)
 				setError('Houve um erro com as credenciais fornecidas.')

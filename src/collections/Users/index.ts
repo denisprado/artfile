@@ -6,6 +6,9 @@ import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 import { redirect } from 'next/navigation'
 import { NextResponse } from 'next/server'
+import type { CollectionAfterLoginHook } from 'payload'
+
+const afterLoginHook: CollectionAfterLoginHook = async ({ user, token }) => {}
 
 // const afterLogoutHook: CollectionAfterLogoutHook = async ({ collection, context, req }) => {
 //   console.log(process.env.NEXT_PUBLIC_SERVER_URL)
@@ -19,6 +22,7 @@ const Users: CollectionConfig = {
   slug: 'users',
   labels: { plural: 'Usuários', singular: 'Usuário' },
   hooks: {
+    afterLogin: [afterLoginHook],
     // afterLogout: [afterLogoutHook],
   },
 
