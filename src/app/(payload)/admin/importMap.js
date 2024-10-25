@@ -17,11 +17,12 @@ import { PreviewComponent as PreviewComponent_15 } from '@payloadcms/plugin-seo/
 import { HorizontalRuleFeatureClient as HorizontalRuleFeatureClient_16 } from '@payloadcms/richtext-lexical/client'
 import { BlocksFeatureClient as BlocksFeatureClient_17 } from '@payloadcms/richtext-lexical/client'
 import { LinkToDoc as LinkToDoc_18 } from '@payloadcms/plugin-search/client'
-import { default as default_19 } from '@/components/LogoAdmin'
+import { Header as Header_19 } from '@/Header/Component'
 import { default as default_20 } from 'src/components/Icon'
 import { default as default_21 } from 'src/components/Logo'
 import { default as default_22 } from '@/components/CreateAccount'
 import { default as default_23 } from '@/components/BeforeDashboard'
+import { CartProvider as CartProvider_24 } from '@/contexts/CartContext'
 
 export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_0,
@@ -43,9 +44,10 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#HorizontalRuleFeatureClient": HorizontalRuleFeatureClient_16,
   "@payloadcms/richtext-lexical/client#BlocksFeatureClient": BlocksFeatureClient_17,
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_18,
-  "@/components/LogoAdmin#default": default_19,
+  "@/Header/Component#Header": Header_19,
   "./components/Icon#default": default_20,
   "./components/Logo#default": default_21,
   "@/components/CreateAccount#default": default_22,
-  "@/components/BeforeDashboard#default": default_23
+  "@/components/BeforeDashboard#default": default_23,
+  "@/contexts/CartContext#CartProvider": CartProvider_24
 }

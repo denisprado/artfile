@@ -55,7 +55,8 @@ export default buildConfig({
     // routes: { logout: '/logout-inactivity?redirect=/cart' },
     components: {
       // beforeNavLinks: ['@/components/LogoAdmin'],
-      header: ['@/components/LogoAdmin'],
+      header: ['@/Header/Component#Header'],
+      providers: ['@/contexts/CartContext#CartProvider'],
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       // beforeLogin: ['@/components/BeforeLogin'],
