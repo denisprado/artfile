@@ -60,7 +60,7 @@ export const HeaderNav = ({ header }: {
 			<CMSLink url={'/cart'} appearance={"link"}>{cartCount}</CMSLink>
 			{user === null || user === undefined ?
 				<div className="flex gap-2">
-					<Link href={'/admin'} className='gap-2 flex justify-center items-center'>Entrar ou Cadastrar</Link>
+					<Link href={'/admin/login?redirect=/'} className='gap-2 flex justify-center items-center'>Entrar ou Cadastrar</Link>
 				</div> :
 				<div className="flex gap-2">
 					{/* <CMSLink label={user?.name} appearance={"link"} url={'/admin'} /><GravatarAccountIcon user={user!} /> */}
