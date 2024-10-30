@@ -10,19 +10,20 @@ import PageContainer from '@/components/PageContainer'
 
 export const revalidate = 600
 
-export default async function Page({ params }) {
-	const pageNumber = params.pageNumber ? params.pageNumber : 2
+export default async function Page(props) {
+    const params = await props.params;
+    const pageNumber = params.pageNumber ? params.pageNumber : 2
 
-	const payload = await getPayloadHMR({ config: configPromise })
+    const payload = await getPayloadHMR({ config: configPromise })
 
-	const posts = await payload.find({
+    const posts = await payload.find({
 		collection: 'posts',
 		depth: 1,
 		limit: 12,
 		page: pageNumber,
 	})
 
-	return (
+    return (
 		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
@@ -50,10 +51,11 @@ export default async function Page({ params }) {
 	)
 }
 
-export function generateMetadata({ params }): Metadata {
-	const pageNumber = params.pageNumber ? params.pageNumber : 2
+export async function generateMetadata(props): Promise<Metadata> {
+    const params = await props.params;
+    const pageNumber = params.pageNumber ? params.pageNumber : 2
 
-	return {
+    return {
 		title: `Payload Website Template Posts Page ${pageNumber}`,
 	}
 }

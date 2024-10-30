@@ -26,13 +26,14 @@ import PageClient from './page.client'
 //   return posts.docs?.map(({ slug }) => slug)
 // }
 
-export default async function Post({ params }) {
-	const slug = params.slug ? params.slug : ''
-	const url = '/posts/' + slug
-	const post = await queryPostBySlug({ slug })
+export default async function Post(props) {
+    const params = await props.params;
+    const slug = params.slug ? params.slug : ''
+    const url = '/posts/' + slug
+    const post = await queryPostBySlug({ slug })
 
 
-	return (
+    return (
 		<article className="pt-16 pb-16">
 			<PageClient />
 
@@ -58,14 +59,13 @@ export default async function Post({ params }) {
 	)
 }
 
-export async function generateMetadata({
-	params
-}) {
-	const slug = params.slug
+export async function generateMetadata(props) {
+    const params = await props.params;
+    const slug = params.slug
 
-	const post = await queryPostBySlug({ slug })
+    const post = await queryPostBySlug({ slug })
 
-	return generateMeta({ doc: post })
+    return generateMeta({ doc: post })
 }
 
 const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {

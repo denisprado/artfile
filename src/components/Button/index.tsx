@@ -3,7 +3,7 @@
 import React, { ElementType, ReactNode } from 'react'
 import Link from 'next/link'
 
-import classes from './index.module.scss'
+import classes from './Button.module.scss'
 import { ShoppingBagIcon } from 'lucide-react'
 
 export type Props = {

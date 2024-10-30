@@ -1,10 +1,9 @@
-import { NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
-import { getPayload } from 'payload'
 import payloadConfig from '@payload-config'
-import Stripe from 'stripe'
-import { Order } from '@/payload-types'
+import { NextResponse } from 'next/server'
+import { getPayload } from 'payload'
 import qs from 'qs'
+import Stripe from 'stripe'
 
 export async function POST(req: Request) {
   try {

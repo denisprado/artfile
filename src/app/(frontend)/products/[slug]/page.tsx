@@ -14,48 +14,50 @@ import { Button } from '@/components/Button'
 import AddToCartButton from './AddCartButton'
 
 type ProductPageProps = {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }
 
 
 
-export async function generateMetadata({ params }: ProductPageProps) {
-	const payload = await getPayloadHMR({ config: configPromise })
-	const product = await payload.find({
+export async function generateMetadata(props: ProductPageProps) {
+    const params = await props.params;
+    const payload = await getPayloadHMR({ config: configPromise })
+    const product = await payload.find({
 		collection: 'products',
 		where: { slug: { equals: params.slug } }
 	})
 
-	if (!product) return notFound()
+    if (!product) return notFound()
 
-	return {
+    return {
 		title: `${product.docs[0].name} - Detalhes do Produto`,
 		description: product.docs[0].description as string,
 	}
 }
 
-const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
-	const payload = await getPayloadHMR({ config: configPromise })
-	const product = await payload.find({
+const ProductPage: React.FC<ProductPageProps> = async props => {
+    const params = await props.params;
+    const payload = await getPayloadHMR({ config: configPromise })
+    const product = await payload.find({
 		collection: 'products',
 		where: { slug: { equals: params.slug } },
 	}).then((res) => res.docs[0] as unknown as Product | null)
 
-	const { user } = await getMeUserServer()
-	const userPurchases = user?.purchases as User['purchases']
+    const { user } = await getMeUserServer()
+    const userPurchases = user?.purchases as User['purchases']
 
-	// Garantindo que isPurchased seja sempre um booleano
-	const isPurchased = userPurchases?.some(userPurchase =>
+    // Garantindo que isPurchased seja sempre um booleano
+    const isPurchased = userPurchases?.some(userPurchase =>
 		((userPurchase as Order).products as Product[]).some(prod => prod.id === product?.id)
 	) ?? false; // Se for undefined, assume false
 
-	if (!product) {
+    if (!product) {
 		return notFound()
 	}
 
-	const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
+    const categories = (product.categories as Product['categories'])?.map(cat => { return (cat as Category).title })
 
-	return (
+    return (
 		<div className="container mx-auto px-4 py-8">
 
 			<div className="grid grid-cols-1 sm:grid-cols-12 gap-20">

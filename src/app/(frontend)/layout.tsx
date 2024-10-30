@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 import { cn } from 'src/utilities/cn'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { Inter } from 'next/font/google'
+
 import React, { Suspense } from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -18,11 +18,15 @@ import { CartProvider } from '@/contexts/CartContext'
 import './_css/app.scss'
 import { CategoriesMenu } from '@/CategoriesMenu/Component'
 
+const inter = Inter({
+	subsets: ['latin'],
+	display: 'swap',
+})
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const { isEnabled } = draftMode()
+	const { isEnabled } = await draftMode()
 
 	return (
-		<html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+		<html className={cn(inter.className)} lang="en" suppressHydrationWarning>
 			<head>
 				<InitTheme />
 				<link href="/favicon.ico" rel="icon" sizes="32x32" />

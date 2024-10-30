@@ -5,20 +5,21 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { Pagination } from '@/components/Pagination';
 import SearchTable from '@/components/ui/search-table'
 
-export default async function SearchPage({
-	searchParams,
-}: {
-	searchParams?: {
-		query?: string;
-		page?: string;
-	};
-}) {
-	const query = searchParams?.query || '';
-	const currentPage = Number(searchParams?.page) || 1;
+export default async function SearchPage(
+    props: {
+        searchParams?: Promise<{
+            query?: string;
+            page?: string;
+        }>;
+    }
+) {
+    const searchParams = await props.searchParams;
+    const query = searchParams?.query || '';
+    const currentPage = Number(searchParams?.page) || 1;
 
-	const payload = await getPayloadHMR({ config: configPromise })
+    const payload = await getPayloadHMR({ config: configPromise })
 
-	const products = await payload.find({
+    const products = await payload.find({
 		collection: 'products',
 		depth: 1,
 		limit: 12,
@@ -38,7 +39,7 @@ export default async function SearchPage({
 		}
 	})
 
-	const stores = await payload.find({
+    const stores = await payload.find({
 		collection: 'stores',
 		depth: 1,
 		limit: 12,
@@ -58,7 +59,7 @@ export default async function SearchPage({
 		}
 	})
 
-	return (
+    return (
 		<div className="w-full container">
 			<div className="flex w-full items-center justify-between">
 				<h1 className={`text-2xl`}>Resultados da busca</h1>

@@ -12,30 +12,30 @@ import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
 
 
 const COLLECTION = 'products'
-export async function generateMetadata({ params }): Promise<Metadata> {
-	const payload = await getPayloadHMR({ config: configPromise })
+export async function generateMetadata(props): Promise<Metadata> {
+    const params = await props.params;
+    const payload = await getPayloadHMR({ config: configPromise })
 
-	const store = await payload.find({
+    const store = await payload.find({
 		collection: 'stores',
 		where: {
 			slug: { equals: params.slug },
 		},
 	})
 
-	if (!store) return {}
+    if (!store) return {}
 
-	return {
+    return {
 		title: `${store?.docs[0]?.name} - Loja`,
 		description: store?.docs[0]?.description as string,
 	}
 }
 
-const StorePage = async ({ params }) => {
-	const payload = await getPayloadHMR({ config: configPromise })
+const StorePage = async props => {
+    const params = await props.params;
+    const payload = await getPayloadHMR({ config: configPromise })
 
-	redirect(`/stores/${params.slug}/cat/all`)
-
-
+    redirect(`/stores/${params.slug}/cat/all`)
 }
 
 export default StorePage

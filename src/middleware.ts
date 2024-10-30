@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 
 export async function middleware(request: NextRequest) {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   // If the user is authenticated, continue as normal
   console.log(request.nextUrl)
 

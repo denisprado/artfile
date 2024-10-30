@@ -10,10 +10,11 @@ import React from 'react'
 
 export const revalidate = 600
 const COLLECTION = 'products'
-export default async function Page({ params }) {
-	const payload = await getPayloadHMR({ config: configPromise })
+export default async function Page(props) {
+    const params = await props.params;
+    const payload = await getPayloadHMR({ config: configPromise })
 
-	const posts = await payload.find({
+    const posts = await payload.find({
 		collection: COLLECTION,
 		depth: 1,
 		limit: 12,
@@ -24,7 +25,7 @@ export default async function Page({ params }) {
 		}
 	})
 
-	const ProductsPageTitle = () => {
+    const ProductsPageTitle = () => {
 		return <div className="container mb-16">
 			<div className="prose dark:prose-invert max-w-none">
 				<h1>Produtos</h1>
@@ -32,7 +33,7 @@ export default async function Page({ params }) {
 		</div>
 	}
 
-	return (
+    return (
 		<PageContainer>
 			<ProductsPageTitle />
 

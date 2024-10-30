@@ -6,9 +6,9 @@ import React, { Fragment } from 'react'
 
 import type { Order, Post, Product, Store } from '@/payload-types'
 
-import AddToCartButton from '@/app/(frontend)/products/[slug]/AddCartButton'
 import { Media } from '@/components/Media'
 import Image from 'next/image'; // Import Image from Next.js
+import imageLoader from '@/lib/imageLoader'
 
 
 export type CardProps = {
@@ -51,6 +51,7 @@ export const Card: React.FC<CardProps> = (props) => {
 					src={imageUrlToUse || '/media/logo-artfile.svg'}
 					alt={title || name}
 					fill
+					loader={imageLoader}
 					style={{ objectFit: 'cover' }}
 				/>
 				{isProduct && price && (

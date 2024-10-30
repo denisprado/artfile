@@ -4983,7 +4983,7 @@ html[data-theme='dark'] .relationship.error button.relationship-add-new__add-but
   margin-inline: calc(var(--base) / -4);
 }
 
-.field-type.row .row__fields: has(>*:nth-child(2))>* {
+.field-type.row .row__fields :has(> *:nth-child(2)) > * {
   flex: 0 1 calc(var(--field-width) - var(--base) * 0.5);
   margin-inline: calc(var(--base) / 4);
 }
