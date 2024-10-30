@@ -1,3 +1,4 @@
+import imageLoader from "@/lib/imageLoader";
 import { Product, Media } from "@/payload-types";
 import { DownloadIcon, LockIcon } from "lucide-react";
 import Image from 'next/image'
@@ -23,6 +24,7 @@ const CollectionProductFiles: React.FC<{ product: Product; isPurchased: boolean 
 					>
 						<span className='flex flex-col gap-2'>
 							<Image
+								loader={imageLoader}
 								src={`/${(file.file as Media)?.sizes?.thumbnail?.filename || ''}`}
 								alt={(file.file as Media).filename || 'Imagem do arquivo'}
 								width={(file.file as Media)?.sizes?.thumbnail?.width || 100}

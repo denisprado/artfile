@@ -7,14 +7,15 @@ import { getPayloadHMR } from '@payloadcms/next/utilities'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
+import imageLoader from '@/lib/imageLoader'
 
 
 const COLLECTION = 'products'
 export async function generateMetadata(props): Promise<Metadata> {
-    const params = await props.params;
-    const payload = await getPayloadHMR({ config: configPromise })
+	const params = await props.params;
+	const payload = await getPayloadHMR({ config: configPromise })
 
-    const store = await payload.find({
+	const store = await payload.find({
 		collection: 'stores',
 		where: {
 			slug: { equals: params.slug },
@@ -22,25 +23,25 @@ export async function generateMetadata(props): Promise<Metadata> {
 	})
 
 
-    if (!store) return {}
+	if (!store) return {}
 
-    return {
+	return {
 		title: `${store?.docs[0]?.name} - Loja`,
 		description: store?.docs[0]?.description as string,
 	}
 }
 
 const StorePageLayout = async props => {
-    const params = await props.params;
+	const params = await props.params;
 
-    const {
-        children
-    } = props;
+	const {
+		children
+	} = props;
 
-    const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayloadHMR({ config: configPromise })
 
 
-    const storeFull = (await payload.find({
+	const storeFull = (await payload.find({
 		collection: 'stores',
 		where: {
 			slug: { equals: params.slug },
@@ -48,26 +49,26 @@ const StorePageLayout = async props => {
 		depth: 2,
 	})) as PaginatedDocs<Store>
 
-    const categoriesWithProducts = storeFull.docs[0]?.products
+	const categoriesWithProducts = storeFull.docs[0]?.products
 
 
 
-    const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
+	const uniqueCategoryNames = Array.from(new Set(categoriesWithProducts && categoriesWithProducts.flatMap(product =>
 		(product as Product)?.categories?.map(category => ({
 			title: (category as Category).title,
 			slug: (category as Category).slug
 		}))
 	))).map(category => category); // Remover duplicatas
 
-    if (!storeFull) return notFound()
-    const store = storeFull.docs[0]
-    return (
+	if (!storeFull) return notFound()
+	const store = storeFull.docs[0]
+	return (
 		<div className="container mx-auto px-4">
 			<div className='relative w-full h-80'>
-				<Image src={"/" + (store?.imageHeaderStore as Media)?.sizes?.widthFull?.filename!} alt={store?.name} fill objectFit='cover' ></Image>
+				<Image src={"/" + (store?.imageHeaderStore as Media)?.sizes?.widthFull?.filename!} alt={store?.name} fill objectFit='cover' loader={imageLoader} ></Image>
 				<div className='absolute w-32 h-32 left-6 -bottom-12'>
 
-					<Image src={"/" + (store?.logoStore as Media)?.sizes!.thumbnail?.filename} alt={store?.name} fill objectFit='cover' className='rounded-full border-4 border-white'></Image>
+					<Image loader={imageLoader} src={"/" + (store?.logoStore as Media)?.sizes!.thumbnail?.filename} alt={store?.name} fill objectFit='cover' className='rounded-full border-4 border-white'></Image>
 				</div>
 			</div>
 			<h1 className="text-3xl font-bold mt-16 mb-6">{store?.name}</h1>

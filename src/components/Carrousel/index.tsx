@@ -1,5 +1,6 @@
 'use client'
 
+import imageLoader from '@/lib/imageLoader'
 import { Media, Product } from '@/payload-types'
 import Image from 'next/image'
 import { useState } from 'react'
@@ -36,6 +37,7 @@ const Carrousel: React.FC<CarrouselProps> = ({ product, position = 'left' }) => 
 			key={image.id}
 		>
 			<Image
+				loader={imageLoader}
 				src={"/" + (image.sizes?.carrouselThumb?.filename || 'media/artfile-logo.svg')}
 				alt={product.name || 'Imagem do produto'}
 				className="w-full rounded-lg shadow-lg"
@@ -57,6 +59,7 @@ const Carrousel: React.FC<CarrouselProps> = ({ product, position = 'left' }) => 
 			<div className={hasMoreThanOneImage ? (position === 'left' ? 'col-span-10' : 'col-span-12') : 'col-span-12'}>
 				{activeImage && (
 					<Image
+						loader={imageLoader}
 						src={"/" + activeImage}
 						alt={product.name || 'Imagem do produto'}
 						className="w-full h-auto rounded-lg shadow-lg"
