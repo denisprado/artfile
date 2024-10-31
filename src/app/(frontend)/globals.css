@@ -15,9 +15,8 @@
 
   :root {
     --base: 24px;
-    --font-body: system-ui;
-    --font-mono: 'Roboto Mono', monospace;
-
+    --font-body: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
     --gutter-h: 180px;
     --block-padding: 120px;
 

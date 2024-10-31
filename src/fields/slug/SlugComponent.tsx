@@ -11,7 +11,6 @@ import {
 } from '@payloadcms/ui'
 
 import { formatSlug } from './formatSlug'
-import './index.scss'
 import { TextFieldClientProps } from 'payload'
 
 type SlugComponentProps = {
@@ -66,10 +65,10 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
 
 	return (
 		<div className="field-type slug-field-component">
-			<div className="label-wrapper">
+			<div className="flex items-center justify-between mb-2">
 				<FieldLabel field={field} htmlFor={`field-${path}`} label={label} />
 
-				<Button className="lock-button" buttonStyle="none" onClick={handleLock}>
+				<Button className="p-0 text-blue-500" buttonStyle="none" onClick={handleLock}>
 					{checkboxValue ? 'Unlock' : 'Lock'}
 				</Button>
 			</div>

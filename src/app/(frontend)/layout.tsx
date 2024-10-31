@@ -1,32 +1,28 @@
 import type { Metadata } from 'next'
 
 import { cn } from 'src/utilities/cn'
-import { Inter } from 'next/font/google'
 
 import React, { Suspense } from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
+import { CategoriesMenu } from '@/CategoriesMenu/Component'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { CartProvider } from '@/contexts/CartContext'
 import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
-import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import './globals.css'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 import { draftMode } from 'next/headers'
-import { CartProvider } from '@/contexts/CartContext'
 import './_css/app.scss'
-import { CategoriesMenu } from '@/CategoriesMenu/Component'
+import './globals.css'
 
-const inter = Inter({
-	subsets: ['latin'],
-	display: 'swap',
-})
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()
 
 	return (
-		<html className={cn(inter.className)} lang="en" suppressHydrationWarning>
+		<html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
 			<head>
 				<InitTheme />
 				<link href="/favicon.ico" rel="icon" sizes="32x32" />

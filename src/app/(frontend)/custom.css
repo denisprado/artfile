@@ -1,11 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* Using Header at Admin */
 
 :root {
+  --base: 24px;
+  --gutter-h: 180px;
+  --block-padding: 120px;
   font-size: 1rem;
+}
+.template-default {
+  font-size: 0.85rem;
 }
 
 h1,
