@@ -3,11 +3,13 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
+import { redirectsPlugin } from '@payloadcms/plugin-redirects'
+import { searchPlugin } from '@payloadcms/plugin-search'
+import { seoPlugin } from '@payloadcms/plugin-seo'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { stripePlugin } from '@payloadcms/plugin-stripe'
 import {
   BoldFeature,
-  FixedToolbarFeature,
   HeadingFeature,
   ItalicFeature,
   LinkFeature,
@@ -21,6 +23,7 @@ import { pt } from 'payload/i18n/pt'
 import sharp from 'sharp' // editor-import
 import { Page, Post } from 'src/payload-types'
 import { fileURLToPath } from 'url'
+import { CategoriesMenu } from './CategoriesMenu/config'
 import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import Orders from './collections/Orders'
@@ -32,10 +35,6 @@ import Users from './collections/Users'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { updateOrderStatus } from './utilities/updateOrderStatus'
-import { searchPlugin } from '@payloadcms/plugin-search'
-import { CategoriesMenu } from './CategoriesMenu/config'
-import { redirectsPlugin } from '@payloadcms/plugin-redirects'
-import { seoPlugin } from '@payloadcms/plugin-seo'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -152,7 +151,7 @@ export default buildConfig({
     redirectsPlugin({
       collections: ['pages', 'posts'],
       overrides: {
-        // @ts-expect-error
+        // @ts-expect-error i dont know
         fields: ({ defaultFields }) => {
           return defaultFields.map((field) => {
             if ('name' in field && field.name === 'from') {
@@ -176,10 +175,7 @@ export default buildConfig({
       stripeSecretKey: process.env.STRIPE_SECRET_KEY!,
       stripeWebhooksEndpointSecret: process.env.STRIPE_WEBHOOK_ENDPOINT_SECRET,
       webhooks: {
-        'customer.subscription.updated': ({ event, stripe }) => {
-          // do something...
-        },
-        'checkout.session.completed': async ({ event, req }) => {
+        'checkout.session.completed': async ({ event }) => {
           const session = event.data.object
 
           // console.log('paymentIntent', paymentIntent)
@@ -226,10 +222,9 @@ export default buildConfig({
               return {
                 ...field,
                 editor: lexicalEditor({
-                  features: ({ rootFeatures }) => {
+                  features: ({ defaultFeatures }) => {
                     return [
-                      ...rootFeatures,
-                      FixedToolbarFeature(),
+                      ...defaultFeatures,
                       HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     ]
                   },

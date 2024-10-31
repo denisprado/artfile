@@ -27,9 +27,9 @@ function useClickableCard<T extends HTMLElement>({
   const router = useRouter()
   const card = useRef<T>(null)
   const link = useRef<HTMLAnchorElement>(null)
-  let timeDown = useRef<number>(0)
-  let hasActiveParent = useRef<boolean>(false)
-  let pressedButton = useRef<number>(0)
+  const timeDown = useRef<number>(0)
+  const hasActiveParent = useRef<boolean>(false)
+  const pressedButton = useRef<number>(0)
 
   const handleMouseDown = useCallback(
     (e: MouseEvent) => {

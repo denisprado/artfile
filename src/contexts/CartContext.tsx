@@ -1,9 +1,9 @@
 'use client'
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { Product, User } from '@/payload-types'
+import { Product } from '@/payload-types'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
-type CartItem = {
+export type CartItem = {
 	product: Product
 	quantity: number
 	userStripe: string
@@ -44,10 +44,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 			const parsedCart = JSON.parse(savedCart)
 			// Verifica se o carrinho salvo é diferente do estado atual
 			if (JSON.stringify(parsedCart) !== JSON.stringify(cart)) {
-				setCart(parsedCart)
+				setCart(parsedCart as CartItem[])
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
 	useEffect(() => {
@@ -55,7 +54,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	}, [cart])
 
 	const addToCart = (product: Product, userStripe: string) => {
-		setCart(currentCart => {
+		setCart((currentCart: CartItem[]) => {
 			// const existingStripeId = currentCart.length > 0 && currentCart[0].userStripe
 			const existingItem = currentCart.find(item => item.product.id === product.id)
 
@@ -73,7 +72,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	}
 
 	const removeFromCart = (productId: string) => {
-		setCart(currentCart => currentCart.filter(item => item.product.id !== productId))
+		setCart((currentCart: CartItem[]) => currentCart.filter(item => item.product.id !== productId))
 	}
 
 	const clearCart = () => {
@@ -82,16 +81,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 	}
 
 	const getCartTotal = () => {
-		return cart.reduce((total, item) => total + item.product.price * item.quantity, 0)
+		return cart.reduce((total: number, item: { product: { price: number }; quantity: number }) => total + item.product.price * item.quantity, 0)
 	}
 
 	const getCartCountItems = () => {
-		return cart.reduce((total, item) => total + item.quantity, 0)
+		return cart.reduce((total: number, item: { quantity: number }) => total + item.quantity, 0)
 	}
 
 	const updateCartQuantity = (productId: string, quantity: number) => {
-		setCart(currentCart => {
-			return currentCart.map(item =>
+		setCart((currentCart: CartItem[]) => {
+			return currentCart.map((item) =>
 				item.product.id === productId
 					? { ...item, quantity } // Atualiza a quantidade do item
 					: item

@@ -1,13 +1,11 @@
 'use client'
 
 import { Button } from '@/components/Button'
-import { useCart } from '@/contexts/CartContext'
+import { CartItem, useCart } from '@/contexts/CartContext'
 import { Store, User } from '@/payload-types'
-import { Trash, Trash2Icon, TrashIcon } from 'lucide-react'
-import Link from 'next/link'
+import { Trash2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const getStoreNameByuserId = (userId: string, stores: Store[]) => {
 	const store = stores.find(store => (store?.createdBy as User)?.id === userId);
@@ -93,7 +91,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 		}
 	}
 
-	const groupedItems = cart.reduce((acc, item) => {
+	const groupedItems = cart.reduce((acc: { [x: string]: unknown[] }, item) => {
 		const userId = (item.product.createdBy as User).id;
 
 		if (userId && !acc[userId]) {
@@ -124,7 +122,7 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 									</tr>
 								</thead>
 								<tbody>
-									{items.map((item) => (
+									{(items).map((item: CartItem) => (
 										<tr key={item.product.id} >
 											<td className="text-left p-2">{item.product.name}</td>
 											<td className="text-right">
@@ -155,12 +153,12 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 								</tbody>
 							</table>
 							<div className="mt-4 text-right">
-								<strong>Total: {formatCurrency(items.reduce((total, item) => total + item.product.price * item.quantity, 0))}</strong>
+								<strong>Total: {formatCurrency((items as CartItem[]).reduce((total, item) => total + (item.product.price * item.quantity), 0))}</strong>
 							</div>
 							<div className='w-full flex justify-end'>
 								<div className='w-56'>
 									{user ? <Button
-										onClick={() => handleCheckout(items)}
+										onClick={() => handleCheckout(items as CartItem[])}
 										className="mt-2 mb-8 "
 										appearance='primary'
 										label={'Finalizar Compra'}
