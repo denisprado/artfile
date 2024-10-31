@@ -10,20 +10,21 @@ import PageContainer from '@/components/PageContainer'
 
 export const revalidate = 600
 
-export default async function Page(props) {
-    const params = await props.params;
-    const pageNumber = params.pageNumber ? params.pageNumber : 2
+export default async function Page({ params }: {
+	params: Promise<{ pageNumber: string }>;
+}) {
 
-    const payload = await getPayloadHMR({ config: configPromise })
+	const pageNumber = (await params).pageNumber
+	const payload = await getPayloadHMR({ config: configPromise })
 
-    const posts = await payload.find({
+	const posts = await payload.find({
 		collection: 'posts',
 		depth: 1,
 		limit: 12,
-		page: pageNumber,
+		page: parseInt(pageNumber),
 	})
 
-    return (
+	return (
 		<PageContainer>
 			<div className="container mb-16">
 				<div className="prose dark:prose-invert max-w-none">
@@ -51,28 +52,30 @@ export default async function Page(props) {
 	)
 }
 
-export async function generateMetadata(props): Promise<Metadata> {
-    const params = await props.params;
-    const pageNumber = params.pageNumber ? params.pageNumber : 2
+// export async function generateMetadata({ params }: {
+// 	params: Promise<{ pageNumber: string }>
+// }): Promise<Metadata> {
 
-    return {
-		title: `Payload Website Template Posts Page ${pageNumber}`,
-	}
-}
+// 	const pageNumber = (await params).pageNumber ? (await params).pageNumber : "2"
 
-export async function generateStaticParams() {
-	const payload = await getPayloadHMR({ config: configPromise })
-	const posts = await payload.find({
-		collection: 'posts',
-		depth: 0,
-		limit: 10,
-	})
+// 	return {
+// 		title: `Payload Website Template Posts Page ${pageNumber}`,
+// 	}
+// }
 
-	const pages: number[] = []
+// export async function generateStaticParams() {
+// 	const payload = await getPayloadHMR({ config: configPromise })
+// 	const posts = await payload.find({
+// 		collection: 'posts',
+// 		depth: 0,
+// 		limit: 10,
+// 	})
 
-	for (let i = 1; i <= posts.totalPages; i++) {
-		pages.push(i)
-	}
+// 	const pages: number[] = []
 
-	return pages
-}
+// 	for (let i = 1; i <= posts.totalPages; i++) {
+// 		pages.push(i)
+// 	}
+
+// 	return pages
+// }
