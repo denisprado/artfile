@@ -49,7 +49,7 @@ export const UserMenu = ({ user }: { user: User }) => {
 				<Link href="/admin/collections/orders" className="w-full">Meus pedidos</Link>
 			</DropdownMenuItem> */}
 			<DropdownMenuItem>
-				<Link href="/orders/products" className="w-full">Minhas compras</Link>
+				<Link href="/orders/purchase" className="w-full">Minhas compras</Link>
 			</DropdownMenuItem>
 			{checkRole(["admin", "vendor"], user) && (
 				<>
