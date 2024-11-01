@@ -41,7 +41,7 @@ export const Card: React.FC<CardProps> = (props) => {
 	return (
 		<article
 			className={cn(
-				'col-span-3 border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer grid grid-rows-subgrid row-span-6 gap-2',
+				'col-span-3 border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer grid grid-rows-subgrid row-span-4 gap-2 ',
 				className,
 			)}
 			ref={card.ref}
@@ -91,16 +91,16 @@ export const Card: React.FC<CardProps> = (props) => {
 				</div>
 			)}
 
-			<div className="px-4">
+			{sanitizedDescription && <div className="px-4 pt-0 pb-2">
 				<p className='m-0'>{sanitizedDescription}</p>
-			</div>
-
+			</div>}
+			{/* 
 			{isProduct && price && (
 				<div className='flex flex-row gap-4 p-4'>
-					{/* <div className='flex-1'><AddToCartButton product={doc as Product} label='Comprar' appearence='primary' /></div> */}
-					{/* <div><AddToCartButton product={doc as Product} /></div> */}
+					<div className='flex-1'><AddToCartButton product={doc as Product} label='Comprar' appearence='primary' /></div>
+					<div><AddToCartButton product={doc as Product} /></div>
 				</div>
-			)}
+			)} */}
 		</article>
 	)
 }
