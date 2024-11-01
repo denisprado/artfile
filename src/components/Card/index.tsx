@@ -4,7 +4,7 @@ import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
 
-import type { Order, Post, Product, Store } from '@/payload-types'
+import type { Order, Product, Store } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import Image from 'next/image'; // Import Image from Next.js
@@ -14,8 +14,8 @@ import imageLoader from '@/lib/imageLoader'
 export type CardProps = {
 	alignItems?: 'center'
 	className?: string
-	doc: Post | Store | Product | Order
-	relationTo: 'posts' | 'stores' | 'products' | 'orders'
+	doc: Store | Product | Order
+	relationTo: 'stores' | 'products' | 'orders'
 	showCategories?: boolean
 	title?: string
 }
@@ -27,12 +27,12 @@ export const Card: React.FC<CardProps> = (props) => {
 	const isProduct = relationTo === 'products'
 	const isStore = relationTo === 'stores'
 	const isOrder = relationTo === 'orders'
-	const isPost = relationTo === 'posts'
+
 
 	const { slug, categories, meta, title, name, description, price, thumbnail, logoStore, id } = doc as any
 
 	const titleToUse = isOrder ? id : titleFromProps || title
-	const imageUrlToUse = getImageUrl(isPost, thumbnail, logoStore, doc)
+	const imageUrlToUse = getImageUrl(thumbnail, logoStore, doc)
 	const { width, height } = getImageDimensions(isProduct, thumbnail, logoStore)
 
 	const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
@@ -106,11 +106,10 @@ export const Card: React.FC<CardProps> = (props) => {
 }
 
 // Função auxiliar para obter a URL da imagem
-const getImageUrl = (isPost: boolean, thumbnail: any, logoStore: any, doc: any) => {
+const getImageUrl = (thumbnail: any, logoStore: any, doc: any) => {
 	const imgProduct = thumbnail?.sizes?.thumbnail?.filename;
 	const imgStore = logoStore?.sizes?.thumbnail?.filename;
 
-	if (isPost) return doc.imageUrl;
 	if (imgProduct) return "/" + imgProduct;
 	if (imgStore) return "/" + imgStore;
 	return '/media/artfile-logo.svg';

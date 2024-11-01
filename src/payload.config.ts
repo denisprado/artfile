@@ -21,14 +21,13 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { pt } from 'payload/i18n/pt'
 import sharp from 'sharp' // editor-import
-import { Page, Post } from 'src/payload-types'
+import { Page, Product, Store } from 'src/payload-types'
 import { fileURLToPath } from 'url'
 import { CategoriesMenu } from './CategoriesMenu/config'
 import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import Orders from './collections/Orders'
 import { Pages } from './collections/Pages'
-import { Posts } from './collections/Posts'
 import Products from './collections/Products'
 import Stores from './collections/Stores'
 import Users from './collections/Users'
@@ -39,11 +38,11 @@ import { updateOrderStatus } from './utilities/updateOrderStatus'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
+const generateTitle: GenerateTitle<Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Artfile` : 'ArtFile'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Page> = ({ doc }) => {
   return doc?.slug
     ? `${process.env.NEXT_PUBLIC_SERVER_URL!}/${doc.slug}`
     : process.env.NEXT_PUBLIC_SERVER_URL!
@@ -115,7 +114,7 @@ export default buildConfig({
         BoldFeature(),
         ItalicFeature(),
         LinkFeature({
-          enabledCollections: ['pages', 'posts'],
+          enabledCollections: ['pages'],
           fields: ({ defaultFields }) => {
             const defaultFieldsWithoutUrl = defaultFields.filter((field) => {
               if ('name' in field && field.name === 'url') return false
@@ -142,14 +141,14 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.DATABASE_URI || '',
   }),
-  collections: [Users, Products, Stores, Orders, Media, Pages, Posts, Categories],
+  collections: [Users, Products, Stores, Orders, Media, Pages, Categories],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [Header, Footer, CategoriesMenu],
   i18n: { supportedLanguages: { pt } },
   plugins: [
     redirectsPlugin({
-      collections: ['pages', 'posts'],
+      collections: ['pages'],
       overrides: {
         // @ts-expect-error i dont know
         fields: ({ defaultFields }) => {

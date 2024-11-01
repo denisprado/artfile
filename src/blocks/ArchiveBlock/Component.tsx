@@ -1,23 +1,23 @@
-import type { Post, ArchiveBlock as ArchiveBlockProps, Store, Product, Order } from '@/payload-types'
+import type { ArchiveBlock as ArchiveBlockProps, Order, Product, Store } from '@/payload-types'
 
+import RichText from '@/components/RichText'
 import configPromise from '@payload-config'
 import { getPayloadHMR } from '@payloadcms/next/utilities'
 import React from 'react'
-import RichText from '@/components/RichText'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 
 export const ArchiveBlock: React.FC<
 	ArchiveBlockProps & {
 		id?: string
-		relationTo: 'posts' | 'stores' | 'products' | 'orders'
+		relationTo: 'stores' | 'products' | 'orders'
 	}
 > = async (props) => {
 	const { id, relationTo, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
 
 	const limit = limitFromProps || 3
 
-	let posts: Post[] | Store[] | Product[] | Order[] = []
+	let posts: Store[] | Product[] | Order[] = []
 
 	if (populateBy === 'collection') {
 		const payload = await getPayloadHMR({ config: configPromise })
@@ -42,12 +42,12 @@ export const ArchiveBlock: React.FC<
 				: {}),
 		})
 
-		posts = fetchedPosts.docs as Post[] | Store[] | Product[] | Order[]
+		posts = fetchedPosts.docs as Store[] | Product[] | Order[]
 	} else {
 		if (selectedDocs?.length) {
 			const filteredSelectedPosts = selectedDocs.map((post) => {
-				if (typeof post.value === 'object') return post.value as Post | Store | Product | Order
-			}) as Post[] | Store[] | Product[] | Order[]
+				if (typeof post.value === 'object') return post.value as Store | Product | Order
+			}) as Store[] | Product[] | Order[]
 
 			posts = filteredSelectedPosts
 		}

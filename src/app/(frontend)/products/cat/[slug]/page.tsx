@@ -11,10 +11,10 @@ import React from 'react'
 export const revalidate = 600
 const COLLECTION = 'products'
 export default async function Page(props) {
-    const params = await props.params;
-    const payload = await getPayloadHMR({ config: configPromise })
+	const params = await props.params;
+	const payload = await getPayloadHMR({ config: configPromise })
 
-    const posts = await payload.find({
+	const products = await payload.find({
 		collection: COLLECTION,
 		depth: 1,
 		limit: 12,
@@ -25,7 +25,7 @@ export default async function Page(props) {
 		}
 	})
 
-    const ProductsPageTitle = () => {
+	const ProductsPageTitle = () => {
 		return <div className="container mb-16">
 			<div className="prose dark:prose-invert max-w-none">
 				<h1>Produtos</h1>
@@ -33,24 +33,24 @@ export default async function Page(props) {
 		</div>
 	}
 
-    return (
+	return (
 		<PageContainer>
 			<ProductsPageTitle />
 
 			<div className="container mb-8">
 				<PageRange
 					collection={COLLECTION}
-					currentPage={posts.page}
+					currentPage={products.page}
 					limit={12}
-					totalDocs={posts.totalDocs}
+					totalDocs={products.totalDocs}
 				/>
 			</div>
 
-			<CollectionArchive relationTo={COLLECTION} items={posts.docs} />
+			<CollectionArchive relationTo={COLLECTION} items={products.docs} />
 
 			<div className="container">
-				{posts.totalPages > 1 && posts.page && (
-					<Pagination page={posts.page} totalPages={posts.totalPages} />
+				{products.totalPages > 1 && products.page && (
+					<Pagination page={products.page} totalPages={products.totalPages} slug={'cat/' + params.slug} />
 				)}
 			</div>
 		</PageContainer>

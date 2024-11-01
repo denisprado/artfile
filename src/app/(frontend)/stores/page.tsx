@@ -12,7 +12,7 @@ export default async function Page() {
 	const COLLECTION = 'stores'
 	const payload = await getPayloadHMR({ config: configPromise })
 
-	const posts = await payload.find({
+	const stores = await payload.find({
 		collection: COLLECTION,
 		depth: 1,
 		limit: 12,
@@ -29,17 +29,17 @@ export default async function Page() {
 			<div className="container mb-8">
 				<PageRange
 					collection={COLLECTION}
-					currentPage={posts.page}
+					currentPage={stores.page}
 					limit={12}
-					totalDocs={posts.totalDocs}
+					totalDocs={stores.totalDocs}
 				/>
 			</div>
 
-			<CollectionArchive relationTo={COLLECTION} items={posts.docs} />
+			<CollectionArchive relationTo={COLLECTION} items={stores.docs} />
 
 			<div className="container">
-				{posts.totalPages > 1 && posts.page && (
-					<Pagination page={posts.page} totalPages={posts.totalPages} />
+				{stores.totalPages > 1 && stores.page && (
+					<Pagination page={stores.page} totalPages={stores.totalPages} slug='/stores' />
 				)}
 			</div>
 		</PageContainer>
