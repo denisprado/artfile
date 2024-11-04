@@ -8,7 +8,6 @@ export async function middleware(request: NextRequest) {
   // console.log(request.nextUrl)
 
   if (request.headers.get('pathname') === '/api/users/logout') {
-    console.log('ok')
     NextResponse.redirect('/')
   }
 

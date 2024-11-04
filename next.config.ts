@@ -1,4 +1,5 @@
 import { withPayload } from '@payloadcms/next/withPayload'
+import redirects from 'redirects'
 
 /** @type {import('next').NextConfig} */
 const nextConfig: import('next').NextConfig = {
@@ -29,7 +30,7 @@ const nextConfig: import('next').NextConfig = {
 
   // 	},
   // ],
-  // redirects,
+  redirects,
   webpack: (config, { isServer }) => {
     if (!isServer) {
       config.resolve.fallback = {

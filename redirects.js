@@ -1,3 +1,5 @@
+import { sources } from "next/dist/compiled/webpack/webpack"
+
 const redirects = async () => {
 	const internetExplorerRedirect = {
 		destination: '/ie-incompatible.html',
@@ -13,9 +15,9 @@ const redirects = async () => {
 	}
 
 	const logoutRedirect = {
-		destination: '/',
+		destination: '/create-account',
 		permanent: true,
-		source: process.env.NEXT_PUBLIC_SERVER_URL + '/admin/logout'
+		source: '/'
 	}
 
 	const redirects = [internetExplorerRedirect, logoutRedirect]

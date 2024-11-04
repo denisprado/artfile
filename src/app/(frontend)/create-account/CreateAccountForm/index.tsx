@@ -120,7 +120,7 @@ const CreateAccountForm: React.FC = () => {
 			/>
 			<div>
 				{'Já tem uma conta? '}
-				<Link href={`/admin/login${allParams}`}>Login</Link>
+				<Link href={`/admin/login${allParams}`}>Faça Login</Link>
 			</div>
 		</form>
 	)

@@ -25,10 +25,13 @@ export default async function CreateAccount({
 	return (
 		<Gutter className={classes.createAccount}>
 			<PageContainer>
-				<div className="container mb-16">
-
-					<h2>Criar conta</h2>
-					<CreateAccountForm />
+				<div className="container flex items-center mb-16">
+					<div className='w-1/2 flex items-center justify-center p-24'>
+						<h1 className='text-7xl'>Crie e venda seu produto digital em <span className='font-bold'> poucos passos</span></h1>
+					</div>
+					<div className='w-1/2'>
+						<CreateAccountForm />
+					</div>
 				</div>
 			</PageContainer>
 		</Gutter>
