@@ -8,19 +8,24 @@ import CreateAccountForm from './CreateAccountForm'
 import classes from './index.module.scss'
 import { Gutter } from '@/components/Gutter'
 import PageContainer from '@/components/PageContainer'
+import BeforeDashboard from '@/components/BeforeDashboard'
 
 export default async function CreateAccount({
 	searchParams,
 }: {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-	await getMeUserServer({
-		validUserRedirect: `/account?warning=${encodeURIComponent(
-			'Não é possível criar uma nova conta enquanto estiver logado, por favor, faça logout e tente novamente.',
-		)}`,
-	})
 
+	const { user } = await getMeUserServer()
 
+	if (user) {
+		return <Gutter className={classes.createAccount}>
+			<PageContainer>
+
+				<BeforeDashboard />
+			</PageContainer>
+		</Gutter>
+	}
 
 	return (
 		<Gutter className={classes.createAccount}>

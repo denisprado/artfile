@@ -71,7 +71,7 @@ const CreateAccountLink = ({ user: userComp }) => {
 			{!user?.stripe && !accountCreatePending && !connectedAccountId && (
 
 				<Button href="#"
-					label="Quero vender arquivos."
+					label="Quero vender produtos digitais. Criar uma conta na plataforma de pagamentos."
 					appearance="primary"
 					onClick={async () => {
 						setAccountCreatePending(true);
@@ -154,7 +154,7 @@ const CreateAccountLink = ({ user: userComp }) => {
 			{error && <p className="error">Algo deu errado!</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
 				<div className="dev-callout">
-					{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>}
+					{/* {connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>} */}
 					{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
 					{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
 				</div>
