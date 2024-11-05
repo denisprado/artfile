@@ -36,9 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 							<Suspense>
 								<Header />
 							</Suspense>
-							<Suspense>
-								<CategoriesMenu />
-							</Suspense>
+
 							<main>
 								{children}
 							</main>

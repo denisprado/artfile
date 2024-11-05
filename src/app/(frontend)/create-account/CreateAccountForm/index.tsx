@@ -10,7 +10,6 @@ import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
 import { useAuth } from '@/providers/Auth'
 
-import classes from './index.module.scss'
 import createAccountLink from '@/components/CreateAccountLink'
 
 type FormData = {
@@ -76,8 +75,14 @@ const CreateAccountForm: React.FC = () => {
 	)
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className={classes.form}>
-			<Message error={error} className={classes.message} />
+		<form
+			onSubmit={handleSubmit(onSubmit)}
+			className="mb-4 flex flex-col gap-4 items-start w-2/3 border-2 rounded-xl p-4"
+		>
+			<Message
+				error={error}
+				className="mb-4"
+			/>
 			<Input
 				name="name"
 				label="Nome"
@@ -108,7 +113,7 @@ const CreateAccountForm: React.FC = () => {
 				label="Confirmar Senha"
 				required
 				register={register}
-				validate={value => value === password.current || 'The passwords do not match'}
+				validate={value => value === password.current || 'A senha não é igual à digitada'}
 				error={errors.passwordConfirm}
 			/>
 			<Button
@@ -116,7 +121,7 @@ const CreateAccountForm: React.FC = () => {
 				label={loading ? 'Processing' : 'Criar Conta'}
 				disabled={loading}
 				appearance="primary"
-				className={classes.submit}
+				className="mt-2"
 			/>
 			<div>
 				{'Já tem uma conta? '}

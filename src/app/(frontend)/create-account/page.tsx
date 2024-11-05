@@ -1,14 +1,11 @@
-import React from 'react'
 import { Metadata } from 'next'
 
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 
 import CreateAccountForm from './CreateAccountForm'
 
-import classes from './index.module.scss'
-import { Gutter } from '@/components/Gutter'
 import PageContainer from '@/components/PageContainer'
-import BeforeDashboard from '@/components/BeforeDashboard'
+import { Button } from '@/components/Button'
 
 export default async function CreateAccount({
 	searchParams,
@@ -19,27 +16,28 @@ export default async function CreateAccount({
 	const { user } = await getMeUserServer()
 
 	if (user) {
-		return <Gutter className={classes.createAccount}>
-			<PageContainer>
+		return
 
-				<BeforeDashboard />
-			</PageContainer>
-		</Gutter>
 	}
 
 	return (
-		<Gutter className={classes.createAccount}>
-			<PageContainer>
-				<div className="container flex items-center mb-16">
-					<div className='w-1/2 flex items-center justify-center p-24'>
-						<h1 className='text-7xl'>Crie e venda seu produto digital em <span className='font-bold'> poucos passos</span></h1>
-					</div>
-					<div className='w-1/2'>
-						<CreateAccountForm />
-					</div>
+
+		<PageContainer>
+			<div className="container grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 items-center mb-16">
+				<div className='flex-col gap-8 items-center justify-center'>
+					<h1 className='inline text-2xl sm:text-4xl md:text-6xl lg:text-7xl'>Crie e venda seu produto digital em <span className='font-bold'> poucos passos</span></h1>
+					<ul className='py-6 list-disc list-inside'>
+						<li className='my-2 text-lg'>No artfile você vende seu produto e recebe diretamente em sua conta</li>
+						<li className='my-2 text-lg'>Personalize sua loja e venda cursos, arquivos e outros produtos digitais</li>
+					</ul>
+					<Button href='/marketplace' className='mt-10' label={'Comprar produtos'} appearance='secondary'></Button>
 				</div>
-			</PageContainer>
-		</Gutter>
+				<div className='flex justify-center'>
+					<CreateAccountForm />
+				</div>
+			</div>
+		</PageContainer>
+
 	)
 }
 
