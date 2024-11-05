@@ -6,8 +6,8 @@ import React, { Suspense } from 'react'
 import { CategoriesMenu } from '@/CategoriesMenu/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
-import './_css/app.scss'
-import './globals.css'
+
+import '../globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()
