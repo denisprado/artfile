@@ -26,7 +26,7 @@ export interface Config {
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
-  collectionsSelect?: {
+  collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
     stores: StoresSelect<false> | StoresSelect<true>;
@@ -50,7 +50,7 @@ export interface Config {
     footer: Footer;
     categoriesMenu: CategoriesMenu;
   };
-  globalsSelect?: {
+  globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
     categoriesMenu: CategoriesMenuSelect<false> | CategoriesMenuSelect<true>;

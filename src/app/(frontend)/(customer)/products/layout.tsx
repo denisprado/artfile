@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 import React, { Suspense } from 'react'
 
-import { CategoriesMenu } from '@/CategoriesMenu/Component'
+import { CategoriesMenu } from '@/globals/CategoriesMenu/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 

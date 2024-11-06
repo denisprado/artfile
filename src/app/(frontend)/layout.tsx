@@ -2,13 +2,10 @@ import type { Metadata } from 'next'
 
 import { cn } from 'src/utilities/cn'
 
-import React, { Suspense } from 'react'
+import React from 'react'
 
-import { CategoriesMenu } from '@/CategoriesMenu/Component'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { CartProvider } from '@/contexts/CartContext'
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
@@ -28,20 +25,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<link href="/favicon.ico" rel="icon" sizes="32x32" />
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
-			<body className='overflow-x-hidden overflow-y-scroll'>
+			<body>
 				<Providers>
 					<CartProvider>
 						<LivePreviewListener />
-						<div className='grid min-h-[100dvh] grid-rows-[auto_auto_1fr_auto] '>
-							<Suspense>
-								<Header />
-							</Suspense>
-
-							<main>
-								{children}
-							</main>
-							<Footer />
-						</div>
+						<>
+							{children}
+						</>
 					</CartProvider>
 				</Providers>
 			</body>

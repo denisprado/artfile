@@ -123,9 +123,9 @@ const CreateAccountForm: React.FC = () => {
 				appearance="primary"
 				className="mt-2"
 			/>
-			<div>
-				{'Já tem uma conta? '}
-				<Link href={`/admin/login${allParams}`}>Faça Login</Link>
+			<div className='w-full'>
+				<p className='text-center'>Já tem uma conta?
+					<Link href={`/admin/login${allParams}`}> Faça Login</Link></p>
 			</div>
 		</form>
 	)

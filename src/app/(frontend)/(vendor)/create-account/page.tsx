@@ -6,6 +6,7 @@ import CreateAccountForm from './CreateAccountForm'
 
 import PageContainer from '@/components/PageContainer'
 import { Button } from '@/components/Button'
+import BeforeDashboard from '@/components/BeforeDashboard'
 
 export default async function CreateAccount({
 	searchParams,
@@ -16,9 +17,13 @@ export default async function CreateAccount({
 	const { user } = await getMeUserServer()
 
 	if (user) {
-		return
-
+		return (
+			<PageContainer>
+				<BeforeDashboard />
+			</PageContainer>
+		)
 	}
+
 
 	return (
 
@@ -30,7 +35,7 @@ export default async function CreateAccount({
 						<li className='my-2 text-lg'>No artfile você vende seu produto e recebe diretamente em sua conta</li>
 						<li className='my-2 text-lg'>Personalize sua loja e venda cursos, arquivos e outros produtos digitais</li>
 					</ul>
-					<Button href='/marketplace' className='mt-10' label={'Comprar produtos'} appearance='secondary'></Button>
+
 				</div>
 				<div className='flex justify-center'>
 					<CreateAccountForm />
