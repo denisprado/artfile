@@ -9,16 +9,18 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 import './../_css/app.scss'
 import './../globals.css'
+import { SidebarTrigger } from '@/components/Sidebar'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()
 
 	return (
-		<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
+		<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] w-full'>
 			<Suspense>
 				<VendorHeader />
 			</Suspense>
 			<main>
+
 				{children}
 			</main>
 			<Footer />

@@ -15,7 +15,13 @@ const redirects = async () => {
 	}
 
 
-	const redirects = [internetExplorerRedirect]
+	const homeSlashRedirect = {
+		destination: '/create-account-vendor',
+		permanent: true,
+		source: '/'
+	}
+
+	const redirects = [internetExplorerRedirect, homeSlashRedirect]
 
 	return redirects
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { cn } from 'src/utilities/cn'
+import { cn } from '@/utilities/cn'
 
 import React from 'react'
 
@@ -14,6 +14,8 @@ import { GeistSans } from 'geist/font/sans'
 import { draftMode } from 'next/headers'
 import './_css/app.scss'
 import './globals.css'
+import { SidebarProvider, SidebarTrigger } from '@/components/Sidebar'
+import { AppSidebar } from '@/components/AppSidebar'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()
@@ -26,14 +28,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 				<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
 			</head>
 			<body>
-				<Providers>
-					<CartProvider>
-						<LivePreviewListener />
-						<>
-							{children}
-						</>
-					</CartProvider>
-				</Providers>
+				<SidebarProvider>
+					<AppSidebar />
+					<Providers>
+						<CartProvider>
+							<LivePreviewListener />
+
+							<>
+
+
+								{children}
+							</>
+						</CartProvider>
+					</Providers>
+				</SidebarProvider>
 			</body>
 		</html>
 	)

@@ -5,14 +5,14 @@ import configPromise from '@payload-config';
 import { getPayloadHMR } from '@payloadcms/next/utilities';
 
 export default async function Return(props) {
-    const params = await props.params;
+	const params = await props.params;
 
-    const { user } = await getMeUserServer()
+	const { user } = await getMeUserServer()
 
-    const payload = await getPayloadHMR({ config: configPromise })
-    const accountReturned = await stripe.accounts.retrieve(params.account)
+	const payload = await getPayloadHMR({ config: configPromise })
+	const accountReturned = await stripe.accounts.retrieve(params.account)
 
-    await payload.update({
+	await payload.update({
 		collection: 'users',
 		where: {
 			id: { equals: user?.id! }
@@ -23,7 +23,7 @@ export default async function Return(props) {
 	})
 
 
-    return (
+	return (
 		<div className="container">
 			<div className="content">
 				<h2>Sua conta foi criada com sucesso.</h2>

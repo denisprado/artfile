@@ -8,6 +8,7 @@ import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo'
 import { HeaderNav } from './Nav'
+import { SidebarTrigger } from '../Sidebar'
 
 interface HeaderClientProps {
 	header: Header
@@ -37,8 +38,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, user }) => {
 			className="header container relative z-20 py-8 flex justify-between"
 			{...(theme ? { 'data-theme': theme } : {})}
 		>
-			<Link href="/">
-				<Logo />
+			<Link href="/" className='flex items-center'>
+				<SidebarTrigger /><Logo />
 			</Link>
 
 			<HeaderNav header={header} />
