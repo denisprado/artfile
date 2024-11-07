@@ -14,13 +14,8 @@ const redirects = async () => {
 		source: '/:path((?!ie-incompatible.html$).*)', // all pages except the incompatibility page
 	}
 
-	const logoutRedirect = {
-		destination: '/create-account',
-		permanent: true,
-		source: '/'
-	}
 
-	const redirects = [internetExplorerRedirect, logoutRedirect]
+	const redirects = [internetExplorerRedirect]
 
 	return redirects
 }

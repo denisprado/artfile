@@ -8,7 +8,7 @@ const CreateAccount = () => {
 
 	return (
 
-		<Button appearance="secondary" label="Criar conta" href={'/create-account?redirect=' + redirect}></Button>
+		<Button appearance="secondary" label="Criar conta" href={'/create-account-vendor?redirect=' + redirect}></Button>
 	)
 }
 

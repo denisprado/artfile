@@ -29,7 +29,6 @@ import { InlineCodeFeatureClient as InlineCodeFeatureClient_e70f5e05f09f93e00b99
 import { SuperscriptFeatureClient as SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
-import { Header as Header_e20ecfb66760893088d0fe14b02758f5 } from '@/Header/Component'
 import { default as default_32d15b2b13e1e9f604c74e03d9ff8022 } from 'src/components/Icon'
 import { default as default_2396ffa5fcb8566707b31b0d1917b213 } from 'src/components/Logo'
 import { default as default_35b927ff3cd29079d4e3027a2b7fec54 } from '@/components/CreateAccount'
@@ -68,7 +67,6 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SuperscriptFeatureClient": SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
-  "@/Header/Component#Header": Header_e20ecfb66760893088d0fe14b02758f5,
   "./components/Icon#default": default_32d15b2b13e1e9f604c74e03d9ff8022,
   "./components/Logo#default": default_2396ffa5fcb8566707b31b0d1917b213,
   "@/components/CreateAccount#default": default_35b927ff3cd29079d4e3027a2b7fec54,
