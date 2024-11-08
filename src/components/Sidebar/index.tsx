@@ -3,7 +3,7 @@
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { VariantProps, cva } from "class-variance-authority"
-import { PanelLeft } from "lucide-react"
+import { MenuIcon } from "lucide-react"
 
 import { useIsMobile } from "@/components/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
@@ -141,7 +141,7 @@ const SidebarProvider = React.forwardRef<
 							} as React.CSSProperties
 						}
 						className={cn(
-							"group/sidebar-wrapper flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
+							"*:w-full border-2 border-red-500 flex min-h-svh w-full has-[[data-variant=inset]]:bg-sidebar",
 							className
 						)}
 						ref={ref}
@@ -278,7 +278,7 @@ const SidebarTrigger = React.forwardRef<
 			}}
 			{...props}
 		>
-			<PanelLeft />
+			<MenuIcon />
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	)

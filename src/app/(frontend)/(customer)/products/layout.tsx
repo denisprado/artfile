@@ -7,7 +7,7 @@ import { CategoriesMenu } from '@/globals/CategoriesMenu/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
-import '../globals.css'
+import '@/app/(frontend)/globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()

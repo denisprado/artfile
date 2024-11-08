@@ -29,11 +29,13 @@ import { InlineCodeFeatureClient as InlineCodeFeatureClient_e70f5e05f09f93e00b99
 import { SuperscriptFeatureClient as SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SubscriptFeatureClient as SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { default as default_843faa55c235f2eeee722ee7d2c0d6b3 } from '@/components/AppSidebar'
 import { default as default_32d15b2b13e1e9f604c74e03d9ff8022 } from 'src/components/Icon'
 import { default as default_2396ffa5fcb8566707b31b0d1917b213 } from 'src/components/Logo'
 import { default as default_35b927ff3cd29079d4e3027a2b7fec54 } from '@/components/CreateAccount'
 import { default as default_1a7510af427896d367a49dbf838d2de6 } from '@/components/BeforeDashboard'
 import { CartProvider as CartProvider_fe6559dc214ce206eb2e772dbb8f6f6f } from '@/contexts/CartContext'
+import { SidebarProvider as SidebarProvider_d9511b000e06cbd2c4960b740908ecef } from '@/components/Sidebar'
 
 export const importMap = {
   "@/fields/slug/SlugComponent#SlugComponent": SlugComponent_92cc057d0a2abb4f6cf0307edf59f986,
@@ -67,9 +69,11 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#SuperscriptFeatureClient": SuperscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#SubscriptFeatureClient": SubscriptFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#StrikethroughFeatureClient": StrikethroughFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "@/components/AppSidebar#default": default_843faa55c235f2eeee722ee7d2c0d6b3,
   "./components/Icon#default": default_32d15b2b13e1e9f604c74e03d9ff8022,
   "./components/Logo#default": default_2396ffa5fcb8566707b31b0d1917b213,
   "@/components/CreateAccount#default": default_35b927ff3cd29079d4e3027a2b7fec54,
   "@/components/BeforeDashboard#default": default_1a7510af427896d367a49dbf838d2de6,
-  "@/contexts/CartContext#CartProvider": CartProvider_fe6559dc214ce206eb2e772dbb8f6f6f
+  "@/contexts/CartContext#CartProvider": CartProvider_fe6559dc214ce206eb2e772dbb8f6f6f,
+  "@/components/Sidebar#SidebarProvider": SidebarProvider_d9511b000e06cbd2c4960b740908ecef
 }

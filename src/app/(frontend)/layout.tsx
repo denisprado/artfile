@@ -12,10 +12,9 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
 import { draftMode } from 'next/headers'
-import './_css/app.scss'
+
+import { SidebarProvider } from '@/components/Sidebar'
 import './globals.css'
-import { SidebarProvider, SidebarTrigger } from '@/components/Sidebar'
-import { AppSidebar } from '@/components/AppSidebar'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const { isEnabled } = await draftMode()
@@ -29,14 +28,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			</head>
 			<body>
 				<SidebarProvider>
-					<AppSidebar />
 					<Providers>
 						<CartProvider>
 							<LivePreviewListener />
-
 							<>
-
-
 								{children}
 							</>
 						</CartProvider>

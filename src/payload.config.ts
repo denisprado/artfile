@@ -53,7 +53,7 @@ export default buildConfig({
     // routes: { logout: '/logout-inactivity?redirect=/cart' },
     components: {
       // beforeNavLinks: ['@/components/LogoAdmin'],
-      providers: ['@/contexts/CartContext#CartProvider'],
+      providers: ['@/contexts/CartContext#CartProvider', '@/components/Sidebar#SidebarProvider'],
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeLogin` statement on line 15.
       // beforeLogin: ['@/components/BeforeLogin'],
@@ -61,6 +61,7 @@ export default buildConfig({
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below and the import `BeforeDashboard` statement on line 15.
       beforeDashboard: ['@/components/BeforeDashboard'],
+      Nav: '@/components/AppSidebar',
       // views: {
       //   customView: {
       //     Component: '/components/CreateAccount#CreateAccount',

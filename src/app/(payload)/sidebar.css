@@ -1,0 +1,33 @@
+.sidebarAdmin {
+  container-name: sidebar;
+}
+
+@tailwind components;
+@tailwind utilities;
+@tailwind base;
+
+.sidebarAdmin {
+  --base: 24px;
+  border: 1px solid red;
+  font-size: 1rem;
+}
+
+:root {
+  /*font-size: 1rem;*/
+  /* --base: 24px;
+  --gutter-h: 5rem;
+  --block-padding: 120px; */
+}
+
+.template-default__nav-toggler-wrapper {
+  display: none;
+}
+
+/* .template-default {
+  font-size: 0.85rem;
+} 
+
+/* .template-default__wrap {
+  position: relative;
+  min-width: 100%;
+} */

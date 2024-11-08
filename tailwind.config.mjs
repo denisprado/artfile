@@ -6,7 +6,7 @@ export default {
 		'./app/**/*.{ts,tsx}',
 		'./src/**/*.{ts,tsx}',
 	],
-	darkMode: ['selector', '[data-theme="dark"]'],
+	darkMode: ['selector', '[data-theme="dark"]', '.dark'],
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],
 	prefix: '',

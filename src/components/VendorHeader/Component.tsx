@@ -1,4 +1,4 @@
-import '../../app/(frontend)/custom.css'
+
 import { getCachedGlobal } from '@/utilities/getGlobals'
 import { HeaderClient } from './Component.client'
 

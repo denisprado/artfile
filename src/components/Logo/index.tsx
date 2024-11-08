@@ -1,4 +1,4 @@
-
+'use client'
 import imageLoader from '@/lib/imageLoader'
 import { cn } from '@/utilities/cn'
 import Image from 'next/image'
