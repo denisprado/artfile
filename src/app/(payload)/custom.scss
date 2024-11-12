@@ -1,3 +1,5 @@
+@tailwind components;
+@tailwind utilities;
 :root {
 	--background: 0 0% 100%;
 	--foreground: 222.2 84% 4.9%;
@@ -127,11 +129,6 @@ h6 {
 	line-height: 16px;
 }
 
-.template-default {
-	border-top: 1px solid var(--theme-elevation-100);
-}
-
-.list-header,
-.doc-header {
-	padding-top: 2rem;
+.template-default__nav-toggler-wrapper {
+	//display: none;
 }

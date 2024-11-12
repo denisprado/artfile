@@ -1,13 +1,9 @@
 'use client'
 
 import { Button } from '@/components/Button'
-import { CMSLink } from '@/components/Link'
-import UserMenu from '@/components/UserMenu'
 import { useCart } from '@/contexts/CartContext'
 import type { Header as HeaderType, User } from '@/payload-types'
 import { NON_BREAKING_SPACE } from '@payloadcms/richtext-lexical'
-import { ShoppingCartIcon } from 'lucide-react'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 export const HeaderNav = ({ header }: {
@@ -38,22 +34,15 @@ export const HeaderNav = ({ header }: {
 			setUser(resp?.user);
 		};
 
-		fetchUser();
-	}, []);
+		fetchUser()
+	}, [])
 
 	return (
-		(<nav className="flex flex-1 gap-4 items-center justify-end">
-			{user === null || user === undefined ?
-				<div className="flex gap-4 w-auto">
-					<Button href={'/marketplace'} label={`Comprar${NON_BREAKING_SPACE}produtos`} appearance='none'></Button>
-					<Button label={'Entrar'} appearance={"primary"} href={'/admin'} />
-				</div> :
-				<div className="flex gap-2">
-					{/* <CMSLink label={user?.name} appearance={"link"} url={'/admin'} /><GravatarAccountIcon user={user!} /> */}
-
-					<UserMenu user={user!} />
-				</div>
-			}
-		</nav>)
-	);
+		<nav className="flex flex-1 gap-4 items-center justify-end">
+			<div className="flex gap-4 w-auto">
+				<Button href={'/marketplace'} label={`Comprar${NON_BREAKING_SPACE}produtos`} appearance='none'></Button>
+				<Button label={'Entrar'} appearance={"primary"} href={'/admin'} />
+			</div>
+		</nav>
+	)
 }

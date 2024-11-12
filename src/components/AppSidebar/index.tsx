@@ -1,88 +1,79 @@
 'use client'
-
-import '../../app/(payload)/sidebar.css'
-
+import { Hamburger, Logout, useNav } from '@payloadcms/ui'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown-menu'
+import './index.scss'
+import Link from 'next/link'
+import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../Sidebar'
+import { Home, Inbox, Calendar, Search, Settings } from 'lucide-react'
 import {
-	Sidebar,
-	SidebarContent,
-	SidebarFooter,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarHeader,
-	SidebarMenu,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarTrigger,
-} from "@/components/Sidebar"
-import { Collapsible, CollapsibleTrigger } from '@/components/ui/collapsible'
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-import LogoAdmin from '../LogoAdmin'
-export default function AppSidebar() {
-
-	const items = [
-		{
-			title: "Home",
-			url: "#",
-			icon: Home,
-		},
-		{
-			title: "Inbox",
-			url: "#",
-			icon: Inbox,
-		},
-		{
-			title: "Calendar",
-			url: "#",
-			icon: Calendar,
-		},
-		{
-			title: "Search",
-			url: "#",
-			icon: Search,
-		},
-		{
-			title: "Settings",
-			url: "#",
-			icon: Settings,
-		},
-	]
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion"
+const baseClass = 'nav'
+const items = [
+	{
+		title: "Home",
+		url: "#",
+		icon: Home,
+	},
+	{
+		title: "Inbox",
+		url: "#",
+		icon: Inbox,
+	},
+	{
+		title: "Calendar",
+		url: "#",
+		icon: Calendar,
+	},
+	{
+		title: "Search",
+		url: "#",
+		icon: Search,
+	},
+	{
+		title: "Settings",
+		url: "#",
+		icon: Settings,
+	},
+]
+export default function Nav() {
+	const { navOpen, navRef, setNavOpen } = useNav()
 
 	return (
-		<div className="w-full flex flex-row gap-4 sidebarAdmin">
-			<div className='flex flex-row z-50 justify-start items-center h-20'>
-				<SidebarTrigger />
+		<aside className={[baseClass, navOpen && `${baseClass}--nav-open`].filter(Boolean).join(' ')}>
+			<div className={`${baseClass}__scroll`} ref={navRef}>
+				<nav className={`${baseClass}__wrap`}>
+					<Accordion type="single" collapsible>
+						<AccordionItem value="item-1">
+							<AccordionTrigger>Is it accessible?</AccordionTrigger>
+							<AccordionContent>
+								Yes. It adheres to the WAI-ARIA design pattern.
+							</AccordionContent>
+						</AccordionItem>
+					</Accordion>
+
+					<div className={`${baseClass}__controls`}>
+						<Logout tabIndex={!navOpen ? -1 : undefined} />
+					</div>
+				</nav>
 			</div>
-			<Sidebar className='mt-20'>
-				<SidebarHeader><LogoAdmin /></SidebarHeader>
-				<SidebarContent>
-					<Collapsible defaultOpen className="group/collapsible">
-
-						<SidebarGroup>
-
-							<SidebarGroupLabel>Vendas</SidebarGroupLabel>
-							<SidebarGroupContent>
-								<SidebarMenu>
-									{items.map((item) => (
-										<SidebarMenuItem key={item.title}>
-											<CollapsibleTrigger asChild>
-
-												<SidebarMenuButton asChild variant={'outline'}>
-													<a href={item.url}>
-														<item.icon />
-														<span>{item.title}</span>
-													</a>
-												</SidebarMenuButton>
-											</CollapsibleTrigger>
-										</SidebarMenuItem>
-									))}
-								</SidebarMenu>
-							</SidebarGroupContent>
-						</SidebarGroup>
-					</Collapsible>
-				</SidebarContent>
-				<SidebarFooter />
-			</Sidebar>
-		</div>
+			<div className={`${baseClass}__header`}>
+				<div className={`${baseClass}__header-content`}>
+					<button
+						className={`${baseClass}__mobile-close`}
+						onClick={() => {
+							setNavOpen(false)
+						}}
+						tabIndex={!navOpen ? -1 : undefined}
+						type="button"
+					>
+						<Hamburger isActive />
+					</button>
+				</div>
+			</div>
+		</aside>
 	)
 }

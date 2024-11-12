@@ -1,26 +1,16 @@
-.sidebarAdmin {
-  container-name: sidebar;
-}
-
 @tailwind components;
 @tailwind utilities;
-@tailwind base;
+@layer payload-default {
+  body {
+    font-size: 1rem;
+  }
 
-.sidebarAdmin {
-  --base: 24px;
-  border: 1px solid red;
-  font-size: 1rem;
-}
-
-:root {
-  /*font-size: 1rem;*/
-  /* --base: 24px;
+  :root {
+    /*font-size: 1rem;*/
+    /* --base: 24px;
   --gutter-h: 5rem;
   --block-padding: 120px; */
-}
-
-.template-default__nav-toggler-wrapper {
-  display: none;
+  }
 }
 
 /* .template-default {

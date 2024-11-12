@@ -1,3 +1,4 @@
+
 'use client'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
@@ -8,14 +9,14 @@ import type { Header } from '@/payload-types'
 
 import { Logo } from '@/components/Logo'
 import { HeaderNav } from './Nav'
-import { SidebarTrigger } from '../Sidebar'
+
 
 interface HeaderClientProps {
 	header: Header
-	user: any
+
 }
 
-export const HeaderClient: React.FC<HeaderClientProps> = ({ header, user }) => {
+export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 	/* Storing the value in a useState to avoid hydration errors */
 	const [theme, setTheme] = useState<string | null>(null)
 	const { headerTheme, setHeaderTheme } = useHeaderTheme()
@@ -35,11 +36,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header, user }) => {
 
 	return (
 		<header
-			className="header container relative z-20 py-8 flex justify-between"
+			className="header relative z-20 p-8 flex justify-between"
 			{...(theme ? { 'data-theme': theme } : {})}
 		>
 			<Link href="/" className='flex items-center'>
-				<SidebarTrigger /><Logo />
+				<Logo />
 			</Link>
 
 			<HeaderNav header={header} />
