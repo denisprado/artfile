@@ -2,40 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
-*::before,
-*::after {
-  /* outline: 2px solid gray; */
-  box-sizing: border-box;
-}
-@media (min-width: 640px) {
-  /* Tela pequena (sm) */
-  * {
-    outline-color: red; /* Cor para telas pequenas */
-  }
-}
-
-@media (min-width: 768px) {
-  /* Tela média (md) */
-  * {
-    outline-color: blue; /* Cor para telas médias */
-  }
-}
-
-@media (min-width: 1024px) {
-  /* Tela grande (lg) */
-  * {
-    outline-color: green; /* Cor para telas grandes */
-  }
-}
-
-@media (min-width: 1280px) {
-  /* Tela extra grande (xl) */
-  * {
-    outline-color: yellow; /* Cor para telas extra grandes */
-  }
-}
-
 @layer base {
   /* h1,
   h2,
@@ -46,6 +12,40 @@
     font-size: larger;
     font-weight: bolder;
   } */
+
+  *,
+  *::before,
+  *::after {
+    /* outline: 2px solid gray; */
+    box-sizing: border-box;
+  }
+  @media (min-width: 640px) {
+    /* Tela pequena (sm) */
+    * {
+      outline-color: red; /* Cor para telas pequenas */
+    }
+  }
+
+  @media (min-width: 768px) {
+    /* Tela média (md) */
+    * {
+      outline-color: blue; /* Cor para telas médias */
+    }
+  }
+
+  @media (min-width: 1024px) {
+    /* Tela grande (lg) */
+    * {
+      outline-color: green; /* Cor para telas grandes */
+    }
+  }
+
+  @media (min-width: 1280px) {
+    /* Tela extra grande (xl) */
+    * {
+      outline-color: yellow; /* Cor para telas extra grandes */
+    }
+  }
 
   :root {
     --base: 24px;

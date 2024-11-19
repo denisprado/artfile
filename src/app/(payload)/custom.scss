@@ -2,18 +2,16 @@
 	@tailwind base;
 	@tailwind components;
 	@tailwind utilities;
+
 }
 
+body {
+	font-size: 1rem !important;
+}
 
-/* h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-size: larger;
-    font-weight: bolder;
-  } */
+#nav-toggler{
+	display: none;
+}
 
 :root {
 

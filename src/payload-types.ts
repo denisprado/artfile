@@ -784,7 +784,6 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  teste?: T;
   name?: T;
   roles?: T;
   stripe?: T;

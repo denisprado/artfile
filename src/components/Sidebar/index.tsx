@@ -1,10 +1,5 @@
 "use client"
 
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { VariantProps, cva } from "class-variance-authority"
-import { MenuIcon } from "lucide-react"
-
 import { useIsMobile } from "@/components/hooks/use-mobile"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,6 +13,10 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/utilities/cn"
+import { Slot } from "@radix-ui/react-slot"
+import { VariantProps, cva } from "class-variance-authority"
+import { MenuIcon } from "lucide-react"
+import * as React from "react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar:state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -263,7 +262,7 @@ const SidebarTrigger = React.forwardRef<
 	React.ElementRef<typeof Button>,
 	React.ComponentProps<typeof Button>
 >(({ className, onClick, ...props }, ref) => {
-	const { toggleSidebar } = useSidebar()
+	const { toggleSidebar, open } = useSidebar()
 
 	return (
 		<Button
@@ -278,7 +277,10 @@ const SidebarTrigger = React.forwardRef<
 			}}
 			{...props}
 		>
+
+
 			<MenuIcon />
+
 			<span className="sr-only">Toggle Sidebar</span>
 		</Button>
 	)
@@ -358,7 +360,7 @@ const SidebarHeader = React.forwardRef<
 		<div
 			ref={ref}
 			data-sidebar="header"
-			className={cn("flex flex-col gap-2 p-2", className)}
+			className={cn("flex flex-col gap-2 p-2 pl-1	", className)}
 			{...props}
 		/>
 	)
@@ -759,5 +761,6 @@ export {
 	SidebarRail,
 	SidebarSeparator,
 	SidebarTrigger,
-	useSidebar,
+	useSidebar
 }
+

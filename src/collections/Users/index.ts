@@ -40,15 +40,6 @@ const Users: CollectionConfig = {
 
   fields: [
     {
-      name: 'teste',
-      type: 'ui',
-      admin: {
-        components: {
-          Field: '/components/AppSidebar',
-        },
-      },
-    },
-    {
       label: 'Nome',
       name: 'name',
       type: 'text',

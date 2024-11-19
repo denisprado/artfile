@@ -1,78 +1,76 @@
 'use client'
-import { Hamburger, Logout, useNav } from '@payloadcms/ui'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown-menu'
-import './index.scss'
-import Link from 'next/link'
-import { Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '../Sidebar'
-import { Home, Inbox, Calendar, Search, Settings } from 'lucide-react'
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@/components/ui/accordion"
-const baseClass = 'nav'
-const items = [
-	{
-		title: "Home",
-		url: "#",
-		icon: Home,
-	},
-	{
-		title: "Inbox",
-		url: "#",
-		icon: Inbox,
-	},
-	{
-		title: "Calendar",
-		url: "#",
-		icon: Calendar,
-	},
-	{
-		title: "Search",
-		url: "#",
-		icon: Search,
-	},
-	{
-		title: "Settings",
-		url: "#",
-		icon: Settings,
-	},
-]
+import { Box, Settings, ShoppingCart } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem, SidebarTrigger, useSidebar } from "../Sidebar"
+import Image from "next/image"
+import Logo from "../Logo"
+import imageLoader from "@/lib/imageLoader"
 export default function Nav() {
-	const { navOpen, navRef, setNavOpen } = useNav()
+
+	const { open } = useSidebar()
+	const menuItems = [
+		{
+			title: "Vendas",
+			icon: ShoppingCart,
+			subItems: [
+				{ title: "Pedidos", url: "/pedidos" },
+				{ title: "Clientes", url: "/clientes" },
+			]
+		},
+		{
+			title: "Produtos",
+			icon: Box,
+			subItems: [
+				{ title: "Catálogo", url: "/catalogo" },
+				{ title: "Estoque", url: "/estoque" },
+			]
+		},
+		{
+			title: "Configurações",
+			icon: Settings,
+			url: "/configuracoes"
+		},
+	]
 
 	return (
-		<aside className={[baseClass, navOpen && `${baseClass}--nav-open`].filter(Boolean).join(' ')}>
-			<div className={`${baseClass}__scroll`} ref={navRef}>
-				<nav className={`${baseClass}__wrap`}>
-					<Accordion type="single" collapsible>
-						<AccordionItem value="item-1">
-							<AccordionTrigger>Is it accessible?</AccordionTrigger>
-							<AccordionContent>
-								Yes. It adheres to the WAI-ARIA design pattern.
-							</AccordionContent>
-						</AccordionItem>
-					</Accordion>
+		<aside className="sidebar">
+			<div>
+				<nav>
+					<Sidebar variant="floating" collapsible="icon">
+						<SidebarTrigger />
+						<SidebarHeader>{open ? <Logo /> : <Image loader={imageLoader} src="/media/favicon.svg" alt="Artfile Logo" width={18} height={18} />}</SidebarHeader>
+						<SidebarContent>
 
-					<div className={`${baseClass}__controls`}>
-						<Logout tabIndex={!navOpen ? -1 : undefined} />
-					</div>
+							<SidebarMenu>
+								{menuItems.map((item, index) => (
+									<SidebarMenuItem key={index}>
+
+										<SidebarMenuButton asChild variant={'outline'}>
+											<a href={item.url}>
+												<item.icon />
+												<span>{item.title}</span>
+											</a>
+										</SidebarMenuButton>
+
+										{item.subItems && (
+											<SidebarMenuSub>
+												{item.subItems.map((subItem, subIndex) => (
+													<SidebarMenuSubItem key={subIndex}>
+														<SidebarMenuButton asChild size="sm">
+															<a href={subItem.url}>
+																<span>{subItem.title}</span>
+															</a>
+														</SidebarMenuButton>
+													</SidebarMenuSubItem>
+												))}
+											</SidebarMenuSub>
+										)}
+									</SidebarMenuItem>
+								))}
+							</SidebarMenu>
+						</SidebarContent>
+						<SidebarFooter />
+					</Sidebar>
 				</nav>
-			</div>
-			<div className={`${baseClass}__header`}>
-				<div className={`${baseClass}__header-content`}>
-					<button
-						className={`${baseClass}__mobile-close`}
-						onClick={() => {
-							setNavOpen(false)
-						}}
-						tabIndex={!navOpen ? -1 : undefined}
-						type="button"
-					>
-						<Hamburger isActive />
-					</button>
-				</div>
 			</div>
 		</aside>
 	)
