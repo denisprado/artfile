@@ -40,7 +40,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ header }) => {
 				<Logo />
 			</Link>
 
-			<HeaderNav header={header} />
+			<HeaderNav />
 		</header>
 	)
 }
