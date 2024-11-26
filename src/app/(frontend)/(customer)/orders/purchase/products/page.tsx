@@ -4,13 +4,13 @@ import PageContainer from '@/components/PageContainer'
 import { Category, Product } from '@/payload-types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import type { Metadata } from 'next/types'
 // export const dynamic = 'force-static'
 export const revalidate = 600
 const COLLECTION = 'orders'
 export default async function Page() {
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const { user } = await getMeUserServer()
 	const orders = await payload.find({

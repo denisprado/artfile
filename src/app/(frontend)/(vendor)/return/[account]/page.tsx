@@ -2,14 +2,14 @@ import { Button } from "@/components/Button";
 import { stripe } from "@/lib/stripe";
 import { getMeUserServer } from "@/utilities/getMeUserServer";
 import configPromise from '@payload-config';
-import { getPayloadHMR } from '@payloadcms/next/utilities';
+import { getPayload } from 'payload';
 
 export default async function Return(props) {
 	const params = await props.params;
 
 	const { user } = await getMeUserServer()
 
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 	const accountReturned = await stripe.accounts.retrieve(params.account)
 
 	await payload.update({

@@ -3,7 +3,7 @@ import CollectionProductFiles from '@/components/CollectionProductFiles'
 import { Category, Order, Product, User } from '@/payload-types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { notFound } from 'next/navigation'
 import React from 'react'
 import AddToCartButton from './AddCartButton'
@@ -15,7 +15,7 @@ type ProductPageProps = {
 
 export async function generateMetadata(props: ProductPageProps) {
 	const params = await props.params;
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
 		where: { slug: { equals: params.slug } }
@@ -31,7 +31,7 @@ export async function generateMetadata(props: ProductPageProps) {
 
 const ProductPage: React.FC<ProductPageProps> = async props => {
 	const params = await props.params;
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 	const product = await payload.find({
 		collection: 'products',
 		where: { slug: { equals: params.slug } },

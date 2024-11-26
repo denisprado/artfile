@@ -5,12 +5,12 @@ import PageContainer from '@/components/PageContainer'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 
 export const revalidate = 600
 export default async function Page() {
 	const COLLECTION = 'stores'
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const stores = await payload.find({
 		collection: COLLECTION,

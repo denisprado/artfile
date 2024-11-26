@@ -5,14 +5,14 @@ import { checkRole } from '@/collections/Users/checkRole'
 import type { CategoriesMenu } from '@/payload-types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 
 export async function CategoriesMenu() {
 	const categories: CategoriesMenu = await getCachedGlobal('categoriesMenu', 1)()
 	const user = await getMeUserServer()
 	const isVendor = checkRole(["admin", "vendor"], user.user)
 
-	const payload = getPayloadHMR({ config: configPromise })
+	const payload = getPayload({ config: configPromise })
 	const allCategories = (await payload).find({
 		collection: 'categories', where: {
 			stick: {

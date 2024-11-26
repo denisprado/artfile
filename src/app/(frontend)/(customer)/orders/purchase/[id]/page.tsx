@@ -3,11 +3,11 @@ import { notFound } from 'next/navigation'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import formattedDate from '@/utilities/formatDate'
 const OrderPage = async props => {
 	const params = await props.params;
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 	const order = await payload.find({
 		collection: 'orders',
 		where: { id: { equals: params.id } }

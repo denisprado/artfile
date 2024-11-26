@@ -2,7 +2,7 @@ import type { Metadata } from 'next/types'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import React from 'react'
 import { Product, User } from '@/payload-types'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
@@ -17,7 +17,7 @@ import { columns } from './columns'
 export const revalidate = 600
 const COLLECTION = 'orders'
 export default async function Page() {
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const { user } = await getMeUserServer()
 

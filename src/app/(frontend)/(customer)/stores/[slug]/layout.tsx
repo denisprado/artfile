@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import CategoriesMenu from '@/components/CategoriesMenu'
 import { Category, Media, Product, Store } from '@/payload-types'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { PaginatedDocs } from 'node_modules/payload/dist/database/types'
@@ -13,7 +13,7 @@ import imageLoader from '@/lib/imageLoader'
 const COLLECTION = 'products'
 export async function generateMetadata(props): Promise<Metadata> {
 	const params = await props.params;
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const store = await payload.find({
 		collection: 'stores',
@@ -38,7 +38,7 @@ const StorePageLayout = async props => {
 		children
 	} = props;
 
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 
 	const storeFull = (await payload.find({
@@ -101,7 +101,7 @@ const StorePageLayout = async props => {
 export default StorePageLayout
 
 export async function generateStaticParams() {
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 	const stores = await payload.find({
 		collection: 'stores',
 		limit: 100, // Ajuste conforme necessário

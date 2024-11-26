@@ -5,14 +5,14 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 import { PageRange } from '@/components/PageRange'
 import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import React from 'react'
 
 export const revalidate = 600
 const COLLECTION = 'products'
 export default async function Page(props) {
 	const params = await props.params;
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const products = await payload.find({
 		collection: COLLECTION,

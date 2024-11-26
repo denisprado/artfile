@@ -1,12 +1,12 @@
 import configPromise from '@payload-config'
-import { getPayloadHMR } from '@payloadcms/next/utilities'
+import { getPayload } from 'payload'
 import { Suspense } from 'react'
 import { CollectionArchive } from '../CollectionArchive'
 
 
 export default async function SearchTable({ query, currentPage }) {
 
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const products = await payload.find({
 		collection: 'products',

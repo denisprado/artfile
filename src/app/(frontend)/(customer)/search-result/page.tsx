@@ -1,7 +1,7 @@
 
 import SearchTable from '@/components/ui/search-table';
 import configPromise from '@payload-config';
-import { getPayloadHMR } from '@payloadcms/next/utilities';
+import { getPayload } from 'payload';
 
 export default async function SearchPage(
 	props: {
@@ -15,7 +15,7 @@ export default async function SearchPage(
 	const query = searchParams?.query || '';
 	const currentPage = Number(searchParams?.page) || 1;
 
-	const payload = await getPayloadHMR({ config: configPromise })
+	const payload = await getPayload({ config: configPromise })
 
 	const products = await payload.find({
 		collection: 'products',
