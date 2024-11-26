@@ -7,7 +7,6 @@ const CreateAccount = () => {
 	const redirect = searchParams.get('redirect')
 
 	return (
-
 		<Button appearance="secondary" label="Criar conta" href={'/create-account-vendor?redirect=' + redirect}></Button>
 	)
 }

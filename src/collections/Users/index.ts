@@ -4,8 +4,6 @@ import { isAdmin } from '@/access/isAdmin'
 import adminsAndUser from './access/adminsAndUser'
 import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
-import { redirect } from 'next/navigation'
-import { NextResponse } from 'next/server'
 import type { CollectionAfterLoginHook } from 'payload'
 
 const afterLoginHook: CollectionAfterLoginHook = async ({ user, token }) => {}
