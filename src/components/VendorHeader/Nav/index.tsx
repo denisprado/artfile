@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button'
-import { NON_BREAKING_SPACE } from 'node_modules/lexical/LexicalConstants'
+import { NON_BREAKING_SPACE } from '@payloadcms/richtext-lexical'
+
 
 /**
  * @param {{ header: import('@/payload-types').Header }} props

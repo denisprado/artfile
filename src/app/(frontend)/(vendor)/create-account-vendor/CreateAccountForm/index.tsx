@@ -21,7 +21,7 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
 	const searchParams = useSearchParams()
-	const allParams = <Suspense>{searchParams.toString()}</Suspense> ? `?${searchParams.toString()}` : ''
+	const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
 	const { login } = useAuth()
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)

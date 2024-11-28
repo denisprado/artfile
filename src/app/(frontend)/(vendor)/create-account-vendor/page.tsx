@@ -16,15 +16,6 @@ export default async function CreateAccount({
 
 	const { user } = await getMeUserServer()
 
-	if (user) {
-		return (
-			<PageContainer>
-				<BeforeDashboard />
-			</PageContainer>
-		)
-	}
-
-
 	return (
 
 		<PageContainer>

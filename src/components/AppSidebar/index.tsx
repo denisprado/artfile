@@ -1,10 +1,14 @@
 'use client'
-import { Box, Settings, ShoppingCart } from "lucide-react"
+import { Box, LogOut, Settings, ShoppingCart } from "lucide-react"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarMenuSub, SidebarMenuSubItem, SidebarTrigger, useSidebar } from "../Sidebar"
 import Image from "next/image"
 import Logo from "../Logo"
 import imageLoader from "@/lib/imageLoader"
+import Link from "next/link"
+import { useAuth } from '@payloadcms/ui'
 export default function Nav() {
+
+	const { logOut } = useAuth()
 
 	const { open } = useSidebar()
 	const menuItems = [
@@ -12,16 +16,14 @@ export default function Nav() {
 			title: "Vendas",
 			icon: ShoppingCart,
 			subItems: [
-				{ title: "Pedidos", url: "/pedidos" },
-				{ title: "Clientes", url: "/clientes" },
+				{ title: "Pedidos", url: "/orders" },
 			]
 		},
 		{
 			title: "Produtos",
 			icon: Box,
 			subItems: [
-				{ title: "Catálogo", url: "/catalogo" },
-				{ title: "Estoque", url: "/estoque" },
+				{ title: "Meus produtos", url: "/collections/products" },
 			]
 		},
 		{
@@ -32,7 +34,7 @@ export default function Nav() {
 	]
 
 	return (
-		<aside className="sidebar">
+		<aside className="sidebar useTw">
 			<div>
 				<nav>
 					<Sidebar variant="floating" collapsible="icon">
@@ -68,7 +70,13 @@ export default function Nav() {
 								))}
 							</SidebarMenu>
 						</SidebarContent>
-						<SidebarFooter />
+						<SidebarFooter >
+							<SidebarMenuButton asChild variant={'outline'}>
+								<Link href={'/admin/logout'} onClick={() => logOut()}>
+									<LogOut />
+									<span>sair</span>
+								</Link>
+							</SidebarMenuButton></SidebarFooter>
 					</Sidebar>
 				</nav>
 			</div>
