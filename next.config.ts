@@ -3,6 +3,9 @@ import redirects from 'redirects'
 
 /** @type {import('next').NextConfig} */
 const nextConfig: import('next').NextConfig = {
+  sassOptions: {
+    silenceDeprecations: ['legacy-js-api'],
+  },
   images: {
     loader: 'custom',
     loaderFile: './src/lib/imageLoader.ts',

@@ -1,20 +1,26 @@
 'use client'
 import { User } from "@/payload-types";
-import { Banner } from "@payloadcms/ui";
-import { useState } from "react";
-import Stripe from "stripe";
+import { useState, useEffect } from "react";
 import { Button } from "../Button";
+import { Banner } from "@payloadcms/ui";
 
-const CreateAccountLink = ({ user: userComp }) => {
+const CreateAccountLink = () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
 	const [accountLinkCreatePending, setAccountLinkCreatePending] = useState(false);
 	const [error, setError] = useState(false);
 	const [wichError, setWichError] = useState()
 
-	const [user, setUser] = useState<User | null>(userComp)
+	const [user, setUser] = useState<User | null>(null);
 	const [connectedAccountId, setConnectedAccountId] = useState<string | null>(null);
 	const [detailsSubmitted, setDetailsSubmited] = useState<boolean>(false)
 
+	useEffect(() => {
+		const fetchUser = async () => {
+			const userData = await getUser();
+			setUser(userData);
+		};
+		fetchUser();
+	}, [accountCreatePending, accountLinkCreatePending]);
 
 	const getUser = async () => {
 		try {
@@ -26,11 +32,10 @@ const CreateAccountLink = ({ user: userComp }) => {
 				},
 			})
 			const data = await req.json()
-			setUser(data.user)
 			return data.user
 		} catch (err) {
 			console.log(err)
-			return err
+			return null
 		}
 	}
 
@@ -54,7 +59,6 @@ const CreateAccountLink = ({ user: userComp }) => {
 				},
 				body: JSON.stringify({
 					detailsSubmited: data.details_submitted,
-
 				}),
 			})
 			setDetailsSubmited(data.details_submitted)
@@ -64,97 +68,81 @@ const CreateAccountLink = ({ user: userComp }) => {
 			return err
 		}
 	}
-	console.log(!!connectedAccountId, !accountLinkCreatePending, !user?.detailsSubmited, !!user?.stripe)
+
+
+	const handleAccountCreationAndLink = async () => {
+
+		setAccountCreatePending(true);
+		setError(false);
+		try {
+			const accountResponse = await fetch("/api/account", {
+				method: "POST",
+			});
+			const accountJson = await accountResponse.json();
+			setAccountCreatePending(false);
+
+			const { account, error } = accountJson;
+			console.log(account, error)
+			if (account && user) {
+				setConnectedAccountId(account);
+				await getVerify(account);
+				await fetch('/api/users/' + user.id, {
+					method: 'PATCH',
+					credentials: 'include',
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						roles: 'vendor',
+						stripe: account,
+					}),
+				});
+
+				const linkResponse = await fetch("/api/account-link", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						account: account,
+					}),
+				});
+				const linkJson = await linkResponse.json();
+				const { url, error: linkError } = linkJson;
+
+				if (url) {
+					window.location.href = url;
+				} else if (linkError) {
+					setError(true);
+					console.log("linkError", linkError)
+				}
+			} else if (error) {
+				setError(true);
+				console.log("error", error)
+			}
+		} catch (err) {
+			setAccountCreatePending(false);
+			setError(true); // Define erro se a requisição falhar
+			console.log("err", err)
+		}
+	};
 
 	return (
 		<>
 			{!user?.stripe && !accountCreatePending && !connectedAccountId && (
 
 				<Button href="#"
-					label="Quero vender produtos digitais. Criar uma conta na plataforma de pagamentos."
-					appearance="primary"
-					onClick={async () => {
-						setAccountCreatePending(true);
-						setError(false);
-						fetch("/api/account", {
-							method: "POST",
-						})
-							.then((response) => response.json())
-							.then(async (json) => {
-								setAccountCreatePending(false);
-
-								const { account, error } = json;
-
-								if (account) {
-									const user = await getUser()
-									setUser(user)
-									setConnectedAccountId(account);
-									getVerify(account)
-									await fetch('/api/users/' + user.id, {
-										method: 'PATCH',
-										credentials: 'include',
-										headers: {
-											"Content-Type": "application/json",
-										},
-										body: JSON.stringify({
-											roles: 'vendor',
-											stripe: account,
-										}),
-									})
-								}
-
-								if (error) {
-									setError(true);
-								}
-							});
-					}}
+					label="Configurar Pagamentos"
+					appearance="secondary"
+					onClick={handleAccountCreationAndLink}
 				>
-
 				</Button>
 			)}
-			{(!!connectedAccountId && !accountLinkCreatePending) || (!user?.detailsSubmited && !!user?.stripe) ? (
-				<Button
-					label="Informar meus dados de vendedor"
-					appearance="secondary"
-					onClick={async () => {
-						setAccountLinkCreatePending(true);
-						setError(false);
-						try {
-							console.log(connectedAccountId)
-							const response = await fetch("/api/account-link", {
-								method: "POST",
-								headers: {
-									"Content-Type": "application/json",
-								},
-								body: JSON.stringify({
-									account: connectedAccountId ? connectedAccountId : user?.stripe,
-								}),
-							});
-							const json = await response.json();
 
-							setAccountLinkCreatePending(false);
-
-							const { url, error } = json;
-							setWichError(url)
-
-							if (url) {
-								window.location.href = url;
-							} else if (error) {
-								setError(true);
-							}
-							connectedAccountId && getVerify(connectedAccountId)
-						} catch (err) {
-							setAccountLinkCreatePending(false);
-							setError(true); // Define erro se a requisição falhar
-						}
-					}}
-				>
-				</Button>
-			) : <></>}
-			{error && <p className="error">Algo deu errado!</p>}
+			{error && <p className="error">Algo deu errado! - {error}</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
 				<div className="dev-callout">
-					{/* {connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}</code></Banner>} */}
+					{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}. Aguarde!</code></Banner>}
 					{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
 					{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
 				</div>
