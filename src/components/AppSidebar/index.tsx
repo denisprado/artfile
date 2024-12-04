@@ -34,7 +34,7 @@ export default function Nav() {
 	]
 
 	return (
-		<aside className="sidebar useTw">
+		<aside className="sidebar useTw border">
 			<div>
 				<nav>
 					<Sidebar variant="floating" collapsible="icon">
