@@ -21,7 +21,7 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
 	const searchParams = useSearchParams()
-	const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
+
 	const { login } = useAuth()
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
@@ -126,7 +126,7 @@ const CreateAccountForm: React.FC = () => {
 			/>
 			<div className='w-full'>
 				<p className='text-center'>Já tem uma conta?
-					<Link href={`/admin/login${allParams}`}> Faça Login</Link></p>
+					<Link href={`/admin/login`}> Faça Login</Link></p>
 			</div>
 		</form>
 	)

@@ -141,7 +141,7 @@ const CreateAccountLink = () => {
 
 	return (
 		<>
-			<Button href={user?.detailsSubmited ? `https://dashboard.stripe.com/${connectedAccountId}/test/dashboard` : "#"}
+			<Button href={user?.detailsSubmited ? `https://dashboard.stripe.com/${connectedAccountId}` : "#"}
 				label={user?.detailsSubmited ? "Dados de Pagamento" : "Configurar Pagamentos"}
 				appearance={"secondary"}
 				onClick={user?.detailsSubmited ? () => { } : handleAccountCreationAndLink}

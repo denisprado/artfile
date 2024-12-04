@@ -1,12 +1,10 @@
 import { Metadata } from 'next'
 import CreateAccountForm from './CreateAccountForm'
 import PageContainer from '@/components/PageContainer'
+import { Suspense } from 'react'
 
-export default async function CreateAccount({
-	searchParams,
-}: {
-	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}) {
+export default async function CreateAccount(
+) {
 
 	return (
 
@@ -21,7 +19,7 @@ export default async function CreateAccount({
 
 				</div>
 				<div className='flex justify-center'>
-					<CreateAccountForm />
+					<Suspense><CreateAccountForm /></Suspense>
 				</div>
 			</div>
 		</PageContainer>
