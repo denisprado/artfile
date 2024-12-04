@@ -76,7 +76,6 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
     user: Users.slug,
-    dateFormat: 'dd/mm/yyyy',
     meta: {
       titleSuffix: '- ArtFile',
     },

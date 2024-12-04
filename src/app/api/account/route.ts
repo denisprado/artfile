@@ -2,39 +2,22 @@ import { stripe } from '@/lib/stripe'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
-  const getUser = async () => {
-    try {
-      const req = await fetch(process.env.NEXT_PUBLIC_SERVER_URL + '/api/users/me', {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      const data = await req.json()
-      console.log('req', data)
-
-      return data
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
   if (req.method === 'POST') {
-    const data = await getUser()
+    const data = await req.json()
+    console.log(data)
     if (data) {
       try {
         const account = await stripe.accounts.create({
           type: 'express',
-          email: 'denisforigo@gmail.com',
+          email: data.email,
           business_type: 'individual',
           individual: {
-            first_name: 'Denis',
-            last_name: 'Forigo',
+            first_name: data.name.split(' ')[0],
+            last_name: data.name.split(' ')[1],
           },
           country: 'BR',
           metadata: {
-            userId: '672ccce99e76f8f771df915e',
+            userId: data.userId,
           },
           capabilities: {
             card_payments: { requested: true },

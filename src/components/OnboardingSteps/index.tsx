@@ -1,6 +1,4 @@
 import { Wallet, Store, Package, Megaphone } from 'lucide-react'
-import Link from 'next/link'
-
 import { cn } from "@/lib/utils"
 
 import {
@@ -11,7 +9,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card"
 import { Button } from '@/components/Button'
-import CreateAccountLink from '../CreateAccountLink'
+import CreateAccountLink from '@/components/CreateAccountLink'
+import UpdateStoreLink from '@/components/UpdateStoreButton'
 
 const steps = [
 	{
@@ -26,7 +25,7 @@ const steps = [
 		description: "Crie uma loja única com sua identidade e informações essenciais.",
 		icon: <Store className="h-6 w-6" />,
 		cta: "Personalizar Loja",
-		href: "/setup-store"
+		href: <UpdateStoreLink />
 	},
 	{
 		title: "Cadastre seu catálogo",

@@ -1,4 +1,6 @@
+import { authenticated } from '@/access/authenticated'
 import { isAdmin } from '@/access/isAdmin'
+import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
 import { isAdminOrVendor } from '@/access/isAdminOrVendor'
 import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy'
 import { slugField } from '@/fields/slug'
@@ -8,10 +10,10 @@ const Stores: CollectionConfig = {
   slug: 'stores',
   labels: { plural: 'Lojas', singular: 'Loja' },
   access: {
-    create: isAdminOrVendor,
-    read: () => true,
-    update: isAdminOrVendorAndCreatedBy,
-    delete: isAdminOrVendorAndCreatedBy,
+    create: authenticated,
+    read: isAdminOrCreatedBy,
+    update: isAdminOrCreatedBy,
+    delete: isAdminOrCreatedBy,
   },
   admin: {
     useAsTitle: 'name',
@@ -68,6 +70,10 @@ const Stores: CollectionConfig = {
       type: 'relationship',
       relationTo: 'users',
       required: true,
+      hasMany: false,
+      defaultValue: ({ user }) => {
+        return user.id
+      },
       access: {
         update: isAdmin,
       },
@@ -83,7 +89,7 @@ const Stores: CollectionConfig = {
     beforeChange: [
       ({ req, operation, data }) => {
         if (operation === 'create') {
-          if (req.user) {
+          if (req.user && !data.createdBy) {
             data.createdBy = req.user.id
             return data
           }

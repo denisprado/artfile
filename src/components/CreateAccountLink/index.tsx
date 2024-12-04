@@ -3,6 +3,8 @@ import { User } from "@/payload-types";
 import { useState, useEffect } from "react";
 import { Button } from "../Button";
 import { Banner } from "@payloadcms/ui";
+import { stripe } from "@/lib/stripe";
+import { useRouter } from "next/navigation";
 
 const CreateAccountLink = () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
@@ -59,6 +61,8 @@ const CreateAccountLink = () => {
 				},
 				body: JSON.stringify({
 					detailsSubmited: data.details_submitted,
+					roles: 'vendor',
+					stripe: account
 				}),
 			})
 			setDetailsSubmited(data.details_submitted)
@@ -77,12 +81,17 @@ const CreateAccountLink = () => {
 		try {
 			const accountResponse = await fetch("/api/account", {
 				method: "POST",
+				body: JSON.stringify({
+					userId: user!.id,
+					name: user!.name,
+					email: user!.email,
+				}),
 			});
 			const accountJson = await accountResponse.json();
 			setAccountCreatePending(false);
 
 			const { account, error } = accountJson;
-			console.log(account, error)
+
 			if (account && user) {
 				setConnectedAccountId(account);
 				await getVerify(account);
@@ -95,6 +104,7 @@ const CreateAccountLink = () => {
 					body: JSON.stringify({
 						roles: 'vendor',
 						stripe: account,
+						detailsSubmited: true
 					}),
 				});
 
@@ -127,17 +137,17 @@ const CreateAccountLink = () => {
 		}
 	};
 
+
+
 	return (
 		<>
-			{!user?.stripe && !accountCreatePending && !connectedAccountId && (
-
-				<Button href="#"
-					label="Configurar Pagamentos"
-					appearance="secondary"
-					onClick={handleAccountCreationAndLink}
-				>
-				</Button>
-			)}
+			<Button href={user?.detailsSubmited ? `https://dashboard.stripe.com/${connectedAccountId}/test/dashboard` : "#"}
+				label={user?.detailsSubmited ? "Dados de Pagamento" : "Configurar Pagamentos"}
+				appearance={"secondary"}
+				onClick={user?.detailsSubmited ? () => { } : handleAccountCreationAndLink}
+				disabled={user?.detailsSubmited ? false : true}
+			>
+			</Button>
 
 			{error && <p className="error">Algo deu errado! - {error}</p>}
 			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (

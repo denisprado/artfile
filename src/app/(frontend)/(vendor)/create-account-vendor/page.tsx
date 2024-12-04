@@ -1,20 +1,12 @@
 import { Metadata } from 'next'
-
-import { getMeUserServer } from '@/utilities/getMeUserServer'
-
 import CreateAccountForm from './CreateAccountForm'
-
 import PageContainer from '@/components/PageContainer'
-import { Button } from '@/components/Button'
-import BeforeDashboard from '@/components/BeforeDashboard'
 
 export default async function CreateAccount({
 	searchParams,
 }: {
 	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-
-	const { user } = await getMeUserServer()
 
 	return (
 

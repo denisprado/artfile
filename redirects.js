@@ -17,7 +17,7 @@ const redirects = async () => {
 
 	const homeSlashRedirect = {
 		destination: '/create-account-vendor',
-		permanent: true,
+		permanent: false,
 		source: '/'
 	}
 

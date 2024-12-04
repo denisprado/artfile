@@ -55,6 +55,7 @@ const CreateAccountForm: React.FC = () => {
 			}
 
 			const redirect = searchParams.get('redirect')
+			console.log(redirect)
 
 			const timer = setTimeout(() => {
 				setLoading(true)
