@@ -1,16 +1,15 @@
 'use client'
 
-import React, { Suspense, useCallback, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useCallback, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
+import { Button } from '@/components/ui/button'
 import { useAuth } from '@/providers/Auth'
 
-import createAccountLink from '@/components/CreateAccountLink'
 
 type FormData = {
 	name: string
@@ -119,11 +118,12 @@ const CreateAccountForm: React.FC = () => {
 			/>
 			<Button
 				type="submit"
-				label={loading ? 'Processing' : 'Criar Conta'}
 				disabled={loading}
-				appearance="primary"
-				className="mt-2"
-			/>
+				variant="default"
+				className="mt-2 w-full"
+			>
+				{loading ? 'Processing' : 'Criar Conta'}
+			</Button>
 			<div className='w-full'>
 				<p className='text-center'>Já tem uma conta?
 					<Link href={`/admin/login`}> Faça Login</Link></p>

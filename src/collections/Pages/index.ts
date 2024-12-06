@@ -29,6 +29,7 @@ export const Pages: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    hideAPIURL: true,
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {

@@ -3,7 +3,7 @@
 import { useCart } from '@/contexts/CartContext'
 import type { Product, User } from '@/payload-types'
 import React, { useEffect, useState } from 'react'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
 

@@ -34,6 +34,7 @@ const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'purchases'],
+    hideAPIURL: true,
   },
 
   fields: [

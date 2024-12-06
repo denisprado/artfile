@@ -6,16 +6,12 @@ import React, { Suspense } from 'react'
 import { VendorHeader } from '@/components/VendorHeader/Component'
 import { Footer } from '@/globals/Footer/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import '../_css/app.scss'
 import '../globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 
 	return (
 		<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
-			<Suspense>
-				<VendorHeader />
-			</Suspense>
 			<main>
 				{children}
 			</main>

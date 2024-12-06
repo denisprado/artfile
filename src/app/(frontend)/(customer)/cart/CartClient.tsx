@@ -1,9 +1,10 @@
 'use client'
 
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import { CartItem, useCart } from '@/contexts/CartContext'
 import { Store, User } from '@/payload-types'
 import { Trash2Icon } from 'lucide-react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -160,10 +161,9 @@ const CartClient: React.FC<{ user: User | null }> = ({ user }) => {
 									{user ? <Button
 										onClick={() => handleCheckout(items as CartItem[])}
 										className="mt-2 mb-8 "
-										appearance='primary'
-										label={'Finalizar Compra'}
-									>
-									</Button> : <Button label='Faça login ou cadastre-se para continuar' appearance='secondary' href='/admin/login?redirect=/cart'></Button>}
+										variant={'default'}
+									>Finalizar Compra
+									</Button> : <Link href='/admin/login?redirect=/cart'><Button variant={'secondary'} asChild>Faça login ou cadastre-se para continuar</Button></Link>}
 								</div>
 							</div>
 						</div>

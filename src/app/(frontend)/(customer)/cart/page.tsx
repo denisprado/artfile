@@ -1,6 +1,6 @@
 
 
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import PageContainer from '@/components/PageContainer'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 import CartClient from './CartClient' // Importando o componente de cliente

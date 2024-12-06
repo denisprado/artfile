@@ -1,5 +1,6 @@
 'use client'
-import { Button } from "@/components/Button";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 import { useSearchParams } from 'next/navigation';
 
 const CreateAccount = () => {
@@ -7,7 +8,9 @@ const CreateAccount = () => {
 	const redirect = searchParams.get('redirect')
 
 	return (
-		<Button appearance="secondary" label="Criar conta" href={'/create-account-vendor?redirect=' + redirect}></Button>
+		<Link href={'/create-account-vendor?redirect=' + redirect} className={buttonVariants({ variant: 'secondary' })}>
+			Criar conta
+		</Link>
 	)
 }
 

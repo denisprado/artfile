@@ -1,9 +1,8 @@
 import { authenticated } from '@/access/authenticated'
 import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrCreatedBy } from '@/access/isAdminOrCreatedBy'
-import { isAdminOrVendor } from '@/access/isAdminOrVendor'
-import { isAdminOrVendorAndCreatedBy } from '@/access/isAdminOrVendorAndCreatedBy'
 import { slugField } from '@/fields/slug'
+
 import { CollectionConfig } from 'payload'
 
 const Stores: CollectionConfig = {
@@ -16,7 +15,8 @@ const Stores: CollectionConfig = {
     delete: isAdminOrCreatedBy,
   },
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: 'slug',
+    hideAPIURL: true,
   },
   fields: [
     {

@@ -4,7 +4,8 @@ import getUser from "@/utilities/getMeUser";
 import { Banner } from "@payloadcms/ui";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Button } from "../Button";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 const UpdateStoreLink = () => {
 	const [storeCreatePending, setStoreCreatePending] = useState(false);
@@ -74,13 +75,13 @@ const UpdateStoreLink = () => {
 
 	return (
 		<>
-			<Button href="#"
-				label="Personalizar sua loja"
-				appearance={"secondary"}
+			<Link href="#"
+
+				className={buttonVariants({ variant: "default" })}
 				onClick={handleCreateAndUpdateStore}
-				disabled={false}
-			>
-			</Button>
+
+			>Personalizar sua loja
+			</Link>
 			{error && <p className="error">Algo deu errado! - {error}</p>}
 			{(connectedStoreId || storeCreatePending) && (
 				<div className="dev-callout">

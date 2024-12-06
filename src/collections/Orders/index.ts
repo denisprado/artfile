@@ -8,6 +8,7 @@ const Orders: CollectionConfig = {
   labels: { plural: 'Pedidos', singular: 'Pedido' },
   admin: {
     useAsTitle: 'id',
+    hideAPIURL: true,
   },
   access: {
     read: adminsOrOrderedBy,

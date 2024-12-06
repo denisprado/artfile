@@ -1,10 +1,11 @@
 'use client'
 import { User } from "@/payload-types";
 import { useState, useEffect } from "react";
-import { Button } from "../Button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Banner } from "@payloadcms/ui";
 import { stripe } from "@/lib/stripe";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const CreateAccountLink = () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
@@ -75,7 +76,6 @@ const CreateAccountLink = () => {
 
 
 	const handleAccountCreationAndLink = async () => {
-
 		setAccountCreatePending(true);
 		setError(false);
 		try {
@@ -141,22 +141,21 @@ const CreateAccountLink = () => {
 
 	return (
 		<>
-			<Button href={user?.detailsSubmited ? `https://dashboard.stripe.com/${connectedAccountId}` : "#"}
-				label={user?.detailsSubmited ? "Dados de Pagamento" : "Configurar Pagamentos"}
-				appearance={"secondary"}
-				onClick={user?.detailsSubmited ? () => { } : handleAccountCreationAndLink}
-				disabled={user?.detailsSubmited ? false : true}
-			>
-			</Button>
+			<Link className={buttonVariants({ variant: user?.detailsSubmited ? "secondary" : "default" })} href={user?.detailsSubmited ? `https://dashboard.stripe.com/${user.stripe}` : "#"} onClick={user?.detailsSubmited ? () => { } : handleAccountCreationAndLink} >
+				{user?.detailsSubmited ? "Dados de Pagamento" : "Configurar Pagamentos"}
 
-			{error && <p className="error">Algo deu errado! - {error}</p>}
-			{(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
-				<div className="dev-callout">
-					{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}. Aguarde!</code></Banner>}
-					{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
-					{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
-				</div>
-			)}</>
+			</Link >
+			{error && <p className="error">Algo deu errado! - {error}</p>
+			}
+			{
+				(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
+					<div className="dev-callout">
+						{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}. Aguarde!</code></Banner>}
+						{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
+						{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
+					</div>
+				)
+			}</>
 	)
 }
 

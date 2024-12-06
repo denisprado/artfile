@@ -1,16 +1,14 @@
 'use client'
 
-import React, { Suspense, useCallback, useRef, useState } from 'react'
-import { useForm } from 'react-hook-form'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
+import React, { useCallback, useRef, useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button } from '@/components/Button'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
-import { useAuth } from '@/providers/Auth'
+import { Button } from '@/components/ui/button'
 
-import createAccountLink from '@/components/CreateAccountLink'
 
 type FormData = {
 	name: string
@@ -21,8 +19,8 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
 	const searchParams = useSearchParams()
-	const allParams = <Suspense>{searchParams.toString()}</Suspense> ? `?${searchParams.toString()}` : ''
-	const { login } = useAuth()
+	const allParams = searchParams.toString() ? `?${searchParams.toString()}` : ''
+
 	const router = useRouter()
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
@@ -118,11 +116,10 @@ const CreateAccountForm: React.FC = () => {
 			/>
 			<Button
 				type="submit"
-				label={loading ? 'Processing' : 'Criar Conta'}
 				disabled={loading}
-				appearance="primary"
+				variant={'default'}
 				className="mt-2"
-			/>
+			>{loading ? 'Processing' : 'Criar Conta'}</Button>
 			<div className='w-full'>
 				<p className='text-center'>Já tem uma conta?
 					<Link href={`/admin/login${allParams}`}> Faça Login</Link></p>

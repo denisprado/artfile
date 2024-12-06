@@ -17,6 +17,7 @@ const Products: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
+    hideAPIURL: true,
     defaultColumns: ['name', 'slug', 'updatedAt'],
     livePreview: {
       url: ({ data }) => {

@@ -8,9 +8,11 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card"
-import { Button } from '@/components/Button'
+
 import CreateAccountLink from '@/components/CreateAccountLink'
 import UpdateStoreLink from '@/components/UpdateStoreButton'
+import { Button, buttonVariants } from '@/components/ui/button'
+import Link from 'next/link'
 
 const steps = [
 	{
@@ -32,7 +34,7 @@ const steps = [
 		description: "Adicione seus produtos com fotos atraentes e descrições detalhadas.",
 		icon: <Package className="h-6 w-6" />,
 		cta: "Adicionar Produtos",
-		href: "/add-products"
+		href: "/admin/collections/products/create"
 	},
 	{
 		title: "Impulsione suas vendas",
@@ -52,7 +54,7 @@ export default function OnboardingSteps() {
 					Complete estes 4 passos para começar a vender seus produtos.
 				</CardDescription>
 			</CardHeader>
-			<CardContent className="grid gap-6">
+			<CardContent className="grid gap-8 grid-cols-2">
 				{steps.map((step, index) => (
 					<div key={index} className="flex flex-col space-y-2">
 						<div className="flex items-center space-x-4">
@@ -70,8 +72,13 @@ export default function OnboardingSteps() {
 							</div>
 						</div>
 						<div className="pl-14">
-							{typeof step.href === 'string' ? <Button appearance='secondary' className="w-full sm:w-auto" href={step.href} label={step.cta}>
-							</Button> : step.href}
+							{typeof step.href === 'string' ?
+								<Link href={step.href} className={buttonVariants({ variant: "default" })} >
+									{step.cta}
+								</Link>
+								:
+								step.href
+							}
 						</div>
 					</div>
 				))}

@@ -8,12 +8,9 @@ export default {
 	],
 	darkMode: ['selector', '[data-theme="dark"]', '.dark', 'class'],
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography'), scopedPreflightStyles({
-		isolationStrategy: isolateInsideOfContainer(['.useTw']),
-	})],
-	corePlugins: {
-		preflight: false,
-	},
+	// plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography'), scopedPreflightStyles({
+	// 	isolationStrategy: isolateInsideOfContainer(['.useTw']),
+	// })],
 	safelist: [
 		'lg:col-span-4',
 		'lg:col-span-6',

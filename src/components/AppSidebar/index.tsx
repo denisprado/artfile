@@ -34,52 +34,48 @@ export default function Nav() {
 	]
 
 	return (
-		<aside className="sidebar useTw border">
-			<div>
-				<nav>
-					<Sidebar variant="floating" collapsible="icon">
-						<SidebarTrigger />
-						<SidebarHeader>{open ? <Logo /> : <Image loader={imageLoader} src="/media/favicon.svg" alt="Artfile Logo" width={18} height={18} />}</SidebarHeader>
-						<SidebarContent>
 
-							<SidebarMenu>
-								{menuItems.map((item, index) => (
-									<SidebarMenuItem key={index}>
+		<Sidebar collapsible="icon" variant="inset" className="z-50">
+			<SidebarTrigger />
+			<SidebarHeader>{open ? <Logo /> : <Image loader={imageLoader} src="/media/favicon.svg" alt="Artfile Logo" width={18} height={18} />}</SidebarHeader>
+			<SidebarContent>
 
-										<SidebarMenuButton asChild variant={'outline'}>
-											<a href={item.url}>
-												<item.icon />
-												<span>{item.title}</span>
-											</a>
-										</SidebarMenuButton>
+				<SidebarMenu>
+					{menuItems.map((item, index) => (
+						<SidebarMenuItem key={index}>
 
-										{item.subItems && (
-											<SidebarMenuSub>
-												{item.subItems.map((subItem, subIndex) => (
-													<SidebarMenuSubItem key={subIndex}>
-														<SidebarMenuButton asChild size="sm">
-															<a href={subItem.url}>
-																<span>{subItem.title}</span>
-															</a>
-														</SidebarMenuButton>
-													</SidebarMenuSubItem>
-												))}
-											</SidebarMenuSub>
-										)}
-									</SidebarMenuItem>
-								))}
-							</SidebarMenu>
-						</SidebarContent>
-						<SidebarFooter >
 							<SidebarMenuButton asChild variant={'outline'}>
-								<Link href={'/admin/logout'} onClick={() => logOut()}>
-									<LogOut />
-									<span>sair</span>
-								</Link>
-							</SidebarMenuButton></SidebarFooter>
-					</Sidebar>
-				</nav>
-			</div>
-		</aside>
+								<a href={item.url}>
+									<item.icon />
+									<span>{item.title}</span>
+								</a>
+							</SidebarMenuButton>
+
+							{item.subItems && (
+								<SidebarMenuSub>
+									{item.subItems.map((subItem, subIndex) => (
+										<SidebarMenuSubItem key={subIndex}>
+											<SidebarMenuButton asChild size="sm">
+												<a href={subItem.url}>
+													<span>{subItem.title}</span>
+												</a>
+											</SidebarMenuButton>
+										</SidebarMenuSubItem>
+									))}
+								</SidebarMenuSub>
+							)}
+						</SidebarMenuItem>
+					))}
+				</SidebarMenu>
+			</SidebarContent>
+			<SidebarFooter >
+				<SidebarMenuButton asChild variant={'outline'}>
+					<Link href={'/admin/logout'} onClick={() => logOut()}>
+						<LogOut />
+						<span>sair</span>
+					</Link>
+				</SidebarMenuButton></SidebarFooter>
+		</Sidebar>
+
 	)
 }

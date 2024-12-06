@@ -11,13 +11,11 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { GeistMono } from 'geist/font/mono'
 import { GeistSans } from 'geist/font/sans'
-import { draftMode } from 'next/headers'
 
 import { SidebarProvider } from '@/components/Sidebar'
 import './globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-	const { isEnabled } = await draftMode()
 
 	return (
 		<html className={cn(GeistSans.variable, GeistMono.variable, 'useTw')} lang="en" suppressHydrationWarning>

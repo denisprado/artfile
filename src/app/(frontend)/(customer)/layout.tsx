@@ -6,7 +6,6 @@ import React, { Suspense } from 'react'
 import { CustomerHeader } from '@/globals/CustomerHeader/Component'
 import { Footer } from '@/globals/Footer/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import './../_css/app.scss'
 import './../globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

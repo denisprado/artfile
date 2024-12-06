@@ -5,8 +5,9 @@ import { getMeUserServer } from '@/utilities/getMeUserServer'
 import CreateAccountForm from './CreateAccountForm'
 
 import PageContainer from '@/components/PageContainer'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import BeforeDashboard from '@/components/BeforeDashboard'
+import { Suspense } from 'react'
 
 export default async function CreateAccount({
 	searchParams,
@@ -40,7 +41,7 @@ export default async function CreateAccount({
 
 				</div>
 				<div className='flex justify-center'>
-					<CreateAccountForm />
+					<Suspense><CreateAccountForm /></Suspense>
 				</div>
 			</div>
 		</PageContainer>

@@ -15,13 +15,13 @@ const redirects = async () => {
 	}
 
 
-	const homeSlashRedirect = {
-		destination: '/create-account-vendor',
+	const AdminRedirect = {
 		permanent: false,
-		source: '/'
+		source: '/admin',
+		destination: '/dashboard',
 	}
 
-	const redirects = [internetExplorerRedirect, homeSlashRedirect]
+	const redirects = [internetExplorerRedirect, homeSlashRedirect, AdminRedirect]
 
 	return redirects
 }

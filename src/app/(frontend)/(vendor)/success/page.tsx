@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { useCart } from '@/contexts/CartContext'
 import Link from 'next/link'
-import { Button } from '@/components/Button'
+import { Button } from '@/components/ui/button'
 import PageContainer from '@/components/PageContainer'
 
 const SuccessPage: React.FC = () => {
