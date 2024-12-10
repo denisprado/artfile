@@ -21,7 +21,7 @@ const redirects = async () => {
 		destination: '/dashboard',
 	}
 
-	const redirects = [internetExplorerRedirect, homeSlashRedirect, AdminRedirect]
+	const redirects = [internetExplorerRedirect, AdminRedirect]
 
 	return redirects
 }
