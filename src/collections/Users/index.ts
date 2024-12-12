@@ -6,7 +6,24 @@ import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
 import type { CollectionAfterLoginHook } from 'payload'
 
-const afterLoginHook: CollectionAfterLoginHook = async ({ user, token }) => {}
+import { stripe } from '@/lib/stripe'
+
+const defaultValue = async ({ user }) => {
+  const userId = user?.id
+  const { accountReturned } = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/get-stripe-account`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ userId: userId }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    },
+  ).then((res) => res.json())
+
+  console.log(accountReturned)
+  return accountReturned.id || null
+}
 
 // const afterLogoutHook: CollectionAfterLogoutHook = async ({ collection, context, req }) => {
 //   console.log(process.env.NEXT_PUBLIC_SERVER_URL)
@@ -20,7 +37,7 @@ const Users: CollectionConfig = {
   slug: 'users',
   labels: { plural: 'Usuários', singular: 'Usuário' },
   hooks: {
-    afterLogin: [afterLoginHook],
+    // afterLogin: [afterLoginHook],
     // afterLogout: [afterLogoutHook],
   },
 
@@ -78,18 +95,7 @@ const Users: CollectionConfig = {
     {
       name: 'stripe',
       type: 'text',
-      access: {
-        update: isAdmin,
-      },
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      label: 'Dados bancários enviados',
-      name: 'detailsSubmited',
-      type: 'checkbox',
-      defaultValue: false,
+      defaultValue: ({ user }) => defaultValue(user),
       access: {
         update: isAdmin,
       },

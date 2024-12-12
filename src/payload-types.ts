@@ -92,7 +92,6 @@ export interface User {
   name?: string | null;
   roles?: ('admin' | 'customer' | 'vendor')[] | null;
   stripe?: string | null;
-  detailsSubmited?: boolean | null;
   purchases?: (string | Order)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -787,7 +786,6 @@ export interface UsersSelect<T extends boolean = true> {
   name?: T;
   roles?: T;
   stripe?: T;
-  detailsSubmited?: T;
   purchases?: T;
   updatedAt?: T;
   createdAt?: T;

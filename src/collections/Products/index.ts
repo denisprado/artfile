@@ -11,7 +11,7 @@ const Products: CollectionConfig = {
 
   access: {
     create: isAdminOrVendor,
-    read: isAdminOrVendorAndCreatedBy,
+    read: isAdminOrVendor,
     update: isAdminOrVendorAndCreatedBy,
     delete: isAdminOrVendorAndCreatedBy,
   },

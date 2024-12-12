@@ -1,7 +1,8 @@
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import { stripe } from "@/lib/stripe";
 import { getMeUserServer } from "@/utilities/getMeUserServer";
 import configPromise from '@payload-config';
+import Link from "next/link";
 import { getPayload } from 'payload';
 
 export default async function Return(props) {
@@ -10,7 +11,6 @@ export default async function Return(props) {
 	const { user } = await getMeUserServer()
 
 	const payload = await getPayload({ config: configPromise })
-	const accountReturned = await stripe.accounts.retrieve(params.account)
 
 	await payload.update({
 		collection: 'users',
@@ -18,7 +18,7 @@ export default async function Return(props) {
 			id: { equals: user?.id! }
 		},
 		data: {
-			detailsSubmited: accountReturned.details_submitted
+			stripe: params.account
 		}
 	})
 
@@ -27,7 +27,7 @@ export default async function Return(props) {
 		<div className="container">
 			<div className="content">
 				<h2>Sua conta foi criada com sucesso.</h2>
-				<Button label="Cadastre seu primeiro produto e comece a vender" href="/admin/collections/products/create" appearance="secondary"></Button>
+				<Link href="/admin/collections/products/create" ><Button variant={"secondary"} asChild>Cadastre seu primeiro produto e comece a vender</Button></Link>
 			</div>
 			<div className="info-callout">
 				<p>

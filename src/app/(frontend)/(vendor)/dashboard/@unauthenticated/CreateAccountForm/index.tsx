@@ -8,8 +8,6 @@ import { useForm } from 'react-hook-form'
 import { Input } from '@/components/Input'
 import { Message } from '@/components/Message'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/providers/Auth'
-
 
 type FormData = {
 	name: string
@@ -20,12 +18,10 @@ type FormData = {
 
 const CreateAccountForm: React.FC = () => {
 	const searchParams = useSearchParams()
-
-	const { login } = useAuth()
 	const router = useRouter()
+
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState<string | null>(null)
-	const [userCreated, setUserCreated] = useState<boolean>(false)
 
 	const {
 		register,
@@ -38,10 +34,17 @@ const CreateAccountForm: React.FC = () => {
 	password.current = watch('password', '')
 
 	const onSubmit = useCallback(
+
 		async (data: FormData) => {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users`, {
+
+			const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL!}/api/users/`, {
 				method: 'POST',
-				body: JSON.stringify(data),
+				credentials: 'include',
+				body: JSON.stringify({
+					name: data?.name!,
+					email: data?.email!,
+					password: data?.password!,
+				}),
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -53,14 +56,11 @@ const CreateAccountForm: React.FC = () => {
 				return
 			}
 
-			const redirect = searchParams.get('redirect')
-			console.log(redirect)
+			const redirect = searchParams.get('redirect') ? searchParams.get('redirect') : "/admin/login"
 
 			const timer = setTimeout(() => {
 				setLoading(true)
 			}, 1000)
-
-			const dataUser = await response.json()
 
 			try {
 				clearTimeout(timer)
@@ -126,7 +126,7 @@ const CreateAccountForm: React.FC = () => {
 			</Button>
 			<div className='w-full'>
 				<p className='text-center'>Já tem uma conta?
-					<Link href={`/admin/login`}> Faça Login</Link></p>
+					<Link href={`/admin/login?redirect=/dashboard`}> Faça Login</Link></p>
 			</div>
 		</form>
 	)

@@ -5,15 +5,11 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const requ = await req.json()
-      const user = requ.user
+      const account = requ.account
 
-      const accounts = await stripe.accounts.list()
+      const accountReturned = await stripe.accounts.retrieve(account)
 
-      const stripeAccountOfUser = accounts.data.find(
-        (account) => account?.metadata?.userId === user.id,
-      )
-
-      return NextResponse.json({ stripeAccountOfUser: stripeAccountOfUser })
+      return NextResponse.json({ accountReturned: accountReturned })
     } catch (error) {
       console.error('An error occurred when calling the Stripe API to create an account:', error)
       // res.status(500);

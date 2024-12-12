@@ -6,6 +6,7 @@ import { Banner } from "@payloadcms/ui";
 import { stripe } from "@/lib/stripe";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Message } from "../Message";
 
 const CreateAccountLink = () => {
 	const [accountCreatePending, setAccountCreatePending] = useState(false);
@@ -61,7 +62,6 @@ const CreateAccountLink = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					detailsSubmited: data.details_submitted,
 					roles: 'vendor',
 					stripe: account
 				}),
@@ -104,7 +104,6 @@ const CreateAccountLink = () => {
 					body: JSON.stringify({
 						roles: 'vendor',
 						stripe: account,
-						detailsSubmited: true
 					}),
 				});
 
@@ -141,8 +140,8 @@ const CreateAccountLink = () => {
 
 	return (
 		<>
-			<Link className={buttonVariants({ variant: user?.detailsSubmited ? "secondary" : "default" })} href={user?.detailsSubmited ? `https://dashboard.stripe.com/${user.stripe}` : "#"} onClick={user?.detailsSubmited ? () => { } : handleAccountCreationAndLink} >
-				{user?.detailsSubmited ? "Dados de Pagamento" : "Configurar Pagamentos"}
+			<Link className={buttonVariants({ variant: !!user?.stripe ? "secondary" : "default" })} href={!!user?.stripe ? `https://dashboard.stripe.com/${user.stripe}` : "#"} onClick={!!user?.stripe ? () => { } : handleAccountCreationAndLink} >
+				{!!user?.stripe ? "Dados de Pagamento" : "Configurar Pagamentos"}
 
 			</Link >
 			{error && <p className="error">Algo deu errado! - {error}</p>
@@ -150,7 +149,7 @@ const CreateAccountLink = () => {
 			{
 				(connectedAccountId || accountCreatePending || accountLinkCreatePending) && (
 					<div className="dev-callout">
-						{connectedAccountId && <Banner type="info">O id da sua conta conectada é: <code className="bold">{connectedAccountId}. Aguarde!</code></Banner>}
+						{connectedAccountId && <Message success message={`O id da sua conta conectada é: ${connectedAccountId}. Aguarde!`}></Message>}
 						{accountCreatePending && <p>Criando uma conta na plataforma de pagamentos Stripe.</p>}
 						{accountLinkCreatePending && <p>Criando uma nova conta conectada ...</p>}
 					</div>
