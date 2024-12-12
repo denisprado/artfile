@@ -6,7 +6,6 @@ import React, { Suspense } from 'react'
 import { VendorHeader } from '@/components/VendorHeader/Component'
 import { Footer } from '@/globals/Footer/Component'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import '../globals.css'
 
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 

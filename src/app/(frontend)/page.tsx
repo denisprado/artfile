@@ -1,7 +1,15 @@
-import PageTemplate, { generateMetadata } from './(customer)/[slug]/page'
+'use client';
 
-export default PageTemplate
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
-export { /* @next-codemod-error `generateMetadata` export is re-exported. Check if this component uses `params` or `searchParams`*/
-	generateMetadata
+export default function HomePage() {
+	const router = useRouter();
+
+	useEffect(() => {
+		// Redireciona para o dashboard do vendor
+		router.push('/dashboard');
+	}, []);
+
+	return <></>; // Não renderiza nada, apenas redireciona
 }

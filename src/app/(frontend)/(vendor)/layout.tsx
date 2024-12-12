@@ -15,7 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 			<main>
 				{children}
 			</main>
-			<Footer />
+
 		</div>
 	)
 }
