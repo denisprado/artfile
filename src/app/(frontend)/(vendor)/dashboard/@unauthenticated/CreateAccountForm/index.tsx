@@ -37,7 +37,7 @@ const CreateAccountForm: React.FC = () => {
 
 		async (data: FormData) => {
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL!}/api/users/`, {
+			const response = await fetch(`/api/users`, {
 				method: 'POST',
 				credentials: 'include',
 				body: JSON.stringify({
