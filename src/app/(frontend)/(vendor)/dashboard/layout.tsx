@@ -10,7 +10,8 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { getMeUserServer } from '@/utilities/getMeUserServer'
 
 export default async function RootLayout({ dashboard, unauthenticated }: { dashboard?: React.ReactNode, unauthenticated?: React.ReactNode }) {
-	const { user } = await getMeUserServer();
+	const getUser = await getMeUserServer();
+	const user = getUser! && getUser?.user! && getUser?.user!
 	return (
 		<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
 			<Suspense>
