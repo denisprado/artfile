@@ -11,12 +11,9 @@ import '../globals.css'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 
 	return (
-		<div className='grid min-h-[100dvh] grid-rows-[auto_1fr_auto] '>
-			<main>
-				{children}
-			</main>
-
-		</div>
+		<>
+			{children}
+		</>
 	)
 }
 

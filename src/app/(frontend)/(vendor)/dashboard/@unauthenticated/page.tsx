@@ -8,8 +8,8 @@ export default async function CreateAccount(
 
 	return (
 
-		<PageContainer>
-			<div className="container grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 items-center mb-16">
+		<PageContainer className='h-full pt-20'>
+			<div className="container grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-2 items-center ">
 				<div className='flex-col gap-8 items-center justify-center'>
 					<h1 className='inline text-2xl sm:text-4xl md:text-6xl lg:text-7xl'>Crie e venda seu produto digital em <span className='font-bold'> poucos passos</span></h1>
 					<ul className='py-6 list-disc list-inside'>

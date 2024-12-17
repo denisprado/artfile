@@ -1,9 +1,9 @@
 import { Access } from 'payload'
 import { checkRole } from '../checkRole'
 
-const adminsOrNotUnauthenticated: Access = ({ req: { user } }) => {
-  if (user) {
-    if (checkRole(['admin'], user)) {
+const adminsOrNotUnauthenticated: Access = ({ req }) => {
+  if (req && req?.user!) {
+    if (checkRole(['admin'], req?.user!)) {
       return true
     }
   } else {

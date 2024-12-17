@@ -36,18 +36,20 @@ const CreateAccountForm: React.FC = () => {
 	const onSubmit = useCallback(
 
 		async (data: FormData) => {
+			if (data.password !== data.passwordConfirm) {
+				setError('As senhas não conferem.')
+			}
+
+
+			if (!data.password || !data.email || !data.name) return
 
 			const response = await fetch(`/api/users`, {
 				method: 'POST',
 				credentials: 'include',
-				body: JSON.stringify({
-					name: data?.name!,
-					email: data?.email!,
-					password: data?.password!,
-				}),
 				headers: {
 					'Content-Type': 'application/json',
 				},
+				body: JSON.stringify(data),
 			})
 
 			if (!response.ok) {

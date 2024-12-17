@@ -1,14 +1,12 @@
-import type { CollectionAfterLogoutHook, CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload'
 
 import { isAdmin } from '@/access/isAdmin'
 import adminsAndUser from './access/adminsAndUser'
 import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
-import type { CollectionAfterLoginHook } from 'payload'
 
-import { stripe } from '@/lib/stripe'
-
-const defaultValue = async ({ user }) => {
+const defaultValue = async (data: { user: any }) => {
+  const user = data ? data.user : null
   const userId = user?.id
   const { accountReturned } = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/api/get-stripe-account`,
@@ -95,7 +93,7 @@ const Users: CollectionConfig = {
     {
       name: 'stripe',
       type: 'text',
-      defaultValue: ({ user }) => defaultValue(user),
+      defaultValue: (data: any) => defaultValue(data),
       access: {
         update: isAdmin,
       },
