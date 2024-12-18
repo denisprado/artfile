@@ -1,5 +1,3 @@
-import { sources } from "next/dist/compiled/webpack/webpack"
-
 const redirects = async () => {
 	const internetExplorerRedirect = {
 		destination: '/ie-incompatible.html',
