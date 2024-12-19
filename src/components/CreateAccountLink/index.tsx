@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Banner } from "@payloadcms/ui";
 import { stripe } from "@/lib/stripe";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Message } from "../Message";
 
@@ -16,7 +16,11 @@ const CreateAccountLink = () => {
 
 	const [user, setUser] = useState<User | null>(null);
 	const [connectedAccountId, setConnectedAccountId] = useState<string | null>(null);
-	const [detailsSubmitted, setDetailsSubmited] = useState<boolean>(false)
+	const searchParams = useSearchParams()
+	const stripe = searchParams.get('stripe')
+	const returnOk = searchParams.get('return')
+	console.log("stripe", stripe)
+	console.log("returnOk", returnOk)
 
 	useEffect(() => {
 		const fetchUser = async () => {
@@ -25,6 +29,7 @@ const CreateAccountLink = () => {
 		};
 		fetchUser();
 	}, [accountCreatePending, accountLinkCreatePending]);
+
 
 	const getUser = async () => {
 		try {
@@ -43,39 +48,36 @@ const CreateAccountLink = () => {
 		}
 	}
 
-	const getVerify = async (account: string) => {
+	const updateUser = async () => {
+		console.log("updateUser", stripe)
 		try {
-			const accountVerify = await fetch('/api/account-verify', {
-				method: "POST",
+			const req = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user?.id}`, {
+				method: "PATCH",
+				credentials: "include",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					account: account,
+					stripe: stripe,
+					roles: 'vendor'
 				}),
 			})
-			const data = await accountVerify.json()
-			await fetch('/api/users/' + user!.id, {
-				method: 'PATCH',
-				credentials: 'include',
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					roles: 'vendor',
-					stripe: account
-				}),
-			})
-			setDetailsSubmited(data.details_submitted)
-			return data.details_submitted
+			const data = await req.json()
+			return data.user
 		} catch (err) {
 			console.log(err)
-			return err
+			return null
 		}
 	}
 
-
+	useEffect(() => {
+		if (stripe && returnOk === 'true') {
+			updateUser()
+		}
+	})
 	const handleAccountCreationAndLink = async () => {
+
+		/** Cria a conta no Stripe e vincula ao usuário */
 		setAccountCreatePending(true);
 		setError(false);
 		try {
@@ -87,15 +89,17 @@ const CreateAccountLink = () => {
 					email: user!.email,
 				}),
 			});
-			const accountJson = await accountResponse.json();
+			const { account } = await accountResponse.json();
 			setAccountCreatePending(false);
 
-			const { account, error } = accountJson;
+			/** Se a conta foi criada com sucesso muda o status do usuário para "vendor"
+			 */
 
+
+			console.log("account", account)
 			if (account && user) {
 				setConnectedAccountId(account);
-				await getVerify(account);
-				await fetch('/api/users/' + user.id, {
+				const updateUser = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user.id}`, {
 					method: 'PATCH',
 					credentials: 'include',
 					headers: {
@@ -106,6 +110,9 @@ const CreateAccountLink = () => {
 						stripe: account,
 					}),
 				});
+
+				console.log("updateUser", updateUser)
+				/** Cria o link para acessar a conta */
 
 				const linkResponse = await fetch("/api/account-link", {
 					method: "POST",

@@ -5,10 +5,10 @@ import { useSearchParams } from 'next/navigation';
 
 const CreateAccount = () => {
 	const searchParams = useSearchParams()
-	const redirect = searchParams.get('redirect')
+	const redirect = searchParams.get('redirect') ? "?redirect=" + searchParams.get('redirect') : ''
 
 	return (
-		<Link href={'/create-account-vendor?redirect=' + redirect} className={buttonVariants({ variant: 'secondary' })}>
+		<Link href={'/dashboard' + redirect} className={buttonVariants({ variant: 'secondary' })}>
 			Criar conta
 		</Link>
 	)

@@ -39,7 +39,7 @@ export default function Refresh() {
 	return (
 		<div className="container">
 			<div className="banner">
-				<h2>DENIS PRADO FORIGO CONSULTORIA EM TECNOLOGIA DA INFORMACAO</h2>
+				<h2>ArtFile</h2>
 			</div>
 			<div className="content">
 				{error && <p className="error">Algo deu errado!</p>}

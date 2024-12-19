@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     const data = await req.json()
-    console.log(data)
+
     if (data) {
       try {
         const account = await stripe.accounts.create({

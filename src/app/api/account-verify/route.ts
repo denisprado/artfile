@@ -5,12 +5,12 @@ export async function POST(req: NextRequest) {
   if (req.method === 'POST') {
     try {
       const requ = await req.json()
-      const user = requ.user
+      const user = requ?.user
 
       const accounts = await stripe.accounts.list()
 
       const stripeAccountOfUser = accounts.data.find(
-        (account) => account?.metadata?.userId === user.id,
+        (account) => account?.metadata?.userId === user?.id,
       )
 
       return NextResponse.json({ stripeAccountOfUser: stripeAccountOfUser })

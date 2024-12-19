@@ -4,24 +4,7 @@ import { isAdmin } from '@/access/isAdmin'
 import adminsAndUser from './access/adminsAndUser'
 import adminsOrNotUnauthenticated from './access/adminsOrNotUnauthenticated'
 import { resolveDuplicatePurchases } from './hooks/resolveDuplicatePurchases'
-
-const defaultValue = async (data: { user: any }) => {
-  const user = data ? data.user : null
-  const userId = user?.id
-  const { accountReturned } = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/api/get-stripe-account`,
-    {
-      method: 'POST',
-      body: JSON.stringify({ userId: userId }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    },
-  ).then((res) => res.json())
-
-  console.log(accountReturned)
-  return accountReturned.id || null
-}
+import { authenticated } from '@/access/authenticated'
 
 // const afterLogoutHook: CollectionAfterLogoutHook = async ({ collection, context, req }) => {
 //   console.log(process.env.NEXT_PUBLIC_SERVER_URL)
@@ -43,7 +26,7 @@ const Users: CollectionConfig = {
   access: {
     create: adminsOrNotUnauthenticated,
     read: () => true,
-    update: adminsAndUser,
+    update: authenticated,
     delete: isAdmin,
   },
   admin: {
@@ -68,10 +51,9 @@ const Users: CollectionConfig = {
       name: 'roles',
       type: 'select',
       hasMany: true,
-      access: {
-        update: isAdmin,
-      },
+      access: {},
       admin: {
+        disabled: true,
         position: 'sidebar',
       },
       defaultValue: ['customer'],
@@ -93,11 +75,9 @@ const Users: CollectionConfig = {
     {
       name: 'stripe',
       type: 'text',
-      defaultValue: (data: any) => defaultValue(data),
-      access: {
-        update: isAdmin,
-      },
+      access: {},
       admin: {
+        disabled: true,
         position: 'sidebar',
       },
     },
